@@ -44,6 +44,7 @@ try {
       model: toUrl(path.join(ROOT, m3)), w: String(W), h: String(H),
       pad: arg('pad', '0.94'), zoom: arg('zoom', '1'), ox: arg('ox', '0'), oy: arg('oy', '0'),
     });
+    if (arg('box', '')) q.set('box', arg('box'));              // --box x,y,w,h（模型坐标）直接渲成成品尺寸
     if (arg('motion', '')) q.set('motion', arg('motion'));
     if (arg('t', '')) q.set('t', arg('t'));
     if (arg('params', '')) q.set('params', arg('params'));

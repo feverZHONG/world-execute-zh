@@ -27,6 +27,7 @@ const ZOOM = parseFloat(Q.get('zoom') || '1');
 const OX = parseFloat(Q.get('ox') || '0');
 const OY = parseFloat(Q.get('oy') || '0');
 const MODEL = Q.get('model');
+const BOX = Q.get('box');                                     // 模型坐标里的取材框 x,y,w,h（y 向下）→ 直接渲成整张图，不用再裁
 const MOTION = Q.get('motion');
 const TIME = parseFloat(Q.get('t') || '0');
 const PARAMS = Q.get('params') || '';
@@ -73,12 +74,22 @@ function motionValue(seg, t) {
     const model = await PIXI.live2d.Live2DModel.from(MODEL, { autoInteract: false, autoUpdate: false });
     app.stage.addChild(model);
 
-    const s = Math.min(W / model.width, H / model.height) * PAD * ZOOM;
+    const mw = model.width, mh = model.height;               // 缩放前的模型画布尺寸（model.width 会跟着 scale 变，必须先存）
+    const s = Math.min(W / mw, H / mh) * PAD * ZOOM;
     model.scale.set(s);
     model.anchor.set(0.5, 0.5);                              // Cubism 画布原点在中心、y 轴向上
     model.x = W / 2 + OX;
     model.y = H / 2 + OY;
-    window.__LOG__.push(`canvas ${model.width.toFixed(0)}x${model.height.toFixed(0)} @${(s * 100).toFixed(1)}%`);
+    if (BOX) {
+      // 直接把模型坐标里的取材框铺满画布：s 由框算，位置由框心对画布中心算 —— 出图即成品，不再二次裁放
+      const [bx, by, bw, bh] = BOX.split(',').map(Number);
+      const bs = Math.min(W / bw, H / bh) * ZOOM;
+      model.scale.set(bs);
+      model.x = W / 2 - (bx + bw / 2 - mw / 2) * bs;
+      model.y = H / 2 - (by + bh / 2 - mh / 2) * bs;
+      window.__LOG__.push(`box ${bx},${by},${bw},${bh} @${(bs * 100).toFixed(1)}%`);
+    }
+    window.__LOG__.push(`canvas ${mw.toFixed(0)}x${mh.toFixed(0)} @${(model.scale.x * 100).toFixed(1)}%`);
 
     const core = model.internalModel.coreModel;
     try { model.internalModel.motionManager.stopAllMotions(); } catch {}
