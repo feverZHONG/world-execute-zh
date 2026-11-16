@@ -196,6 +196,31 @@ export class Art {
     const exact = [0, 1].map((k) => { const p = new Path2D(); p.addPath(path[k]); p.addPath(path[k + 1]); return p; });
     exact.push(path[2]);
 
+    // SHADES. Inside each ink family the body is split by luminance into light -> dark sub-plates (cream 2, orange 3,
+    // black 2 = 7 levels, light first), so art drawn in more than three inks still prints faithfully. A three-ink
+    // file leaves one shade per family empty and its three plates come out exactly as before.
+    const NL = 7, FAM_BASE = [0, 2, 5], FAM_SUBS = [2, 3, 2];
+    const SHADE_RGB = [[244, 224, 198], [217, 187, 152], [240, 144, 96], [220, 114, 63], [143, 58, 30], [36, 26, 21], [20, 16, 13]];
+    const cov = new Uint8Array(NL * N);
+    {
+      const lo = [255, 255, 255], hi = [0, 0, 0], fam = new Uint8Array(N);
+      for (let i = 0; i < N; i++) {
+        if (A[i] < 128) continue;
+        const f = C2[i] > 127 ? 2 : C1[i] > 127 ? 1 : 0;                       // the same rule as the label map
+        fam[i] = f;
+        const l0 = 0.299 * px[i * 4] + 0.587 * px[i * 4 + 1] + 0.114 * px[i * 4 + 2];
+        if (l0 < lo[f]) lo[f] = l0; if (l0 > hi[f]) hi[f] = l0;
+      }
+      for (let i = 0; i < N; i++) {
+        if (!fam[i]) continue;
+        const f = fam[i] - 1, K2 = FAM_SUBS[f], range = Math.max(1, hi[f] - lo[f]);
+        const l0 = 0.299 * px[i * 4] + 0.587 * px[i * 4 + 1] + 0.114 * px[i * 4 + 2];
+        let sub = Math.floor(((l0 - lo[f]) / range) * K2);
+        if (sub >= K2) sub = K2 - 1; if (sub < 0) sub = 0;
+        cov[(FAM_BASE[f] + sub) * N + i] = A[i];
+      }
+    }
+
     // which ink lies where, at half resolution: 0 = none, 1 = cream, 2 = orange, 3 = black
     const lw = Math.ceil(W / 2), lh = Math.ceil(H / 2), label = new Uint8Array(lw * lh);
     for (let y = 0; y < lh; y++) for (let x = 0; x < lw; x++) {
@@ -213,7 +238,8 @@ export class Art {
     this.dim[name] = { w: W, h: H };
     this.sil[name] = mask[0];                                       // art.silhouette(): the whole figure as one flat shape
     const ref = REF[name] ?? REF_DEFAULT;                           // the design basis this picture's numbers are in
-    this.ink[name] = { w: W, h: H, mask, path, exact, label, lw, lh, rgb: ink, ref: { w: ref[0], h: ref[1], sx: W / ref[0], sy: H / ref[1] } };
+    this.ink[name] = { w: W, h: H, mask, path, exact, label, lw, lh, rgb: ink, ref: { w: ref[0], h: ref[1], sx: W / ref[0], sy: H / ref[1] },
+      level: { nl: NL, base: FAM_BASE, subs: FAM_SUBS, rgb: SHADE_RGB, cov, W, H } };
   }
 
   /** design px -> source px, per axis (a picture re-drawn at another resolution keeps its design coordinates). */
@@ -389,6 +415,35 @@ export class Art {
     if (!K) warnOnce(`ink|${name}`, `[art] "${name}" has no ink plates - the three-ink silhouettes are: ${INK_NAMES.join(', ')}`);
     return K;
   }
+  /** The levels of `name` that carry paint: [{ fam, sub, level, rgb, share }], light -> dark. Built once. */
+  shades(name) {
+    const K = this.ink[name];
+    if (!K?.level) return [];
+    const L = K.level;
+    if (L.list) return L.list;
+    const N = L.W * L.H, list = [];
+    for (let f = 0; f < 3; f++) for (let s = 0; s < L.subs[f]; s++) {
+      const level = L.base[f] + s;
+      let n = 0;
+      for (let i = 0; i < N; i++) if (L.cov[level * N + i]) n++;
+      if (n > N * 0.004) list.push({ fam: ['cream', 'orange', 'black'][f], sub: s, level, rgb: L.rgb[level], share: n / N });
+    }
+    return (L.list = list);
+  }
+  /** Coverage of level k and above, white with alpha (built on first use: shade plates print as bitmaps). */
+  _levelMask(K, k) {
+    const L = K.level;
+    L.mask ??= [];
+    if (L.mask[k]) return L.mask[k];
+    const W = L.W, H = L.H, N = W * H, c = mk(W, H), g = c.getContext('2d'), im = g.createImageData(W, H), d = im.data;
+    for (let i = 0; i < N; i++) {
+      let a = 0;
+      for (let j = k; j < L.nl; j++) a += L.cov[j * N + i];
+      d[i * 4] = d[i * 4 + 1] = d[i * 4 + 2] = 255; d[i * 4 + 3] = a > 255 ? 255 : a;
+    }
+    g.putImageData(im, 0, 0);
+    return (L.mask[k] = c);
+  }
   /** Where to draw bust `name` so that it registers with f_bust drawn into `base` (chin, flower and collar coincide). */
   fit(name, base) {
     const r = REGISTER[name];
@@ -541,6 +596,7 @@ export class Art {
 
     if (asPath) {                                                    // paths: crisp at any size (a figure alpha < 1 is applied per plate)
       for (const p of list) {
+        if (p.shade != null) continue;                                 // shades print from their masks (no traced outline)
         const k = p.ink === 'all' ? 0 : INK_KEY[p.ink], o = p.offset ?? [0, 0], w = wipe(p, dst);
         g.save();
         if (w !== dst) { g.beginPath(); g.rect(w.x + o[0], w.y + o[1], w.w, w.h); g.clip(); }
@@ -565,11 +621,20 @@ export class Art {
       gg.setTransform(1, 0, 0, 1, 0, 0); gg.globalAlpha = 1; gg.globalCompositeOperation = 'source-over'; gg.clearRect(0, 0, G.width, G.height);
     }
     for (const p of list) {
-      const k = p.ink === 'all' ? 0 : INK_KEY[p.ink], minus = p.exact && p.ink !== 'all' && k < 2 ? k + 1 : -1, o = p.offset ?? [0, 0];
+      const k = p.ink === 'all' ? 0 : INK_KEY[p.ink], o = p.offset ?? [0, 0];
+      const shadeLv = p.shade == null ? null : K.level ? K.level.base[k] + p.shade : null;
+      const minus = shadeLv != null ? (shadeLv + 1 < K.level.nl ? shadeLv + 1 : -1) : p.exact && p.ink !== 'all' && k < 2 ? k + 1 : -1;
       const t = this._tmp(this.tmpA, c.w, c.h), tg = t.getContext('2d');
-      tg.globalCompositeOperation = 'copy'; tg.drawImage(K.mask[k], c.x, c.y, c.w, c.h, 0, 0, t.width, t.height);
-      if (minus >= 0) { tg.globalCompositeOperation = 'destination-out'; tg.drawImage(K.mask[minus], c.x, c.y, c.w, c.h, 0, 0, t.width, t.height); }
-      tg.globalCompositeOperation = 'source-in'; tg.fillStyle = ctx.col(p.role, 1); tg.fillRect(0, 0, t.width, t.height);
+      tg.globalCompositeOperation = 'copy'; tg.drawImage(shadeLv != null ? this._levelMask(K, shadeLv) : K.mask[k], c.x, c.y, c.w, c.h, 0, 0, t.width, t.height);
+      if (minus >= 0) {
+        tg.globalCompositeOperation = 'destination-out';
+        tg.drawImage(shadeLv != null ? this._levelMask(K, minus) : K.mask[minus], c.x, c.y, c.w, c.h, 0, 0, t.width, t.height);
+      }
+      tg.globalCompositeOperation = 'source-in';
+      const col = p.tint && p.tint !== 1 && Array.isArray(ctx.pal[p.role])
+        ? `rgb(${[0, 1, 2].map((i) => Math.round(clamp(ctx.pal[p.role][i] * p.tint, 0, 255))).join(',')})`
+        : ctx.col(p.role, 1);
+      tg.fillStyle = col; tg.fillRect(0, 0, t.width, t.height);
       const full = { x: 0, y: 0, w: t.width, h: t.height }, w = wipe(p, full);                     // the reveal, in the scratch canvas
       if (group) {
         gg.globalAlpha = p.alpha ?? 1;

@@ -32,6 +32,9 @@ const TARGET_LONG_DEFAULT = 2000;
 const MARGIN_MIN = 0.05;
 const INK_SEEDS = [[244, 224, 198], [220, 114, 63], [36, 26, 21]];
 const INK_NAMES = ['cream', 'orange', 'black'];
+// the seven levels art.js separates each family into (light -> dark); art may be drawn in 3 inks or in all 7
+const LEVEL_SEEDS = [[244, 224, 198], [217, 187, 152], [240, 144, 96], [220, 114, 63], [143, 58, 30], [36, 26, 21], [20, 16, 13]];
+const LEVEL_FAM = ['cream', 'cream', 'orange', 'orange', 'orange', 'black', 'black'];
 
 const { server, url } = await startServer({ port: 5190 });
 const browser = await chromium.launch({ channel: 'msedge', headless: true }).catch(() => null)
@@ -39,7 +42,7 @@ const browser = await chromium.launch({ channel: 'msedge', headless: true }).cat
 try {
   const page = await browser.newPage();
   await page.goto(`${url}/config.json`);                        // any same-origin document will do: this one is inert
-  const measured = await page.evaluate(async ({ names, dir, seeds }) => {
+  const measured = await page.evaluate(async ({ names, dir, seeds, lseeds, lfam }) => {
     const out = {};
     for (const name of names) {
       let bmp;
@@ -79,12 +82,32 @@ try {
       }
       const inks = {};
       seeds.forEach((_s, k) => { const s = sum[k]; inks[['cream', 'orange', 'black'][k]] = s[3] ? [Math.round(s[0] / s[3]), Math.round(s[1] / s[3]), Math.round(s[2] / s[3])] : null; });
+      // the seven levels: which of them the file actually carries, and how much of the body each covers
+      const lv = lseeds.map(() => 0), famShare = { cream: 0, orange: 0, black: 0 };
+      let outside7 = 0;
+      for (let i = 0; i < N; i += 2) {
+        if (px[i * 4 + 3] < 250) continue;
+        const r = px[i * 4], g2 = px[i * 4 + 1], b2 = px[i * 4 + 2];
+        let best = -1, bd = Infinity;
+        for (let k = 0; k < lseeds.length; k++) {
+          const d = (r - lseeds[k][0]) ** 2 + (g2 - lseeds[k][1]) ** 2 + (b2 - lseeds[k][2]) ** 2;
+          if (d < bd) { bd = d; best = k; }
+        }
+        if (bd > 60 * 60) { outside7++; continue; }
+        if (bd > 24 * 24) continue;                       // a blend, not an ink: an anti-aliased edge is not a level
+        lv[best]++; famShare[lfam[best]]++;
+      }
+      const total7 = lv.reduce((a, b) => a + b, 0) || 1;
+      const levels = lv.map((n, k) => ({ k, fam: lfam[k], rgb: lseeds[k], share: +(n / total7 * 100).toFixed(1) })).filter((x) => x.share >= 1.5);
       const bw = bx1 - bx0 + 1, bh = by1 - by0 + 1;
       out[name] = {
         w, h, dust, soft, solid, zero, aModal,
         dustPct: +(dust / N * 100).toFixed(3),
         outsidePct: solidChecked ? +(outside / solidChecked * 100).toFixed(2) : 0,
         inks,
+        levels,
+        palette: levels.length,
+        outsidePct7: solidChecked ? +(outside7 / solidChecked * 100).toFixed(2) : 0,
         bbox: { x: bx0, y: by0, w: bw, h: bh },
         // framing, normalised so two drawings of the same pose at different resolutions can be compared
         frame: { cx: +((bx0 + bw / 2) / w).toFixed(4), cy: +((by0 + bh / 2) / h).toFixed(4), fw: +(bw / w).toFixed(4), fh: +(bh / h).toFixed(4) },
@@ -93,7 +116,7 @@ try {
       bmp.close?.();
     }
     return out;
-  }, { names: NAMES, dir: ART_DIR, seeds: INK_SEEDS });
+  }, { names: NAMES, dir: ART_DIR, seeds: INK_SEEDS, lseeds: LEVEL_SEEDS, lfam: LEVEL_FAM });
 
   fs.mkdirSync(path.join(ROOT, path.dirname(BASE_FILE)), { recursive: true });
   const basePath = path.join(ROOT, BASE_FILE);
@@ -115,7 +138,7 @@ try {
     if (long < target) notes.push(`${name}: 长边 ${long} px < 目标 ${target} px（重画时按目标给）`);
     if (m.dustPct > 0.2) notes.push(`${name}: alpha<16 的残点 ${m.dustPct}%（应清成 0）`);
     if (m.aModal < 255) notes.push(`${name}: 主体 alpha 众数 ${m.aModal}（理想 255）`);
-    if (m.outsidePct > 1) notes.push(`${name}: ${m.outsidePct}% 的实体像素不在三墨范围内（渐变 / 第四色 / 锈色）`);
+    if ((m.outsidePct7 ?? m.outsidePct) > 1) notes.push(`${name}: ${m.outsidePct7 ?? m.outsidePct}% 的实体像素不在三墨 / 七阶范围内（渐变 / 第四色 / 锈色）`);
     const side = Math.min(m.margins.top, m.margins.left, m.margins.right);
     if (side < MARGIN_MIN * 100) notes.push(`${name}: 上/左/右最小留白 ${side}% < 5%（会被迫贴边使用）`);
     if (base?.[name]?.frame) {
@@ -124,7 +147,7 @@ try {
       ideas.push(`相对原图：位移约 ${Math.round(dc)} px（源分辨率），尺度 ${(1 + ds).toFixed(3)} 倍`);
       if (dc > 0.05 * Math.max(m.w, m.h) || ds > 0.05) problems.push(`${name}: 构图相对原图移动过大（位移 ${Math.round(dc)} px / 尺度差 ${pct(ds)}），配准要重测`);
     }
-    rows.push([name, `${m.w}x${m.h}`, `dust ${m.dustPct}% / 实体 a=${m.aModal}`, `留白 上${m.margins.top} 左${m.margins.left} 右${m.margins.right}%`, ideas[0] ?? '']);
+    rows.push([name, `${m.w}x${m.h}`, `${m.palette ?? 3} 阶 / dust ${m.dustPct}% / a=${m.aModal}`, `留白 上${m.margins.top} 左${m.margins.left} 右${m.margins.right}%`, ideas[0] ?? '']);
   }
 
   const pad = (s, n) => String(s).padEnd(n);

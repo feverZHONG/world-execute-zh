@@ -81,9 +81,14 @@ export function ratchet(t, base, steps, rise = 0.1) {
  * roles / the other options are those of art.inks(); proof 1 = the darkened proof: all three plates in dark tones
  * (a dark figure, readable against a field of flat orange); ink = { black, orange, cream } 0 / 1, which plates are printed.
  */
-export function figure(ctx, art, name, dst, m = 0, { roles = {}, proof = 0, ink = null, ...o } = {}) {
+export function figure(ctx, art, name, dst, m = 0, { roles = {}, proof = 0, ink = null, shades = true, ...o } = {}) {
   const off = OFF(m), dim = proof > 0.5;
   const on = (k) => (dim ? 1 : ink ? ink[k] ?? 1 : 1);
+  // the darker shades of each ink family, printed inside their family plate: only art that carries them has any
+  const SH = shades && !dim ? art.shades(name) : [];
+  const roleOf = (fam) => roles[fam] ?? { cream: 'text', orange: 'me', black: 'panel' }[fam];
+  const dark = (fam, sub, tint) => SH.some((s) => s.fam === fam && s.sub === sub)
+    ? [{ ink: fam, shade: sub, role: roleOf(fam), tint, alpha: on(fam) }] : [];
   art.inks(ctx, name, dst, {
     ...o,
     plates: [
@@ -91,6 +96,11 @@ export function figure(ctx, art, name, dst, m = 0, { roles = {}, proof = 0, ink 
       ...(m > 0 && !dim ? [{ ink: 'orange', role: 'err', offset: off.red, alpha: on('orange') }] : []),
       { ink: 'orange', role: dim ? 'line' : roles.orange ?? 'me', offset: off.orange, alpha: on('orange') },
       { ink: 'black', role: roles.black ?? 'panel', offset: off.black, alpha: on('black') },
+      ...(SH.length ? [
+        ...dark('cream', 1, 0.72),
+        ...dark('orange', 2, 0.62),
+        ...dark('black', 1, 0.8),
+      ] : []),
     ],
   });
 }
