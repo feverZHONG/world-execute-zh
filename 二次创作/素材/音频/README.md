@@ -2,10 +2,10 @@
 
 放备用音源：换歌候选、试听版本、封面音乐。
 
-现用的音频在工程的 `音頻&歌詞/` 目录，由 `config.json → paths.audio` 指向：
+现用的音频在工程的 `音頻&歌詞/` 目录，由 `config.json → paths.audio` 指向（2026-11-17 实测为 `.wav`，211.9128 s）：
 
 ```json
-"paths": { "audio": "音頻&歌詞/Mili - world.execute (me) ;.mp3" }
+"paths": { "audio": "音頻&歌詞/Mili - world.execute (me) ;.wav" }
 ```
 
 ## 换歌要连带动三样
