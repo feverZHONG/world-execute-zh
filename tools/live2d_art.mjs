@@ -72,12 +72,13 @@ try {
     const CLEAN = +arg('clean', 2);                            // 5×5 众数清理遍数，0 关闭
     const KEY = +arg('keyline', 6);                            // 黑边宽度（输出 px），0 关闭
     const BLOCK = +arg('block', 1);                            // 降采样格：>1 只取形体（细节被平均掉）
+    const SKIN = arg('skin', 'cream');                          // 皮肤走哪一墨：cream（默认）/ black（贴近原片无脸设计）
     const dst = outPath(arg('out', dry ? 'out/_ink_dry.png' : 'out/ink.png'));
 
     const page = await browser.newPage({ viewport: { width: 600, height: 400 } });
     page.on('console', (m) => { if (m.type() === 'error') console.log('[page]', m.text()); });
     await page.goto(`${url}/tools/probe.html`);
-    const res = await page.evaluate(async ({ src, W, H, crop, CLEAN, KEY, BLOCK }) => {
+    const res = await page.evaluate(async ({ src, W, H, crop, CLEAN, KEY, BLOCK, SKIN }) => {
       const bmp = await createImageBitmap(await (await fetch(src)).blob());
       const sw = bmp.width, sh = bmp.height;
       const rect = crop ? crop.split(',').map(Number) : [0, 0, sw, sh];
@@ -102,7 +103,7 @@ try {
         return v < 0.30 ? 3                                    // 近黑：线稿、深色布料
           : (h >= 150 && h <= 265 && s >= 0.12) ? 2            // 青蓝：头发 → 橙墨
             : s < 0.20 ? 1                                     // 白布、无彩 → 米白
-              : (h >= 5 && h <= 55 && s < 0.42) ? 1             // 暖白：皮肤 → 米白
+              : (h >= 5 && h <= 55 && s < 0.42) ? (SKIN === 'black' ? 3 : 1)   // 暖白：皮肤 → 米白（原片无脸，皮肤走黑更贴原设计）
                 : 2;                                           // 其余中间调 → 橙
       };
       if (BLOCK > 1) {
@@ -198,7 +199,7 @@ try {
       g.putImageData(new ImageData(px, W, H), 0, 0);
       const bbox = solid ? { x: bx0, y: by0, w: bx1 - bx0 + 1, h: by1 - by0 + 1 } : null;
       return { dataUrl: c.toDataURL('image/png'), src: { w: sw, h: sh }, solid, hits, bbox };
-    }, { src: toUrl(path.resolve(inp)), W, H, crop, CLEAN, KEY, BLOCK });
+    }, { src: toUrl(path.resolve(inp)), W, H, crop, CLEAN, KEY, BLOCK, SKIN });
 
     if (res.bbox) {
       const m = { top: res.bbox.y, left: res.bbox.x, right: W - (res.bbox.x + res.bbox.w), bottom: H - (res.bbox.y + res.bbox.h) };
