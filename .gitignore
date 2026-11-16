@@ -40,5 +40,7 @@ Thumbs.db
 /assets/_test_art/
 /assets/_test_art3/
 /assets/_test_art7/
+# 原生立绘裁出来直接用的图（第三方版权，不入库）
+/assets/character_pic/
 # 空白素材目录（本地占位）
 /素材箱/

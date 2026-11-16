@@ -95,6 +95,9 @@ async function svgImage(url, name, key) {
 export async function loadArt(cfg, step = () => {}) {
   const dir = cfg.paths.art, art = new Art();
   const svgDir = cfg.paths.artSvg || '';                       // optional: the same silhouettes as vector plates
+  // raw.json: ["f_bust", ...] — these are PICTURES, not silhouettes: they are printed as they are (see Art.inks).
+  try { art.raw = await (await fetch(`/${dir}/raw.json`)).json(); } catch { art.raw = {}; }
+  if (!Array.isArray(art.raw)) art.raw = {};
   await Promise.all(ART_NAMES.map(async (name) => {
     let img = null;
     if (svgDir) {
@@ -105,6 +108,7 @@ export async function loadArt(cfg, step = () => {}) {
       img = new Image(); img.src = `/${dir}/${name}.png`;
       await img.decode();
     }
+    art.img[name] = img;
     art._prepareInk(name, img);
     await step(`silhouette  ${name}`);
   }));
@@ -116,6 +120,7 @@ export class Art {
   constructor() {
     this.sil = {}; this.lum = {}; this.regions = {};
     this.ink = {}; this.dim = {}; this.walls = {};
+    this.img = {}; this.raw = [];                                   // raw = printed as a picture, not as ink plates
     this.tmpA = mk(8, 8); this.tmpB = mk(8, 8); this.tmpC = mk(8, 8);
   }
 
@@ -560,7 +565,33 @@ export class Art {
    *   vector   draw the plates as paths instead of bitmaps. Default: automatically above 1.75 x source size at 4K,
    *            where a bitmap would go soft (f_eye and f_reach close-ups).
    */
+  /**
+   * A PICTURE (listed in raw.json): printed as it is — same dst, crop, flip, alpha and reveal as an ink figure, no
+   * separation, no tint, no misregistration. The engine still separates it, because some scenes clip or sample it
+   * through the ink plates (close-ups, the glyph plate); only the figure itself shows the picture.
+   */
+  printRaw(ctx, name, dst, { reveal = null, crop = null, flip = false, alpha = 1 } = {}) {
+    const img = this.img[name], g = ctx.g;
+    if (!img || !(alpha > 0.003)) return;
+    const K = this.ink[name];
+    const c = K ? this._src(K, crop ?? this._full(name)) : { x: 0, y: 0, w: img.naturalWidth, h: img.naturalHeight };
+    const a0 = g.globalAlpha, k = reveal == null ? 1 : clamp(reveal.k ?? reveal);
+    const w = k >= 1 ? null
+      : reveal?.dir === 'up' ? { x: 0, y: dst.h * (1 - k), w: dst.w, h: dst.h * k }
+      : reveal?.dir === 'right' ? { x: 0, y: 0, w: dst.w * k, h: dst.h }
+      : reveal?.dir === 'left' ? { x: dst.w * (1 - k), y: 0, w: dst.w * k, h: dst.h }
+      : { x: 0, y: 0, w: dst.w, h: dst.h * k };
+    g.save();
+    g.translate(dst.x, dst.y);
+    if (flip) { g.translate(dst.w, 0); g.scale(-1, 1); }
+    if (w) { g.beginPath(); g.rect(w.x, w.y, w.w, w.h); g.clip(); }
+    g.globalAlpha = a0 * alpha;
+    g.drawImage(img, c.x, c.y, c.w, c.h, 0, 0, dst.w, dst.h);
+    g.restore();
+    g.globalAlpha = a0; ctx._font = '';
+  }
   inks(ctx, name, dst, { roles = {}, offset = {}, reveal = null, exact = false, plates = null, keyline = null, crop = null, flip = false, alpha = 1, vector = null } = {}) {
+    if (this.raw.includes(name)) { this.printRaw(ctx, name, dst, { reveal, crop, flip, alpha }); return; }
     const K = this._ink(name), g = ctx.g;
     if (!K || !(alpha > 0.003)) return;
     const c = this._src(K, crop ?? this._full(name));               // source px from here on
