@@ -38,5 +38,7 @@ Thumbs.db
 /assets/live2d/
 # 换图试拍用的临时剪影套
 /assets/_test_art/
+/assets/_test_art3/
+/assets/_test_art7/
 # 空白素材目录（本地占位）
 /素材箱/
