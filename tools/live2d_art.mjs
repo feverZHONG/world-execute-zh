@@ -70,12 +70,13 @@ try {
     const dry = has('dry');
     const CLEAN = +arg('clean', 2);                            // 5×5 众数清理遍数，0 关闭
     const KEY = +arg('keyline', 6);                            // 黑边宽度（输出 px），0 关闭
+    const BLOCK = +arg('block', 1);                            // 降采样格：>1 只取形体（细节被平均掉）
     const dst = outPath(arg('out', dry ? 'out/_ink_dry.png' : 'out/ink.png'));
 
     const page = await browser.newPage({ viewport: { width: 600, height: 400 } });
     page.on('console', (m) => { if (m.type() === 'error') console.log('[page]', m.text()); });
     await page.goto(`${url}/tools/probe.html`);
-    const res = await page.evaluate(async ({ src, W, H, crop, CLEAN, KEY }) => {
+    const res = await page.evaluate(async ({ src, W, H, crop, CLEAN, KEY, BLOCK }) => {
       const bmp = await createImageBitmap(await (await fetch(src)).blob());
       const sw = bmp.width, sh = bmp.height;
       const rect = crop ? crop.split(',').map(Number) : [0, 0, sw, sh];
@@ -89,21 +90,69 @@ try {
 
       const CREAM = [244, 224, 198], ORANGE = [220, 114, 63], BLACK = [36, 26, 21];
       const label = new Uint8Array(W * H);                     // 0 透明 / 1 cream / 2 orange / 3 black
-      for (let i = 0, n = W * H; i < n; i++) {
-        const a = px[i * 4 + 3];
-        if (a < 16) continue;
-        const r = px[i * 4] / 255, gg = px[i * 4 + 1] / 255, b = px[i * 4 + 2] / 255;
+      const classify = (r8, g8, b8) => {
+        const r = r8 / 255, gg = g8 / 255, b = b8 / 255;
         const mx = Math.max(r, gg, b), mn = Math.min(r, gg, b), v = mx, s = mx === 0 ? 0 : (mx - mn) / mx;
         let h = 0; const d = mx - mn;
         if (d > 0) {
           if (mx === r) h = 60 * (((gg - b) / d) % 6); else if (mx === gg) h = 60 * (((b - r) / d) + 2); else h = 60 * (((r - gg) / d) + 4);
           if (h < 0) h += 360;
         }
-        label[i] = v < 0.30 ? 3                                   // 近黑：线稿、深色布料
-          : (h >= 150 && h <= 265 && s >= 0.12) ? 2               // 青蓝：头发 → 橙墨
-            : s < 0.20 ? 1                                         // 白布、无彩 → 米白
-              : (h >= 5 && h <= 55 && s < 0.42) ? 1                 // 暖白：皮肤 → 米白
-                : 2;                                               // 其余中间调 → 橙
+        return v < 0.30 ? 3                                    // 近黑：线稿、深色布料
+          : (h >= 150 && h <= 265 && s >= 0.12) ? 2            // 青蓝：头发 → 橙墨
+            : s < 0.20 ? 1                                     // 白布、无彩 → 米白
+              : (h >= 5 && h <= 55 && s < 0.42) ? 1             // 暖白：皮肤 → 米白
+                : 2;                                           // 其余中间调 → 橙
+      };
+      if (BLOCK > 1) {
+        // 两段式「只取形体」：
+        //   ① 先降到 BLOCK 分之一，按格分类 → 细节（蕾丝、棋格、睫毛、高光）被平均掉，只剩几块大色域；
+        //   ② 每个墨层单独用平滑放大放回原尺寸，再按 alpha≥128 阈值取形 —— 边缘是平滑曲线，不是马赛克台阶。
+        const bw = Math.max(2, Math.round(W / BLOCK)), bh = Math.max(2, Math.round(H / BLOCK));
+        const c2 = document.createElement('canvas'); c2.width = bw; c2.height = bh;
+        const g2 = c2.getContext('2d', { willReadFrequently: true });
+        g2.imageSmoothingEnabled = true; g2.imageSmoothingQuality = 'high';
+        g2.drawImage(c, 0, 0, W, H, 0, 0, bw, bh);
+        const lp = g2.getImageData(0, 0, bw, bh).data;
+        let low = new Uint8Array(bw * bh);
+        for (let j = 0; j < bw * bh; j++) low[j] = lp[j * 4 + 3] < 110 ? 0 : classify(lp[j * 4], lp[j * 4 + 1], lp[j * 4 + 2]);
+        // 低分辨率再清两遍 3×3 众数，去掉一两格的小岛
+        for (let pass = 0; pass < 2; pass++) {
+          const from = low, to = Uint8Array.from(from);
+          for (let y = 1; y < bh - 1; y++) for (let x = 1; x < bw - 1; x++) {
+            const j = y * bw + x, own = from[j];
+            if (own === 0) continue;
+            const counts = [0, 0, 0, 0];
+            for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) counts[from[j + dy * bw + dx]]++;
+            let bi = own, bc = counts[own];
+            for (let k = 1; k < 4; k++) if (counts[k] > bc && counts[k] >= 5) { bc = counts[k]; bi = k; }
+            to[j] = bi;
+          }
+          low = to;
+        }
+        const up = document.createElement('canvas'); up.width = W; up.height = H;
+        const gu = up.getContext('2d', { willReadFrequently: true });
+        gu.imageSmoothingEnabled = true; gu.imageSmoothingQuality = 'high';
+        const masks = [null, null, null, null];
+        for (let k = 1; k <= 3; k++) {
+          const mk = document.createElement('canvas'); mk.width = bw; mk.height = bh;
+          const gk = mk.getContext('2d', { willReadFrequently: true });
+          const id = gk.createImageData(bw, bh);
+          for (let j = 0; j < bw * bh; j++) if (low[j] === k) { id.data[j * 4] = id.data[j * 4 + 1] = id.data[j * 4 + 2] = 255; id.data[j * 4 + 3] = 255; }
+          gk.putImageData(id, 0, 0);
+          gu.clearRect(0, 0, W, H);
+          gu.drawImage(mk, 0, 0, bw, bh, 0, 0, W, H);
+          const ud = gu.getImageData(0, 0, W, H).data;
+          const m = new Uint8Array(W * H);
+          for (let i = 0, n = W * H; i < n; i++) m[i] = ud[i * 4 + 3] >= 128 ? 1 : 0;
+          masks[k] = m;
+        }
+        for (let i = 0, n = W * H; i < n; i++) label[i] = masks[3][i] ? 3 : masks[2][i] ? 2 : masks[1][i] ? 1 : 0;
+      } else {
+        for (let i = 0, n = W * H; i < n; i++) {
+          if (px[i * 4 + 3] < 16) continue;
+          label[i] = classify(px[i * 4], px[i * 4 + 1], px[i * 4 + 2]);
+        }
       }
       // 众数清理：5×5 各点取邻域票数最多的墨，压掉渐变带上的碎斑（腮红、肤色暗面、发际高光）
       let lab2 = Uint8Array.from(label);
@@ -148,7 +197,7 @@ try {
       g.putImageData(new ImageData(px, W, H), 0, 0);
       const bbox = solid ? { x: bx0, y: by0, w: bx1 - bx0 + 1, h: by1 - by0 + 1 } : null;
       return { dataUrl: c.toDataURL('image/png'), src: { w: sw, h: sh }, solid, hits, bbox };
-    }, { src: toUrl(path.resolve(inp)), W, H, crop, CLEAN, KEY });
+    }, { src: toUrl(path.resolve(inp)), W, H, crop, CLEAN, KEY, BLOCK });
 
     if (res.bbox) {
       const m = { top: res.bbox.y, left: res.bbox.x, right: W - (res.bbox.x + res.bbox.w), bottom: H - (res.bbox.y + res.bbox.h) };
