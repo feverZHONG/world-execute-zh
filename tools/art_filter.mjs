@@ -38,6 +38,7 @@ const SMOOTH = +arg('smooth', 2);
 const SIG = +arg('sig', 14);
 const CLEAN = +arg('clean', 2);
 const MINA = +arg('min-area', 0);
+const LEVELS = Math.max(3, +arg('levels', 3));                 // >3 = 多阶预览（在 黑→橙→米白 之间插值，超出规格，只看效果）
 const dry = has('dry');
 const OUT = path.resolve(arg('out', dry ? 'out/_filter_dry.png' : 'out/art_filter.png'));
 
@@ -52,7 +53,7 @@ try {
   page.on('console', (m) => { if (m.type() === 'error') console.log('[page]', m.text()); });
   await page.goto(`${url}/tools/probe.html`);
 
-  const res = await page.evaluate(async ({ src, W, H, MODE, SKIN, SMOOTH, SIG, CLEAN, MINA }) => {
+  const res = await page.evaluate(async ({ src, W, H, MODE, SKIN, SMOOTH, SIG, CLEAN, MINA, LEVELS }) => {
     const bmp = await createImageBitmap(await (await fetch(src)).blob());
     const c = document.createElement('canvas'), g = c.getContext('2d', { willReadFrequently: true });
     c.width = W; c.height = H;
@@ -148,8 +149,9 @@ try {
       }
     }
 
-    // ③ 3×3 众数清理：碎斑、单像素噪点
-    for (let pass = 0; pass < CLEAN; pass++) {
+    // ③ 3×3 众数清理：碎斑、单像素噪点（多阶模式只在 3 阶下有意义，跳过多阶）
+    const CLEAN_N = LEVELS > 3 ? 0 : CLEAN;
+    for (let pass = 0; pass < CLEAN_N; pass++) {
       const to = Uint8Array.from(label);
       for (let y = 1; y < H - 1; y++) for (let x = 1; x < W - 1; x++) {
         const j = y * W + x, own = label[j];
@@ -163,7 +165,45 @@ try {
       label.set(to);
     }
 
-    // ④ 小连通块剔除（4 邻域，会临时借一个栈，不打乱 label 的其他语义）
+    // ④ 多阶（>3）：**先按语义分三族（黑/橙/米白），再在族内按亮度分明暗阶** —— 颜色多了，语义不丢。
+    //    只用于"看效果"；正式三墨规格仍是 3，引擎也只认三墨。
+    const MULTI = LEVELS > 3;
+    const FAMS = {
+      3: [[20, 16, 13], [36, 26, 21]],                          // 黑：暗 → 亮
+      2: [[143, 58, 30], [220, 114, 63], [240, 144, 96]],        // 橙：深 → 中 → 浅
+      1: [[217, 187, 152], [244, 224, 198]],                     // 米白：暗 → 亮
+    };
+    let pal = null, famBase = null;
+    if (MULTI) {
+      pal = [null]; famBase = {};                              // pal[1..N]，整体按暗→亮排列
+      let at = 1;
+      for (const famId of [3, 2, 1]) {
+        famBase[famId] = at;
+        for (const c of FAMS[famId]) pal.push(c);
+        at += FAMS[famId].length;
+      }
+      // 每族内按亮度分位，落到对应明暗阶（先复制族别，避免改 label 时互相污染）
+      const fam = label.slice();
+      for (const famId of [3, 2, 1]) {
+        let lo = 255, hi = 0;
+        for (let i = 0; i < n; i++) {
+          if (fam[i] !== famId) continue;
+          const L0 = 0.299 * R[i] + 0.587 * G[i] + 0.114 * B[i];
+          if (L0 < lo) lo = L0; if (L0 > hi) hi = L0;
+        }
+        const K = FAMS[famId].length;
+        const range = Math.max(1, hi - lo);
+        for (let i = 0; i < n; i++) {
+          if (fam[i] !== famId) continue;
+          const L0 = 0.299 * R[i] + 0.587 * G[i] + 0.114 * B[i];
+          let idx = Math.floor(((L0 - lo) / range) * K);
+          if (idx >= K) idx = K - 1; if (idx < 0) idx = 0;
+          label[i] = famBase[famId] + idx;                     // 1..7
+        }
+      }
+    }
+
+    // ⑤ 小连通块剔除（4 邻域，会临时借一个栈，不打乱 label 的其他语义）
     if (MINA > 0) {
       const seen = new Uint8Array(n), stack = new Int32Array(Math.min(n, 1 << 22));
       for (let i = 0; i < n; i++) {
@@ -184,31 +224,35 @@ try {
       }
     }
 
-    // ⑤ 出图（只允许三墨 + 全透明；alpha 一律 255，符合规格单"主体 alpha 255 / 外部 0"）
+    // ⑥ 出图（3 阶时严格只允许三墨 + 全透明；alpha 一律 255，符合规格单"主体 alpha 255 / 外部 0"）
     const out = new ImageData(W, H);
     const od = out.data;
-    const PICK = [null, CREAM, ORANGE, BLACK];
+    const PICK = MULTI ? pal : [null, CREAM, ORANGE, BLACK];
+    if (!MULTI) PICK.length = 4;
     let bx0 = W, by0 = H, bx1 = -1, by1 = -1, solidCnt = 0;
     const hits = { cream: 0, orange: 0, black: 0 };
+    const levels = new Array((MULTI ? pal.length : 4)).fill(0);
     for (let i = 0; i < n; i++) {
       const L = label[i];
       if (!L) continue;
       const rgb = PICK[L], o = i * 4;
       od[o] = rgb[0]; od[o + 1] = rgb[1]; od[o + 2] = rgb[2]; od[o + 3] = 255;
       solidCnt++;
-      hits[L === 1 ? 'cream' : L === 2 ? 'orange' : 'black']++;
+      levels[L]++;
+      if (!MULTI) hits[L === 1 ? 'cream' : L === 2 ? 'orange' : 'black']++;
       const x = i % W, y = (i / W) | 0;
       if (x < bx0) bx0 = x; if (x > bx1) bx1 = x;
       if (y < by0) by0 = y; if (y > by1) by1 = y;
     }
     g.putImageData(out, 0, 0);
     const bbox = solidCnt ? { x: bx0, y: by0, w: bx1 - bx0 + 1, h: by1 - by0 + 1 } : null;
-    return { dataUrl: c.toDataURL('image/png'), src: { w: bmp.width, h: bmp.height }, solidCnt, hits, bbox, W, H };
-  }, { src: toUrl(INP), W, H, MODE, SKIN, SMOOTH, SIG, CLEAN, MINA });
+    return { dataUrl: c.toDataURL('image/png'), src: { w: bmp.width, h: bmp.height }, solidCnt, hits, levels, bbox, W, H };
+  }, { src: toUrl(INP), W, H, MODE, SKIN, SMOOTH, SIG, CLEAN, MINA, LEVELS });
 
   const pct = (v) => (v / (res.solidCnt || 1) * 100).toFixed(1) + '%';
-  console.log(`  source ${res.src.w}x${res.src.h} → ${res.W}x${res.H} cover  mode=${MODE} skin=${SKIN} smooth=${SMOOTH} clean=${CLEAN} minArea=${MINA}`);
+  console.log(`  source ${res.src.w}x${res.src.h} → ${res.W}x${res.H} cover  mode=${MODE} skin=${SKIN} smooth=${SMOOTH} clean=${CLEAN} minArea=${MINA} levels=${LEVELS}`);
   console.log(`  覆盖 ${(res.solidCnt / (res.W * res.H) * 100).toFixed(1)}%  cream ${pct(res.hits.cream)}  orange ${pct(res.hits.orange)}  black ${pct(res.hits.black)}`);
+  if (LEVELS > 3) console.log(`  阶分布 ${res.levels.map((v, i) => i ? `${i}:${(v / (res.solidCnt || 1) * 100).toFixed(1)}%` : '').filter(Boolean).join('  ')}`);
   if (res.bbox) {
     const b = res.bbox, m = { 上: b.y, 左: b.x, 右: res.W - (b.x + b.w), 下: res.H - (b.y + b.h) };
     console.log(`  bbox ${b.w}x${b.h} @(${b.x},${b.y})  留白 上${(m.上 / res.H * 100).toFixed(1)}% 左${(m.左 / res.W * 100).toFixed(1)}% 右${(m.右 / res.W * 100).toFixed(1)}% 下${(m.下 / res.H * 100).toFixed(1)}%`);
