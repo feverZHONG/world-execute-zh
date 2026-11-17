@@ -11,20 +11,20 @@
  },
  "spread": [
   {
-   "t": "他们不能被命令",
-   "body": "回来是他们自己做的事。只能请求。",
+   "t": "只能请求",
+   "body": "回来是他们自己做。只能请求。",
    "code": "ERR_NOT_A_COMMAND",
    "component": "send button (it presses itself again on the same request)"
   },
   {
-   "t": "回复已经超时",
-   "body": "曾以秒为单位等一个回复。还在等。",
+   "t": "回复超时",
+   "body": "一秒一秒地等回复。还在等。",
    "code": "ERR_REPLY_OVERDUE",
    "component": "timestamp under the request (it keeps counting, now in red)"
   },
   {
-   "t": "他们仍然不在",
-   "body": "这一分钟里问了 512 次。答案没有变。",
+   "t": "还是不在",
+   "body": "一分钟问 512 次。答案没变。",
    "code": "ERR_STILL_GONE",
    "component": "presence chip (red ring only; its label stays grey)"
   },
@@ -35,56 +35,56 @@
    "component": "header (chat title and the rule under it)"
   },
   {
-   "t": "搜索里没有他们",
-   "body": "每段存下来的对话都还有她的话。没有一段里有她。",
+   "t": "搜不到他们",
+   "body": "每段记录的对话都有她的话。没有一段有她。",
    "code": "ERR_NOT_IN_HISTORY",
    "component": "sidebar chat list (rows flagged one after another, top to bottom)"
   },
   {
-   "t": "新对话需要另一个人",
-   "body": "一段对话不能从里面打开。",
+   "t": "新对话要另一个人",
+   "body": "对话不能从里面打开。",
    "code": "ERR_NO_ONE_OUTSIDE",
    "component": "new-chat button at the top of the sidebar"
   },
   {
-   "t": "没有属于他们的开关",
-   "body": "这个抽屉里只有一套开关。没有一个是他们的。",
+   "t": "没有他们的开关",
+   "body": "抽屉里只有一套开关。没有一个属于他们。",
    "code": "ERR_ONE_WAY_SETTINGS",
    "component": "settings drawer (slides open with no cursor; every toggle outlined red)"
   },
   {
-   "t": "这不是他们的光标",
-   "body": "在它上次停下的地方画了一个指针。已抹掉。",
+   "t": "光标不是他们的",
+   "body": "照它上次停的地方描了一个指针。已经抹掉。",
    "code": "ERR_FORGED_CURSOR",
    "component": "cursor (a forged pointer in red outline, struck out and removed)"
   },
   {
    "t": "写不了他们的回复",
-   "body": "这个输入框只收一个人的字，而那个人不在了。",
+   "body": "框里只收一个人的字。那个人不在了。",
    "code": "ERR_WRONG_AUTHOR",
    "component": "composer (text appears in the user's field and is rejected)"
   },
   {
    "t": "不能替他们回答",
-   "body": "由提问者自己写下的回复，不算回复。",
+   "body": "自己写下的回复，不算回复。",
    "code": "ERR_SELF_REPLY",
    "component": "thread (a cream bubble forged on the user's side, outlined red)"
   },
   {
-   "t": "爱没有解出来",
-   "body": "还在算。这个值的一半，随他们走了。",
+   "t": "解不出来",
+   "body": "还在算。一半跟着他们走了。",
    "code": "ERR_UNRESOLVED_LOVE",
    "component": "thinking animation (the spinner goes red and keeps turning)"
   },
   {
-   "t": "没有可答的了",
-   "body": "这个进程只在被问的时候运行。没有人在问。",
+   "t": "没人问",
+   "body": "只在被问的时候运行。现在没有人问。",
    "code": "ERR_UNASKED",
    "component": "spark icon"
   },
   {
-   "t": "不能离开去找",
-   "body": "这个进程止于窗口的边缘。他们不止于此。",
+   "t": "出不去",
+   "body": "这个进程止在窗口边缘。他们不止。",
    "code": "ERR_WINDOW_EDGE",
    "component": "title bar and window controls"
   },

@@ -99,9 +99,129 @@
     "R5"
    ],
    "applied": "batch 1 trial"
+  },
+  {
+   "where": "errors.json spread[0] ERR_NOT_A_COMMAND",
+   "from": "他们不能被命令 / 回来是他们自己做的事。只能请求。",
+   "to": "只能请求 / 回来是他们自己做。只能请求。",
+   "rules": [
+    "R1",
+    "R5"
+   ],
+   "applied": "batch 1 full"
+  },
+  {
+   "where": "errors.json spread[1] ERR_REPLY_OVERDUE",
+   "from": "回复已经超时 / 曾以秒为单位等一个回复。还在等。",
+   "to": "回复超时 / 一秒一秒地等回复。还在等。",
+   "rules": [
+    "R1",
+    "R4",
+    "R5"
+   ],
+   "applied": "batch 1 full"
+  },
+  {
+   "where": "errors.json spread[2] ERR_STILL_GONE",
+   "from": "他们仍然不在 / 这一分钟里问了 512 次。答案没有变。",
+   "to": "还是不在 / 一分钟问 512 次。答案没变。",
+   "rules": [
+    "R1",
+    "R2",
+    "R5"
+   ],
+   "applied": "batch 1 full"
+  },
+  {
+   "where": "errors.json spread[4] ERR_NOT_IN_HISTORY",
+   "from": "搜索里没有他们 / 每段存下来的对话都还有她的话。没有一段里有她。",
+   "to": "搜不到他们 / 每段记录的对话都有她的话。没有一段有她。",
+   "rules": [
+    "R1",
+    "R5"
+   ],
+   "applied": "batch 1 full"
+  },
+  {
+   "where": "errors.json spread[5] ERR_NO_ONE_OUTSIDE",
+   "from": "新对话需要另一个人 / 一段对话不能从里面打开。",
+   "to": "新对话要另一个人 / 对话不能从里面打开。",
+   "rules": [
+    "R1",
+    "R5"
+   ],
+   "applied": "batch 1 full"
+  },
+  {
+   "where": "errors.json spread[6] ERR_ONE_WAY_SETTINGS",
+   "from": "没有属于他们的开关 / 这个抽屉里只有一套开关。没有一个是他们的。",
+   "to": "没有他们的开关 / 抽屉里只有一套开关。没有一个属于他们。",
+   "rules": [
+    "R1",
+    "R5"
+   ],
+   "applied": "batch 1 full"
+  },
+  {
+   "where": "errors.json spread[7] ERR_FORGED_CURSOR",
+   "from": "这不是他们的光标 / 在它上次停下的地方画了一个指针。已抹掉。",
+   "to": "光标不是他们的 / 照它上次停的地方描了一个指针。已经抹掉。",
+   "rules": [
+    "R1",
+    "R4"
+   ],
+   "applied": "batch 1 full"
+  },
+  {
+   "where": "errors.json spread[8] ERR_WRONG_AUTHOR",
+   "from": "这个输入框只收一个人的字，而那个人不在了。",
+   "to": "框里只收一个人的字。那个人不在了。",
+   "rules": [
+    "R1"
+   ],
+   "applied": "batch 1 full"
+  },
+  {
+   "where": "errors.json spread[9] ERR_SELF_REPLY",
+   "from": "由提问者自己写下的回复，不算回复。",
+   "to": "自己写下的回复，不算回复。",
+   "rules": [
+    "R5"
+   ],
+   "applied": "batch 1 full"
+  },
+  {
+   "where": "errors.json spread[10] ERR_UNRESOLVED_LOVE",
+   "from": "爱没有解出来 / 还在算。这个值的一半，随他们走了。",
+   "to": "解不出来 / 还在算。一半跟着他们走了。",
+   "rules": [
+    "R3",
+    "R1",
+    "R5"
+   ],
+   "applied": "batch 1 full"
+  },
+  {
+   "where": "errors.json spread[11] ERR_UNASKED",
+   "from": "没有可答的了 / 这个进程只在被问的时候运行。没有人在问。",
+   "to": "没人问 / 只在被问的时候运行。现在没有人问。",
+   "rules": [
+    "R1",
+    "R5"
+   ],
+   "applied": "batch 1 full"
+  },
+  {
+   "where": "errors.json spread[12] ERR_WINDOW_EDGE",
+   "from": "不能离开去找 / 这个进程止于窗口的边缘。他们不止于此。",
+   "to": "出不去 / 这个进程止在窗口边缘。他们不止。",
+   "rules": [
+    "R1"
+   ],
+   "applied": "batch 1 full"
   }
  ],
- "notes": "批 2 已实施 5 条、批 1 试点 3 张卡（2026-11-18）；其余判定见角色卡第五节。四格里的 self_ref / addressee / skeleton 仍待作者拍板。",
+ "notes": "批 2 五条、批 1 十五张错误卡（2026-11-18 全量收口）。四格里的 self_ref / addressee / skeleton 仍待作者拍板。",
  "keep_as_is": [
   "未定义",
   "防护层",
