@@ -203,7 +203,7 @@ export function errorShots(env) {
     }
     if (thread && t >= tSend) {
       const over = Math.floor(t - T(83) - 5), two = (v) => String(v).padStart(2, '0'), a = prog(t, tSend, tSend + 0.2);     // same clock as the outro reads later
-      const str = over < 0 ? '已发送 · 等待回复' : `超时 ${two(Math.floor(over / 3600))}:${two(Math.floor(over / 60) % 60)}:${two(over % 60)}`;
+      const str = over < 0 ? '发过了 · 在等' : `超时 ${two(Math.floor(over / 3600))}:${two(Math.floor(over / 60) % 60)}:${two(over % 60)}`;
       ctx.glow(ERR, 8, () => ctx.text(str, G.stamp[0], G.stamp[1], { size: 17, font: 'mono', color: up(1) ? ERR : 'mute', alpha: a }), up(1) ? 0.5 : 0);
     }
     const te = enter(t, S0 + P, 0, { dur: 0.3 });

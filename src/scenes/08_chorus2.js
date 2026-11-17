@@ -360,8 +360,8 @@ export function chorus2Shots(env) {
         ctx.text(BRB, 1846 - bw + 28, 141, { size: 32 });
         ctx.text(BRB_AT, 1840, 198, { size: 21, weight: 500, color: 'sub', align: 'right' });
         chip(ctx, 1846, 992, 'online', { size: 22 });
-        ctx.text('输入已接收', 74, 968, { size: 24, font: 'mono', color: 'sub' });
-        ctx.text('可以回答', 74, 1004, { size: 24, font: 'mono', color: 'sub' });
+        ctx.text('收到了', 74, 968, { size: 24, font: 'mono', color: 'sub' });
+        ctx.text('能答了', 74, 1004, { size: 24, font: 'mono', color: 'sub' });
         ctx.flash(0.2 * pulse(age, 10), 'me');
       },
     },

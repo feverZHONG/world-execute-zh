@@ -1,63 +1,95 @@
 {
-  "id": "gao_naliya",
-  "name": "高奈利亚",
-  "card": "二次创作/说明/角色/高奈利亚.md",
-  "self_ref": null,
-  "addressee": null,
-  "tone": {
-   "flat": "不解释，只报状态",
-   "holding": "报状态时带上她正在做的事",
-   "over": "只用于超时/溢出这类她被逼到边界的地方"
+ "id": "gao_naliya",
+ "name": "高奈利亚",
+ "card": "二次创作/说明/角色/高奈利亚.md",
+ "self_ref": null,
+ "addressee": null,
+ "tone": {
+  "flat": "不解释，只报状态",
+  "holding": "报状态时带上她正在做的事",
+  "over": "只用于超时/溢出这类她被逼到边界的地方"
+ },
+ "max_len": 18,
+ "punct": {
+  "fullwidth": true,
+  "final_period": false,
+  "exclaim": false,
+  "ellipsis": false
+ },
+ "num_rule": "数字写阿拉伯数字，不写约数",
+ "ban": [
+  "爱",
+  "想",
+  "其实",
+  "大概",
+  "可能",
+  "你好",
+  "我是"
+ ],
+ "swap": {},
+ "skeleton": [],
+ "samples": [
+  {
+   "where": "04_pre1 (JSON vision-off)",
+   "from": "图像输入：无",
+   "to": "看不见",
+   "rules": [
+    "R1",
+    "R6"
+   ],
+   "applied": "2026-11-18 batch 2"
   },
-  "max_len": 18,
-  "punct": {
-   "fullwidth": true,
-   "final_period": false,
-   "exclaim": false,
-   "ellipsis": false
+  {
+   "where": "08_chorus2.js:363-364",
+   "from": "输入已接收 / 可以回答",
+   "to": "收到了 / 能答了",
+   "rules": [
+    "R1",
+    "R6"
+   ],
+   "applied": "2026-11-18 batch 2"
   },
-  "num_rule": "数字写阿拉伯数字，不写约数",
-  "ban": [
-   "爱",
-   "想",
-   "其实",
-   "大概",
-   "可能",
-   "你好",
-   "我是"
-  ],
-  "swap": {},
-  "skeleton": [],
-  "samples": [
-   {
-    "where": "13_shutdown system",
-    "from": "剩余部件：4",
-    "to": "还剩 4 件",
-    "rules": [
-     "R1",
-     "R2",
-     "R4"
-    ]
-   },
-   {
-    "where": "04_pre1 hardcoded",
-    "from": "图像输入：无",
-    "to": "看不见",
-    "rules": [
-     "R1",
-     "R6"
-    ]
-   },
-   {
-    "where": "errors.json ERR_LOVE_OVERFLOW",
-    "from": "感情超出了窗口 / 申报尺寸：一个对话窗口。实际尺寸还在长。",
-    "to": "超出窗口 / 报的是一个窗口，现在不止",
-    "rules": [
-     "R3",
-     "R1",
-     "R5"
-    ]
-   }
-  ],
-  "notes": "四格里的 self_ref / addressee / skeleton 待作者拍板；ban 与 R6/R7 已由角色卡定案。"
+  {
+   "where": "10_error.js:206",
+   "from": "已发送 · 等待回复",
+   "to": "发过了 · 在等",
+   "rules": [
+    "R1"
+   ],
+   "applied": "2026-11-18 batch 2"
+  },
+  {
+   "where": "01_boot.js:167 status pill",
+   "from": "· 就绪",
+   "to": "· 待命",
+   "rules": [
+    "R1",
+    "R2"
+   ],
+   "applied": "2026-11-18 batch 2"
+  },
+  {
+   "where": "errors.json ERR_LOVE_OVERFLOW (batch 1, pending)",
+   "from": "感情超出了窗口 / 申报尺寸：一个对话窗口。实际尺寸还在长。",
+   "to": "超出窗口 / 报的是一个窗口，现在不止",
+   "rules": [
+    "R3",
+    "R1",
+    "R5"
+   ],
+   "applied": null
+  }
+ ],
+ "notes": "四格里的 self_ref / addressee / skeleton 待作者拍板；ban 与 R6/R7 已由角色卡定案。批 2 已实施 5 条（2026-11-18），其余 7 条判定不改，理由见角色卡第五节。",
+ "keep_as_is": [
+  "未定义",
+  "防护层",
+  "已记录",
+  "没有开关",
+  "不是她写的",
+  "超时 hh:mm:ss",
+  "最后一条消息：未读",
+  "N 条消息",
+  "循环：开"
+ ]
 }

@@ -164,7 +164,7 @@ export function bootShots(env) {
         spark(ctx, cx, cy - 20 + e.dy, 84, { lit: 0, off: 'mute', offAlpha: 0.9, alpha: e.a, rot: 0.08 * (t - B(6)) });
         const c2 = enter(t, B(6) + 2 * P, 0, { dur: 0.45 });
         composer(ctx, { ...L.composer, y: 610 + c2.dy }, { placeholder: script.composer_placeholder ?? '', t, k: c2.raw, send: 'off' });
-        if (sim > 0) pill(ctx, L.head.x + L.head.w - 34, L.head.y + 34, `${text(10).toLowerCase()} · 就绪`, { align: 'right', font: 'mono', size: 17, alpha: sim, color: 'text' });
+        if (sim > 0) pill(ctx, L.head.x + L.head.w - 34, L.head.y + 34, `${text(10).toLowerCase()} · 待命`, { align: 'right', font: 'mono', size: 17, alpha: sim, color: 'text' });
         ctx.camera();
         keyBand(ctx, t, 10, 925);
       },
