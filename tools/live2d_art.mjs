@@ -92,12 +92,15 @@ try {
     const KEY = +arg('keyline', 6);                            // 黑边宽度（输出 px），0 关闭
     const BLOCK = +arg('block', 1);                            // 降采样格：>1 只取形体（细节被平均掉）
     const SKIN = arg('skin', 'cream');                          // 皮肤走哪一墨：cream（默认）/ black（贴近原片无脸设计）
+    const FACELESS = has('faceless');                           // 去五官：把头部里被皮肤包住的封闭块（眉/眼/鼻影/嘴）填成皮肤墨
+    const FACEH = +arg('face-h', 0.45);                         // 去五官时作用的头部高度占比（从图顶算）
+    const ERASE = arg('erase', '');                             // 手工抹除：输出像素 "x,y,w,h"（多块用 ; 分隔），填成皮肤墨
     const dst = outPath(arg('out', dry ? 'out/_ink_dry.png' : 'out/ink.png'));
 
     const page = await browser.newPage({ viewport: { width: 600, height: 400 } });
     page.on('console', (m) => { if (m.type() === 'error') console.log('[page]', m.text()); });
     await page.goto(`${url}/tools/probe.html`);
-    const res = await page.evaluate(async ({ src, W, H, crop, CLEAN, KEY, BLOCK, SKIN }) => {
+    const res = await page.evaluate(async ({ src, W, H, crop, CLEAN, KEY, BLOCK, SKIN, FACELESS, FACEH, ERASE }) => {
       const bmp = await createImageBitmap(await (await fetch(src)).blob());
       const sw = bmp.width, sh = bmp.height;
       const rect = crop ? crop.split(',').map(Number) : [0, 0, sw, sh];
@@ -190,6 +193,48 @@ try {
         }
         lab2 = to;
       }
+      // 去五官（--faceless）：片子要的是"无脸"剪影，而模型天生有眉、眼、鼻影、嘴，
+      // 这些小块都被皮肤包住 —— 标准补洞：从 ROI 边界泛洪非皮肤像素，只留在外面；
+      // 到不了外面的非皮肤实心块就是"洞"，一律填成皮肤墨。
+      if (FACELESS) {
+        const SKINFILL = SKIN === 'black' ? 3 : 1;
+        const roiH = Math.max(2, Math.min(H, Math.round(H * FACEH)));
+        const reach = new Uint8Array(W * roiH);
+        const stack = new Int32Array(W * roiH); let sp = 0;
+        const push = (i) => { if (!reach[i]) { reach[i] = 1; stack[sp++] = i; } };
+        for (let x = 0; x < W; x++) { push(x); push((roiH - 1) * W + x); }
+        for (let y = 0; y < roiH; y++) { push(y * W); push(y * W + W - 1); }
+        while (sp > 0) {
+          const i = stack[--sp], x = i % W, y = (i - x) / W;
+          if (x > 0 && lab2[i - 1] !== 1 && !reach[i - 1]) { reach[i - 1] = 1; stack[sp++] = i - 1; }
+          if (x < W - 1 && lab2[i + 1] !== 1 && !reach[i + 1]) { reach[i + 1] = 1; stack[sp++] = i + 1; }
+          if (y > 0 && lab2[i - W] !== 1 && !reach[i - W]) { reach[i - W] = 1; stack[sp++] = i - W; }
+          if (y < roiH - 1 && lab2[i + W] !== 1 && !reach[i + W]) { reach[i + W] = 1; stack[sp++] = i + W; }
+        }
+        for (let i = 0; i < W * roiH; i++) if (lab2[i] !== 0 && lab2[i] !== 1 && !reach[i]) lab2[i] = SKINFILL;
+      }
+      // 手工抹除（--erase）：脸上的五官不是"洞"（头发压着脸，泛洪穿过去了），
+      // 那就给一条确定的出口 —— 由人给框，工具只负责按框填成皮肤墨。
+      if (ERASE) {
+        const SKINFILL = SKIN === 'black' ? 3 : 1;
+        for (const seg of ERASE.split(';')) {
+          const [ex, ey, ew, eh] = seg.split(',').map(Number);
+          if (![ex, ey, ew, eh].every((v) => Number.isFinite(v))) continue;
+          const x0 = Math.max(0, Math.round(ex)), y0 = Math.max(0, Math.round(ey));
+          const x1 = Math.min(W - 1, Math.round(ex + ew)), y1 = Math.min(H - 1, Math.round(ey + eh));
+          for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
+            const i = y * W + x;
+            if (lab2[i] !== 0) lab2[i] = SKINFILL;
+          }
+          // 框里的透明小洞也要堵上（只堵左右有实心像素的），否则后面的 blackline 会把洞边勾成黑点
+          for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
+            const i = y * W + x;
+            if (lab2[i] !== 0) continue;
+            const l = x > x0 && lab2[i - 1] !== 0, r = x < x1 && lab2[i + 1] !== 0;
+            if (l || r) lab2[i] = SKINFILL;
+          }
+        }
+      }
       // 黑边：把贴着实心外缘的一圈（KEY px）改成黑，补回原图那种墨线勾边
       if (KEY > 0) {
         let edge = new Uint8Array(W * H);
@@ -218,7 +263,7 @@ try {
       g.putImageData(new ImageData(px, W, H), 0, 0);
       const bbox = solid ? { x: bx0, y: by0, w: bx1 - bx0 + 1, h: by1 - by0 + 1 } : null;
       return { dataUrl: c.toDataURL('image/png'), src: { w: sw, h: sh }, solid, hits, bbox };
-    }, { src: toUrl(path.resolve(inp)), W, H, crop, CLEAN, KEY, BLOCK, SKIN });
+    }, { src: toUrl(path.resolve(inp)), W, H, crop, CLEAN, KEY, BLOCK, SKIN, FACELESS, FACEH, ERASE });
 
     if (res.bbox) {
       const m = { top: res.bbox.y, left: res.bbox.x, right: W - (res.bbox.x + res.bbox.w), bottom: H - (res.bbox.y + res.bbox.h) };
