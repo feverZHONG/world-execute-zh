@@ -169,7 +169,7 @@ export function livePlates(ctx, art, name, dst, t, { m = 12, kicks = [], pop = 1
 }
 
 /** What the loop writes, without end: the listing of loop.js with its line numbers, and after each pass the round it has reached. */
-const TRACE = [...LOOP.map((l, i) => ({ str: `${String(i + 1).padStart(2, '0')}  ${l}`, role: i === 6 ? 'meDim' : 'me' })), { str: 'round 12 / 12   replies 0', role: 'meHot' }, { str: '', role: 'me' }];
+const TRACE = [...LOOP.map((l, i) => ({ str: `${String(i + 1).padStart(2, '0')}  ${l}`, role: i === 6 ? 'meDim' : 'me' })), { str: '第 12 轮 / 共 12 轮   回复 0', role: 'meHot' }, { str: '', role: 'me' }];
 export const traceRow = (j) => TRACE[((j % TRACE.length) + TRACE.length) % TRACE.length];
 /**
  * HER BLACK INK IS A SCREEN. Rows of mono type run up it without a break, cut to the black plate of the figure where

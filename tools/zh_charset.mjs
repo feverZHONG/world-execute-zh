@@ -21,7 +21,8 @@ const CHECK = process.argv.includes('--check');
 const isCJK = (ch) => {
   const c = ch.codePointAt(0);
   return (c >= 0x3400 && c <= 0x4dbf) || (c >= 0x4e00 && c <= 0x9fff) || (c >= 0xf900 && c <= 0xfaff)
-    || (c >= 0x3000 && c <= 0x303f) || (c >= 0xff00 && c <= 0xff6f) || (c >= 0xfe10 && c <= 0xfe19);
+    || (c >= 0x3000 && c <= 0x303f) || (c >= 0xff00 && c <= 0xff6f) || (c >= 0xfe10 && c <= 0xfe19)
+    || c === 0x3c0 || c === 0xd7;                    // π, ×：数学记号，随中文角色一起预载
 };
 
 const files = ['docs/v4/chat_script.json', 'docs/v4/errors.json', 'docs/v4/lyrics.json'];

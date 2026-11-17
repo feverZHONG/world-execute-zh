@@ -184,12 +184,14 @@ export function plateTest(ctx, env, P) {
   });
   // the tally at the foot of the sheet, in the system's hand; every pass counts the answers again
   if (pass) {
-    const n = again >= 0 ? Math.min(asked.length, Math.floor(again / 0.022)) : asked.length, size = 50, cw = ctx.cw(size), y = 1046;
+    const n = again >= 0 ? Math.min(asked.length, Math.floor(again / 0.022)) : asked.length, size = 50, cw = ctx.cw(size), y = 1046, mo = { size, font: 'mono' };
+    const lab1 = '回答：', lab2 = '不同：';
     strip(ctx, 978, { rule: 'me' });
-    ctx.text('answers:', X, y, { size, font: 'mono', color: 'sub' });
-    ctx.text(String(n), X + 9 * cw, y, { size, font: 'mono', weight: 800, color: 'meHot' });
-    ctx.text('distinct:', X + 13 * cw, y, { size, font: 'mono', color: 'sub' });
-    ctx.text('1', X + 23 * cw, y, { size, font: 'mono', weight: 800, color: 'meHot' });
+    ctx.text(lab1, X, y, { ...mo, color: 'sub' });
+    ctx.text(String(n), X + ctx.measure(lab1, mo), y, { ...mo, weight: 800, color: 'meHot' });
+    const x2 = X + ctx.measure(lab1 + n + '  ', mo);
+    ctx.text(lab2, x2, y, { ...mo, color: 'sub' });
+    ctx.text('1', x2 + ctx.measure(lab2, mo), y, { ...mo, weight: 800, color: 'meHot' });
   }
   marks(ctx, { color: 'mute', target: false });
 }
@@ -245,7 +247,7 @@ export function plateFormula(ctx, env, P) {
   ctx.text(EQ.slice(0, n), XL, 392, { size: 40, weight: 700, font: 'mono', color: 'me' });
   if (kk > 0) {
     ctx.text(`x = ${sgn(hx)}   y = ${sgn(hy)}`, XL, 456, { size: 30, font: 'mono', color: 'sub' });
-    ctx.text(`point ${String(Math.min(HEART_N, i + 1)).padStart(3, ' ')} of ${HEART_N}`, XL, 506, { size: 30, font: 'mono', color: 'mute' });
+    ctx.text(`第 ${Math.min(HEART_N, i + 1)} 点 / 共 ${HEART_N} 点`, XL, 506, { size: 30, font: 'mono', color: 'mute' });
   }
   if (pass) foot(ctx, word, t, at, { maxW: WORD_W.formula, m, tear });
   marks(ctx, { color: 'mute' });
@@ -253,14 +255,14 @@ export function plateFormula(ctx, env, P) {
 
 /** The request the client refused (the error section), as one line of code with the client's red marks; struck = she lets it go. */
 function request(ctx, env, x, y, { size = 38, strike = 0, alpha = 1 } = {}) {
-  const REQ = env.errors.illegal_request?.code ?? '', cw = ctx.cw(size), w = REQ.length * cw, done = strike >= 1, red = done ? 'mute' : 'err', small = size * 0.66;
+  const REQ = env.errors.illegal_request?.code ?? '', mo = { size, font: 'mono' }, w = ctx.measure(REQ, mo), done = strike >= 1, red = done ? 'mute' : 'err', small = size * 0.66;
   if (!(alpha > 0.003) || !REQ) return;
   ctx.rect(x - 40, y - size * 2.5, w + 76, size * 3.34, { fill: true, color: 'panel', alpha });                  // its slip of paper
   ctx.rect(x - 40, y - size * 2.5, 6, size * 3.34, { fill: true, color: red, alpha });
-  ctx.text('request', x, y - size * 1.5, { size: small, font: 'mono', color: 'mute', alpha });
-  ctx.text(done ? 'withdrawn' : 'refused', x + 8 * ctx.cw(small), y - size * 1.5, { size: small, font: 'mono', weight: 700, color: done ? 'sub' : red, alpha });
+  ctx.text('请求', x, y - size * 1.5, { size: small, font: 'mono', color: 'mute', alpha });
+  ctx.text(done ? '已撤回' : '被拒', x + ctx.measure('请求' + '  ', { size: small, font: 'mono' }), y - size * 1.5, { size: small, font: 'mono', weight: 700, color: done ? 'sub' : red, alpha });
   codeLine(ctx, REQ, x, y, { size, alpha, force: done ? 'sub' : null });
-  for (const arg of ['you', '"online"']) { const i = REQ.indexOf(arg); if (i >= 0) ctx.rect(x + i * cw, y + size * 0.26, arg.length * cw, 3, { fill: true, color: red, alpha }); }
+  for (const arg of ['你', '"在线"']) { const i = REQ.indexOf(arg); if (i >= 0) { const xa = x + ctx.measure(REQ.slice(0, i), mo); ctx.rect(xa, y + size * 0.26, ctx.measure(arg, mo), 3, { fill: true, color: red, alpha }); } }
   if (strike > 0) ctx.rect(x - 10, y - size * 0.38, (w + 20) * clamp(strike), 7, { fill: true, color: 'me', alpha });      // her own line through it
 }
 

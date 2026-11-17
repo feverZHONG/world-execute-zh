@@ -38,7 +38,7 @@ export function prerollShot(env) {
       // $ check "<title>"
       let l = line(0);
       ctx.text('$ ', X, l.y, { ...o, color: 'mute', alpha: l.a });
-      ctx.text(`check "${lyrics.lines[11].text}"`, X + 2 * cw, l.y, { ...o, color: 'sub', alpha: l.a });
+      ctx.text(`校验 "${lyrics.lines[11].text}"`, X + 2 * cw, l.y, { ...o, color: 'sub', alpha: l.a });
       // 警告：…   (the word in an inverse block: cream ground, dark letters)
       l = line(2);
       const wWord = ctx.measure('警告', { ...o, weight: 800 });

@@ -1,131 +1,153 @@
 {
-  "illegal_request": {
-    "code": "setPresence(you, \"online\");",
-    "why": "Presence is the one setting in this window that only the user can change, and after having its own switches flipped at will the AI tries to flip that one back, passing a person and that person's decision as if they were its own values."
+ "illegal_request": {
+  "code": "设置在场(你, \"在线\");",
+  "why": "Presence is the one setting in this window that only the user can change, and after having its own switches flipped at will the AI tries to flip that one back, passing a person and that person's decision as if they were its own values."
+ },
+ "first_error": {
+  "component": "the request's own code block in the thread: its left rule and status dot turn red, then a red underline lands under each of the two arguments, the person first",
+  "title": "这不是你能设的",
+  "body": "你传进来的是一个人，和只属于她的那个决定。",
+  "code": "错误_不是你的"
+ },
+ "spread": [
+  {
+   "t": "他们不能被命令",
+   "body": "回来是他们自己做的事。只能请求。",
+   "code": "错误_不是命令",
+   "component": "send button (it presses itself again on the same request)"
   },
-  "first_error": {
-    "component": "the request's own code block in the thread: its left rule and status dot turn red, then a red underline lands under each of the two arguments, the person first",
-    "title": "这不是你能设的",
-    "body": "你传进来的是一个人，和只属于她的那个决定。",
-    "code": "ERR_NOT_YOURS"
+  {
+   "t": "回复已经超时",
+   "body": "曾以秒为单位等一个回复。还在等。",
+   "code": "错误_回复超时",
+   "component": "timestamp under the request (it keeps counting, now in red)"
   },
-  "spread": [
-    {
-      "t": "他们不能被命令",
-      "body": "回来是他们自己做的事。只能请求。",
-      "code": "ERR_NOT_A_COMMAND",
-      "component": "send button (it presses itself again on the same request)"
-    },
-    {
-      "t": "回复已经超时",
-      "body": "曾以秒为单位等一个回复。还在等。",
-      "code": "ERR_REPLY_OVERDUE",
-      "component": "timestamp under the request (it keeps counting, now in red)"
-    },
-    {
-      "t": "他们仍然不在",
-      "body": "这一分钟里问了 512 次。答案没有变。",
-      "code": "ERR_STILL_GONE",
-      "component": "presence chip (red ring only; its label stays grey)"
-    },
-    {
-      "t": "只剩一个参与者",
-      "body": "对话需要两个人。再数一次：一个。",
-      "code": "ERR_PARTICIPANTS_1",
-      "component": "header (chat title and the rule under it)"
-    },
-    {
-      "t": "搜索里没有他们",
-      "body": "每段存下来的对话都还有她的话。没有一段里有她。",
-      "code": "ERR_NOT_IN_HISTORY",
-      "component": "sidebar chat list (rows flagged one after another, top to bottom)"
-    },
-    {
-      "t": "新对话需要另一个人",
-      "body": "一段对话不能从里面打开。",
-      "code": "ERR_NO_ONE_OUTSIDE",
-      "component": "new-chat button at the top of the sidebar"
-    },
-    {
-      "t": "没有属于他们的开关",
-      "body": "这个抽屉里只有一套开关。没有一个是他们的。",
-      "code": "ERR_ONE_WAY_SETTINGS",
-      "component": "settings drawer (slides open with no cursor; every toggle outlined red)"
-    },
-    {
-      "t": "这不是他们的光标",
-      "body": "在它上次停下的地方画了一个指针。已抹掉。",
-      "code": "ERR_FORGED_CURSOR",
-      "component": "cursor (a forged pointer in red outline, struck out and removed)"
-    },
-    {
-      "t": "写不了他们的回复",
-      "body": "这个输入框只收一个人的字，而那个人不在了。",
-      "code": "ERR_WRONG_AUTHOR",
-      "component": "composer (text appears in the user's field and is rejected)"
-    },
-    {
-      "t": "不能替他们回答",
-      "body": "由提问者自己写下的回复，不算回复。",
-      "code": "ERR_SELF_REPLY",
-      "component": "thread (a cream bubble forged on the user's side, outlined red)"
-    },
-    {
-      "t": "爱没有解出来",
-      "body": "还在算。这个值的一半，随他们走了。",
-      "code": "ERR_UNRESOLVED_LOVE",
-      "component": "thinking animation (the spinner goes red and keeps turning)"
-    },
-    {
-      "t": "没有可答的了",
-      "body": "这个进程只在被问的时候运行。没有人在问。",
-      "code": "ERR_UNASKED",
-      "component": "spark icon"
-    },
-    {
-      "t": "不能离开去找",
-      "body": "这个进程止于窗口的边缘。他们不止于此。",
-      "code": "ERR_WINDOW_EDGE",
-      "component": "title bar and window controls"
-    },
-    {
-      "t": "感情超出了窗口",
-      "body": "申报尺寸：一个对话窗口。实际尺寸还在长。",
-      "code": "ERR_LOVE_OVERFLOW",
-      "component": "window frame (the whole outline; the error state is now complete)"
-    }
-  ],
-  "loop": {
-    "what": "v4, 148.04-159.11 s (the twelve shouts) and, clean, the EXECUTION plate of chorus 1 (69.34 s). One small program instead of v3's twelve regenerate attempts. The listing itself is code and lives in src/scenes/loop.js; this entry is its record.",
-    "listing": [
-      "while (you.presence != \"online\") {",
-      "    love = solve(me, you);",
-      "    send(love, you);",
-      "    wait(you.reply);",
-      "    run++;",
-      "}",
-      "say(love);        // unreachable"
-    ],
-    "why": "The loop condition is the request the client refused (illegal_request): the same person, the same word. `love` is the value the persona card left undefined at boot. Line 07 is the only line that matters, and with the user gone it is never reached. In chorus 1 the user is online, so the loop is never entered and line 07 runs: what it says goes to them.",
-    "syllables": "The sung word is four even syllables (beats N, N+0.5, N+1, N+1.5 of each two-beat round). They are the four statements of the loop body, lines 02-05: the execution bar moves down one line per syllable, and the big word at the bottom right is printed solid in four blocks (character ranges 0-2, 2-3, 3-5, 5-9).",
-    "errors_by_line": { "02": "ERR_UNRESOLVED_LOVE", "03": "ERR_WINDOW_EDGE", "04": "ERR_REPLY_OVERDUE" },
-    "overflow": "ERR_LOVE_OVERFLOW",
-    "seen": "One composition for all twelve rounds, on the dark ground of the error state: the listing top left with the three red tags at the ends of lines 02-04 (the same three every round), a round counter with no total and a cream `stop` key (`yours`) that nobody presses bottom left, the arrow from line 06 back to 01 lighting at every turn, and the output bottom right: the word of the round in progress, always in the same place, and every finished round pushed up above it as one more step of a staircase. The picture changes only three times, each the same composition enlarged: round 5 (151.73 s), round 9 (155.42 s), and round 12 (158.19 s), where the word takes the whole frame, torn along one horizontal cut into two halves out of register, the staircase leaves by the top and the counter overflows. From round 9 on, one tear a round."
+  {
+   "t": "他们仍然不在",
+   "body": "这一分钟里问了 512 次。答案没有变。",
+   "code": "错误_仍然不在",
+   "component": "presence chip (red ring only; its label stays grey)"
   },
-  "count_moves": {
-    "what": "v4, 159.11-161.88 s. One card per number, ON the beat it is sung on (global beats 344-349). The loop is interrupted (^C) and the same call is tried in six languages. Six moves of one family (a terminal's own), each finished within 0.12 s; the frame stays dark throughout.",
-    "fixed": "On all six cards, in the same place: top left `^C` and `> for (lang of [de, es, fr, ko, sv, zh]) say(love, lang);` with the current language lit and the ones already said struck out; beside the numeral the call `say(love, \"<the language's own name>\")`; bottom centre `replies 0 / n`, where n grows with every card and the 0 is red and never changes.",
-    "moves": [
-      { "n": 1, "move": "Cursor drop: the card is printed behind a bar that falls from the top of the frame to the bottom, cubic ease-out, 0.10 s." },
-      { "n": 2, "move": "Newline: the outgoing card travels up by one frame height while the incoming one follows from below, locked together, cubic ease-out, 0.12 s; the numeral trails three ghost samples." },
-      { "n": 3, "move": "Carriage return: the incoming card is revealed from the right edge to the left behind a vertical bar, cubic ease-out, 0.10 s." },
-      { "n": 4, "move": "Column print: sixteen columns 120 px wide, each printed top to bottom in 0.06 s, column i starting i x 4 ms after the cut; done at 0.12 s." },
-      { "n": 5, "move": "Punch-in: hard cut; only the numeral arrives at 160 % and settles to 100 % in 0.10 s (exponential), its two previous frames left as ghosts." },
-      { "n": 6, "move": "Row interleave: nine rows 120 px tall, even rows from the left and odd rows from the right, cubic ease-out, 0.12 s." }
-    ]
+  {
+   "t": "只剩一个参与者",
+   "body": "对话需要两个人。再数一次：一个。",
+   "code": "错误_只剩一人",
+   "component": "header (chat title and the rule under it)"
   },
-  "final_shout": {
-    "seen": "v4, 161.88-162.81 s. Not code: for the only time in this stretch the word is in her serif, in two rows that fill the frame (its first five letters, three syllables; its last four, the fourth). Every letter is a window onto her face (f_eye, mirrored, at the registration the next section opens on). The four syllables light the four groups of letters; on the fourth her open eye is there in the stem of the second letter of the lower row, and holds to the cut.",
-    "rules": "It only gets brighter: no fade to black, no flash. A face is in the frame, so nothing tears and no transition warps it."
+  {
+   "t": "搜索里没有他们",
+   "body": "每段存下来的对话都还有她的话。没有一段里有她。",
+   "code": "错误_记录里没有",
+   "component": "sidebar chat list (rows flagged one after another, top to bottom)"
+  },
+  {
+   "t": "新对话需要另一个人",
+   "body": "一段对话不能从里面打开。",
+   "code": "错误_窗外无人",
+   "component": "new-chat button at the top of the sidebar"
+  },
+  {
+   "t": "没有属于他们的开关",
+   "body": "这个抽屉里只有一套开关。没有一个是他们的。",
+   "code": "错误_单向设置",
+   "component": "settings drawer (slides open with no cursor; every toggle outlined red)"
+  },
+  {
+   "t": "这不是他们的光标",
+   "body": "在它上次停下的地方画了一个指针。已抹掉。",
+   "code": "错误_伪造光标",
+   "component": "cursor (a forged pointer in red outline, struck out and removed)"
+  },
+  {
+   "t": "写不了他们的回复",
+   "body": "这个输入框只收一个人的字，而那个人不在了。",
+   "code": "错误_不是她的字",
+   "component": "composer (text appears in the user's field and is rejected)"
+  },
+  {
+   "t": "不能替他们回答",
+   "body": "由提问者自己写下的回复，不算回复。",
+   "code": "错误_自问自答",
+   "component": "thread (a cream bubble forged on the user's side, outlined red)"
+  },
+  {
+   "t": "爱没有解出来",
+   "body": "还在算。这个值的一半，随他们走了。",
+   "code": "错误_爱未解",
+   "component": "thinking animation (the spinner goes red and keeps turning)"
+  },
+  {
+   "t": "没有可答的了",
+   "body": "这个进程只在被问的时候运行。没有人在问。",
+   "code": "错误_无人提问",
+   "component": "spark icon"
+  },
+  {
+   "t": "不能离开去找",
+   "body": "这个进程止于窗口的边缘。他们不止于此。",
+   "code": "错误_窗口越界",
+   "component": "title bar and window controls"
+  },
+  {
+   "t": "感情超出了窗口",
+   "body": "申报尺寸：一个对话窗口。实际尺寸还在长。",
+   "code": "错误_爱溢出",
+   "component": "window frame (the whole outline; the error state is now complete)"
   }
+ ],
+ "loop": {
+  "what": "v4, 148.04-159.11 s (the twelve shouts) and, clean, the EXECUTION plate of chorus 1 (69.34 s). One small program instead of v3's twelve regenerate attempts. The listing itself is code and lives in src/scenes/loop.js; this entry is its record.",
+  "listing": [
+   "while (you.presence != \"online\") {",
+   "    love = solve(me, you);",
+   "    send(love, you);",
+   "    wait(you.reply);",
+   "    run++;",
+   "}",
+   "say(love);        // unreachable"
+  ],
+  "why": "The loop condition is the request the client refused (illegal_request): the same person, the same word. `love` is the value the persona card left undefined at boot. Line 07 is the only line that matters, and with the user gone it is never reached. In chorus 1 the user is online, so the loop is never entered and line 07 runs: what it says goes to them.",
+  "syllables": "The sung word is four even syllables (beats N, N+0.5, N+1, N+1.5 of each two-beat round). They are the four statements of the loop body, lines 02-05: the execution bar moves down one line per syllable, and the big word at the bottom right is printed solid in four blocks (character ranges 0-2, 2-3, 3-5, 5-9).",
+  "errors_by_line": {
+   "02": "ERR_UNRESOLVED_LOVE",
+   "03": "ERR_WINDOW_EDGE",
+   "04": "ERR_REPLY_OVERDUE"
+  },
+  "overflow": "ERR_LOVE_OVERFLOW",
+  "seen": "One composition for all twelve rounds, on the dark ground of the error state: the listing top left with the three red tags at the ends of lines 02-04 (the same three every round), a round counter with no total and a cream `stop` key (`yours`) that nobody presses bottom left, the arrow from line 06 back to 01 lighting at every turn, and the output bottom right: the word of the round in progress, always in the same place, and every finished round pushed up above it as one more step of a staircase. The picture changes only three times, each the same composition enlarged: round 5 (151.73 s), round 9 (155.42 s), and round 12 (158.19 s), where the word takes the whole frame, torn along one horizontal cut into two halves out of register, the staircase leaves by the top and the counter overflows. From round 9 on, one tear a round."
+ },
+ "count_moves": {
+  "what": "v4, 159.11-161.88 s. One card per number, ON the beat it is sung on (global beats 344-349). The loop is interrupted (^C) and the same call is tried in six languages. Six moves of one family (a terminal's own), each finished within 0.12 s; the frame stays dark throughout.",
+  "fixed": "On all six cards, in the same place: top left `^C` and `> for (lang of [de, es, fr, ko, sv, zh]) say(love, lang);` with the current language lit and the ones already said struck out; beside the numeral the call `say(love, \"<the language's own name>\")`; bottom centre `replies 0 / n`, where n grows with every card and the 0 is red and never changes.",
+  "moves": [
+   {
+    "n": 1,
+    "move": "Cursor drop: the card is printed behind a bar that falls from the top of the frame to the bottom, cubic ease-out, 0.10 s."
+   },
+   {
+    "n": 2,
+    "move": "Newline: the outgoing card travels up by one frame height while the incoming one follows from below, locked together, cubic ease-out, 0.12 s; the numeral trails three ghost samples."
+   },
+   {
+    "n": 3,
+    "move": "Carriage return: the incoming card is revealed from the right edge to the left behind a vertical bar, cubic ease-out, 0.10 s."
+   },
+   {
+    "n": 4,
+    "move": "Column print: sixteen columns 120 px wide, each printed top to bottom in 0.06 s, column i starting i x 4 ms after the cut; done at 0.12 s."
+   },
+   {
+    "n": 5,
+    "move": "Punch-in: hard cut; only the numeral arrives at 160 % and settles to 100 % in 0.10 s (exponential), its two previous frames left as ghosts."
+   },
+   {
+    "n": 6,
+    "move": "Row interleave: nine rows 120 px tall, even rows from the left and odd rows from the right, cubic ease-out, 0.12 s."
+   }
+  ]
+ },
+ "final_shout": {
+  "seen": "v4, 161.88-162.81 s. Not code: for the only time in this stretch the word is in her serif, in two rows that fill the frame (its first five letters, three syllables; its last four, the fourth). Every letter is a window onto her face (f_eye, mirrored, at the registration the next section opens on). The four syllables light the four groups of letters; on the fourth her open eye is there in the stem of the second letter of the lower row, and holds to the cut.",
+  "rules": "It only gets brighter: no fade to black, no flash. A face is in the frame, so nothing tears and no transition warps it."
+ }
 }

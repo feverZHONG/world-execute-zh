@@ -30,8 +30,8 @@ export function errorShots(env) {
   // The error state's own red, by value: it has to be drawable while the shot's state is still `off` (whose `err` is grey).
   const ERR = cfg.palettes.error.err, DIM = cfg.palettes.error.errDim;
   const TITLE = script.title ?? '', SIDE = script.sidebar ?? [], HINT = script.composer_placeholder ?? '';
-  const REQ = errors.illegal_request?.code ?? 'setPresence(you, "online");';
-  const FIRST = errors.first_error ?? { title: 'Not yours to set', body: '', code: 'ERR_NOT_YOURS' };
+  const REQ = errors.illegal_request?.code ?? '设置在场(你, "在线");';
+  const FIRST = errors.first_error ?? { title: '这不是你能设的', body: '', code: '错误_不是你的' };
   /** 0 = the first error, 1…14 = the spread, in order. */
   const IT = [{ title: FIRST.title, body: FIRST.body, code: FIRST.code }, ...(errors.spread ?? []).slice(0, 14).map((s) => ({ title: s.t, body: s.body, code: s.code }))];
   const FORGED = '我回来了。';                                   // the reply it wants (the user's last words were "one sec, brb")
@@ -60,7 +60,7 @@ export function errorShots(env) {
   const a2 = iComma + 1 + (REQ.slice(iComma + 1).length - REQ.slice(iComma + 1).trimStart().length);
   const ARG = [[iOpen + 1, iComma], [a2, iClose]];
   const SEG = [[0, iOpen, 'sub'], [iOpen, ARG[0][0], 'mute'], [ARG[0][0], ARG[0][1], 'text'], [ARG[0][1], ARG[1][0], 'mute'], [ARG[1][0], ARG[1][1], 'text'], [ARG[1][1], REQ.length, 'mute']];
-  const ARG_TAG = ['a person', 'their decision'];
+  const ARG_TAG = ['一个人', '她的决定'];
 
   // ---------------------------------------------------------------- geometry (world px), at time t (the drawer opens at error 7)
   const MSG = 44;
@@ -104,10 +104,10 @@ export function errorShots(env) {
     if (e.a <= 0) return;
     const y = b.y + e.dy, sent = t >= tSend, refused = t >= tRule, n = nPress(t);
     ctx.rrect(b.x, y, b.w, b.h, 14, { fill: 'panel', stroke: 'line', alpha: e.a, shadow: 0.35 });
-    ctx.text('request', b.x + 30, y + 31, { size: 16, font: 'mono', color: 'mute', alpha: e.a });
+    ctx.text('请求', b.x + 30, y + 31, { size: 16, font: 'mono', color: 'mute', alpha: e.a });
     ctx.line(b.x + 20, y + 46, b.x + b.w - 20, y + 46, { color: 'line', alpha: e.a, width: 1 });
     // status, top right: draft → sent → refused (and refused again, every time the send button presses itself)
-    const label = refused ? (n ? `refused × ${n + 1}` : 'refused') : sent ? 'sent' : 'draft', sc = refused ? ERR : sent ? 'sub' : 'mute';
+    const label = refused ? (n ? `被拒 × ${n + 1}` : '被拒') : sent ? '已发送' : '草稿', sc = refused ? ERR : sent ? 'sub' : 'mute';
     const lx = b.x + b.w - 26, dotX = lx - ctx.measure(label, { size: 16, font: 'mono' }) - 14;
     ctx.text(label, lx, y + 31, { size: 16, font: 'mono', color: sc, align: 'right', alpha: e.a });
     ctx.glow(ERR, 10, () => ctx.circle(dotX, y + 26, 5, { fill: true, color: sc, alpha: e.a }), refused ? 0.7 : 0);
@@ -118,14 +118,14 @@ export function errorShots(env) {
     const rk = easeOut(prog(t, tRule, tRule + 0.3));
     if (rk > 0) ctx.glow(ERR, 14, () => ctx.rrect(b.x + 1, y + 14, 5, (b.h - 28) * rk, 2.5, { fill: ERR }), 0.7);
     // the code, typed; the two arguments are cream: they are the user's
-    const size = 29, cw = ctx.cw(size), x0 = b.x + 34, y0 = y + 98;
+    const size = 29, x0 = b.x + 34, y0 = y + 98, mo = { size, font: 'mono' }, px = (i) => ctx.measure(REQ.slice(0, i), mo);
     const shown = t >= tCodeEnd ? REQ.length : Math.floor(prog(t, tCode, tCodeEnd) * REQ.length + 1e-6);
-    for (const [a, z, role] of SEG) if (shown > a) ctx.text(REQ.slice(a, Math.min(z, shown)), x0 + a * cw, y0, { size, font: 'mono', color: role, alpha: e.a });
-    if (t >= tCode && t < tSend && (shown < REQ.length || Math.floor(t * 5) % 2 === 0)) ctx.rect(x0 + shown * cw + 3, y0 - size * 0.8, cw * 0.8, size * 0.98, { fill: true, color: 'sub' });
+    for (const [a, z, role] of SEG) if (shown > a) ctx.text(REQ.slice(a, Math.min(z, shown)), x0 + px(a), y0, { size, font: 'mono', color: role, alpha: e.a });
+    if (t >= tCode && t < tSend && (shown < REQ.length || Math.floor(t * 5) % 2 === 0)) ctx.rect(x0 + px(shown) + 3, y0 - size * 0.8, ctx.cw(size) * 0.8, size * 0.98, { fill: true, color: 'sub' });
     // the client reads it once, left to right, before it answers
     const scan = prog(t, CUT_CHECK + 0.08, tRule - 0.04);
     if (scan > 0 && scan < 1) {
-      const sx = x0 + easeInOut(scan) * REQ.length * cw;
+      const sx = x0 + easeInOut(scan) * px(REQ.length);
       ctx.gradRect(sx - 70, y0 - 30, 70, 44, [[0, 'text', 0], [1, 'text', 0.16]], 'h');
       ctx.line(sx, y0 - 32, sx, y0 + 16, { color: 'text', alpha: 0.85, width: 2 });
     }
@@ -133,7 +133,7 @@ export function errorShots(env) {
     ARG.forEach(([a, z], i) => {
       const at = i ? tArg2 : tArg1, k = easeOut(prog(t, at, at + 0.2));
       if (k <= 0) return;
-      const xa = x0 + a * cw, xb = x0 + z * cw, te = enter(t, at + 0.1, 0, { dur: 0.22, rise: -8 });
+      const xa = x0 + px(a), xb = x0 + px(z), te = enter(t, at + 0.1, 0, { dur: 0.22, rise: -8 });
       ctx.glow(ERR, 8, () => ctx.line(xa, y0 + 11, lerp(xa, xb, k), y0 + 11, { color: ERR, width: 3 }), 0.5);
       ctx.text(ARG_TAG[i], xa, y0 + 38 + te.dy, { size: 15, font: 'mono', color: ERR, alpha: te.a });
     });
@@ -258,7 +258,7 @@ export function errorShots(env) {
       g.setLineDash([]);
       ctx.text('没有开关', G.slot.x + G.slot.w / 2, G.slot.y + 26, { size: 15, color: 'mute', align: 'center' });
       ctx.line(c.x, d.y + 204, x1, d.y + 204, { color: 'line', alpha: 0.7, width: 1 });
-      ctx.text('Claude', c.x, d.y + 234, { size: 16, weight: 600, color: 'mute', spacing: 0.6 });
+      ctx.text('克劳德', c.x, d.y + 234, { size: 16, weight: 600, color: 'mute', spacing: 0.6 });
       SET.forEach((row, i) => {
         const ry = d.y + 246 + i * 66, v = LEFT[row.label] ?? 0;
         ctx.text(row.label, c.x, ry + 40, { size: 21, weight: 500, color: 'text' });
@@ -487,9 +487,9 @@ export function errorShots(env) {
         // camera rides up the thread it goes home to the label it is: the status line of the request block
         const n = nPress(t), lp = t - lastPress(t), home = easeInOut(prog(t, tRide - 0.08, tArrive)), z = camSend(t).zoom;
         if (n > 0 && home < 1) {
-          const to = p(G.block.x + G.block.w - 26, G.block.y + 31), size = lerp(250, 16 * z, home), cw = ctx.cw(size), jump = pulse(lp, 12);
-          const x = lerp(150, to[0] - 2.4 * cw, home), y = lerp(880, to[1], home) - 12 * jump * (1 - home);
-          ctx.text('refused', x, y - size * 0.92, { size: lerp(46, 16 * z, home), font: 'mono', weight: 700, color: 'sub', alpha: 1 - home });
+          const to = p(G.block.x + G.block.w - 26, G.block.y + 31), size = lerp(250, 16 * z, home), cw = ctx.cw(size), lw = ctx.cw(16 * z), jump = pulse(lp, 12);
+          const x = lerp(150, to[0] - 3.4 * lw, home), y = lerp(880, to[1], home) - 12 * jump * (1 - home);
+          ctx.text('被拒', x, y - size * 0.92, { size: lerp(46, 16 * z, home), font: 'mono', weight: 700, color: 'sub', alpha: 1 - home });
           ctx.glow(ERR, 18, () => { ctx.text('×', x, y, { size, font: 'mono', weight: 800, color: ERR }); odometer(ctx, x + 1.3 * cw, y, n + clamp(lp / 0.12), { digits: 1, size, color: ERR }); }, 0.45 * (1 - home));
         }
         toast(ctx, 1, t, { open: [100, 150], dock: (() => { const s = p(...G.send), b = chipBox(ctx, 1); return [s[0] - b.w - 30, s[1] - 190]; })(), park: tRide - 0.3, to: (() => { const s = p(...G.send); return [s[0] - 50, s[1] - 50]; })() });

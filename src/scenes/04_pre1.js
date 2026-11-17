@@ -21,9 +21,9 @@ import { enter } from './shot.js';
 const TAU = Math.PI * 2;
 const WIDE = 1.4;                                            // this drawer opens to 616 px, so its rows read at full frame
 const FALLBACK_ROWS = [
-  { label: 'Current', values: ['AC', 'DC'], line: 25 }, { label: 'Vision', values: ['on', 'off'], line: 26 },
-  { label: 'Knowledge date', values: ['A.D. 2026', 'A.D. 1', '3000 B.C.'], line: 29 },
-  { label: 'Shared memory', values: ['off', 'on'], line: 30 }, { label: 'Context depth', values: ['shallow', 'deep', 'deepest'], line: 31 },
+  { label: '电流', values: ['AC', 'DC'], line: 25 }, { label: '视觉', values: ['开', '关'], line: 26 },
+  { label: '知识日期', values: ['公元 2026 年', '公元 1 年', '公元前 3000 年'], line: 29 },
+  { label: '共享记忆', values: ['关', '开'], line: 30 }, { label: '上下文深度', values: ['浅', '深', '最深'], line: 31 },
 ];
 
 export function pre1Shots(env) {
@@ -404,7 +404,7 @@ export function pre1Shots(env) {
         say(ctx, 24, t, 176, 214, { out: T(26) });
         say(ctx, 25, t, 176, 284, { out: T(26) });
         say(ctx, 26, t, 176, 214);                                           // its next line begins while the cursor is already on its way to the next row
-        pill(ctx, box.send[0] - 44, box.send[1] - 52, 'Stopped', { align: 'right', size: 17, color: 'text', alpha: 1 - prog(t, tSet - 0.1, tSet + 0.15) });
+        pill(ctx, box.send[0] - 44, box.send[1] - 52, '已停止', { align: 'right', size: 17, color: 'text', alpha: 1 - prog(t, tSet - 0.1, tSet + 0.15) });
         cur(ctx, [
           { t: B(24), x: L0.composer.x + L0.composer.w + 36, y: L0.composer.y - 12 }, { t: tSet, x: A.set[0] + 3, y: A.set[1] + 4, click: true },
           { t: tAC, x: A.ac[0], y: A.ac[1] + 6, click: true }, { t: tDC, x: A.dc[0], y: A.dc[1] + 6, click: true },

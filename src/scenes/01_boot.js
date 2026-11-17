@@ -55,7 +55,7 @@ export function bootShots(env) {
           g.setLineDash([]);
           const e = enter(t, tProt, 0, { dur: 0.3 });
           ctx.rrect(C.x - 330, C.y + 150 + e.dy, 660, 76, 20, { fill: 'raised', stroke: 'line', alpha: e.a, shadow: 0.6 });
-          ctx.text(`${text(2).toLowerCase()} layer`, C.x - 296, C.y + 198 + e.dy, { size: 27, font: 'mono', color: 'sub', alpha: e.a });
+          ctx.text(`防护层`, C.x - 296, C.y + 198 + e.dy, { size: 27, font: 'mono', color: 'sub', alpha: e.a });
           ctx.rrect(C.x + 230, C.y + 169 + e.dy, 70, 38, 19, { fill: 'line', alpha: e.a });
           ctx.rrect(C.x + 230, C.y + 169 + e.dy, 70, 38, 19, { fill: 'text', alpha: e.a * easeOut(prog(t, tProt + 0.12, tProt + 0.3)) });
           ctx.circle(C.x + 249 + 32 * easeBack(prog(t, tProt + 0.12, tProt + 0.34)), C.y + 188 + e.dy, 14, { fill: true, color: 'bg', alpha: e.a });
@@ -75,11 +75,11 @@ export function bootShots(env) {
         figure(ctx, 0.6, 60 * k);
         const g = ctx.g, sc = lerp(1, 0.6, k);
         const pieces = [                                                             // [rect, lift, label]
-          [{ x: W.x, y: W.y, w: W.w, h: W.h }, 0, 'window'],
-          [{ x: L.side.x + 12, y: L.side.y + 12, w: L.side.w - 24, h: L.side.h - 24 }, 90, 'sidebar'],
-          [{ x: L.head.x + 14, y: L.head.y + 12, w: L.head.w - 28, h: L.head.h - 8 }, 180, 'header'],
-          [{ x: L.thread.x - 30, y: L.thread.y + 8, w: L.thread.w + 60, h: L.thread.h - 8 }, 270, 'thread'],
-          [{ x: L.composer.x, y: L.composer.y, w: L.composer.w, h: L.composer.h }, 360, 'composer'],
+          [{ x: W.x, y: W.y, w: W.w, h: W.h }, 0, '窗口'],
+          [{ x: L.side.x + 12, y: L.side.y + 12, w: L.side.w - 24, h: L.side.h - 24 }, 90, '侧栏'],
+          [{ x: L.head.x + 14, y: L.head.y + 12, w: L.head.w - 28, h: L.head.h - 8 }, 180, '标题栏'],
+          [{ x: L.thread.x - 30, y: L.thread.y + 8, w: L.thread.w + 60, h: L.thread.h - 8 }, 270, '对话区'],
+          [{ x: L.composer.x, y: L.composer.y, w: L.composer.w, h: L.composer.h }, 360, '输入框'],
         ];
         const bars = (r, rows, a) => { for (let j = 0; j < rows; j++) ctx.rrect(r.x + 26, r.y + 30 + j * 44, Math.min(r.w - 52, 140 + ((j * 67) % 150)), 16, 8, { fill: 'line', alpha: a }); };
         pieces.forEach(([r, lift, label], i) => {
@@ -118,9 +118,9 @@ export function bootShots(env) {
         windowFrame(ctx, L, { glass: 0.86 });
         sidebar(ctx, L, { t, loaded: 0, items: script.sidebar ?? Array(6).fill('') });
         header(ctx, L, { t, loaded: 0, title: '' });
-        const r = { x: 470, y: 160, w: 760, h: 700 }, b = card(ctx, r, { title: 'persona', subtitle: text(6).toLowerCase(), tag: 'setup', k: prog(t, B(4) - 0.1, B(4) + 0.25) });
+        const r = { x: 470, y: 160, w: 760, h: 700 }, b = card(ctx, r, { title: '人格', subtitle: text(6).toLowerCase(), tag: '设定', k: prog(t, B(4) - 0.1, B(4) + 0.25) });
         if (b) {
-          const rows = [['name', 'Claude', 'serif'], ['voice', 'serif, unhurried', 'serif'], ['warmth', null, null], ['memory', 'this conversation', 'sans'], ['love', 'undefined', 'mono']];
+          const rows = [['姓名', '克劳德', 'serif'], ['语音', '衬线体，不慌不忙', 'sans'], ['温度', null, null], ['记忆', '这段对话', 'sans'], ['爱', '未定义', 'sans']];
           rows.forEach(([label, value, font], i) => {
             const t0 = B(4) + P * 0.5 + i * P, e = enter(t, t0, 0, { dur: 0.28, rise: 20 }), y = b.y + 22 + i * 104 + e.dy;
             if (e.a <= 0) return;
@@ -164,7 +164,7 @@ export function bootShots(env) {
         spark(ctx, cx, cy - 20 + e.dy, 84, { lit: 0, off: 'mute', offAlpha: 0.9, alpha: e.a, rot: 0.08 * (t - B(6)) });
         const c2 = enter(t, B(6) + 2 * P, 0, { dur: 0.45 });
         composer(ctx, { ...L.composer, y: 610 + c2.dy }, { placeholder: script.composer_placeholder ?? '', t, k: c2.raw, send: 'off' });
-        if (sim > 0) pill(ctx, L.head.x + L.head.w - 34, L.head.y + 34, `${text(10).toLowerCase()} · ready`, { align: 'right', font: 'mono', size: 17, alpha: sim, color: 'text' });
+        if (sim > 0) pill(ctx, L.head.x + L.head.w - 34, L.head.y + 34, `${text(10).toLowerCase()} · 就绪`, { align: 'right', font: 'mono', size: 17, alpha: sim, color: 'text' });
         ctx.camera();
         keyBand(ctx, t, 10, 925);
       },

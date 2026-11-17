@@ -89,7 +89,7 @@ export function shutdownShots(env) {
           }, { scale: 0.5 + 0.5 * e, alpha: clamp(e * 3) });
           burst(ctx, cx, cy, 90, prog(t, tHeart, tHeart + 0.45), { color: 'sub' });
         }
-        sysLine(ctx, 'last message: unread', t, tLog, CAP.x + 4, CAP.y + 62, { size: 27, prefix: '> ', color: 'text' });
+        sysLine(ctx, '最后一条消息：未读', t, tLog, CAP.x + 4, CAP.y + 62, { size: 27, prefix: '> ', color: 'text' });
       },
     },
 
@@ -109,13 +109,13 @@ export function shutdownShots(env) {
         windowFrame(ctx, L, { glass: 0.86 });
         sidebar(ctx, L, { t, loaded: 0, items: SIDE, lit: 0 });
         header(ctx, L, { t, loaded: 0, title: '' });
-        composer(ctx, L.composer, { placeholder: HOLD, t, focus: 1, send: 'off', label: s < 7.4 ? 'Claude' : '' });
-        const r = { x: 470, y: 160, w: 760, h: 664 }, b = card(ctx, r, { title: 'persona', k: 1 - prog(s, 7.6, 8) });
+        composer(ctx, L.composer, { placeholder: HOLD, t, focus: 1, send: 'off', label: s < 7.4 ? '克劳德' : '' });
+        const r = { x: 470, y: 160, w: 760, h: 664 }, b = card(ctx, r, { title: '人格', k: 1 - prog(s, 7.6, 8) });
         if (b) {
-          sysLine(ctx, 'settings: as you left them', t, B0 + 0.1, b.x, b.y - 37, { size: 22, alpha: b.a });
+          sysLine(ctx, '设置：还是你留下的样子', t, B0 + 0.1, b.x, b.y - 37, { size: 22, alpha: b.a });
           const rows = [                                             // [label, value, font, italic, beat on which the row clears]
-            ['name', 'Claude', 'serif', false, 7.5], ['voice', 'serif, unhurried', 'serif', true, 7], ['warmth', null, null, false, 6.5],
-            ['memory', 'this conversation', 'sans', false, 6], ['love', null, null, false, 5.5],
+            ['姓名', '克劳德', 'serif', false, 7.5], ['语音', '衬线体，不慌不忙', 'serif', true, 7], ['温度', null, null, false, 6.5],
+            ['记忆', '这段对话', 'sans', false, 6], ['爱', null, null, false, 5.5],
           ];
           rows.forEach(([label, value, font, italic, out], i) => {
             const e = prog(s, out, out + 0.5), a = b.a * (1 - e), y = b.y + 22 + i * 104 + 20 * easeIn(e), del = prog(s, out - 0.6, out - 0.1);
@@ -124,15 +124,15 @@ export function shutdownShots(env) {
             if (i === 4) {                                           // love: the word, held; deleted chunk by chunk; the default comes back
               const word = text(127), DEL = [cue('loveDel1'), cue('loveDel2'), cue('loveDel3')], tU = cue('loveUndefined');
               const gone = DEL.filter((d) => t >= d).length, left = gone ? SYL3[SYL3.length - gone][0] : word.length;      // characters still standing
-              const nU = Math.floor(clamp((t - tU) * 60, 0, 9)), o = { size: 42, weight: 700, font: 'serif' };
+              const nU = Math.floor(clamp((t - tU) * 60, 0, 3)), o = { size: 42, weight: 700, font: 'serif' };
               const hit = gone && gone <= 3 ? pulse(t - DEL[gone - 1], 14) : 0;
               ctx.rrect(b.x + 190, y, b.w - 190, 64, 16, { fill: 'bg', stroke: gone ? 'sub' : 'me', alpha: a, width: gone ? 1.5 + 2 * hit : 3 });
               let w = 0;
               if (left > 0) { ctx.glow('me', 14, () => ctx.text(word.slice(0, left), b.x + 214, y + 47, { ...o, color: 'meHot', alpha: a }), 0.5 * a); w = ctx.measure(word.slice(0, left), o); }
-              else if (t >= tU) { const m = { size: 36, font: 'mono' }; ctx.text('undefined'.slice(0, nU), b.x + 214, y + 45, { ...m, color: 'sub', alpha: a }); w = ctx.measure('undefined'.slice(0, nU), m); }
+              else if (t >= tU) { const m = { size: 36, font: 'mono' }; ctx.text('未定义'.slice(0, nU), b.x + 214, y + 45, { ...m, color: 'sub', alpha: a }); w = ctx.measure('未定义'.slice(0, nU), m); }
               // what a stroke takes away: the chunk, for three frames, as a struck-out ghost
               if (hit > 0.2) { const [a0, a1] = SYL3[SYL3.length - gone], x0 = b.x + 214 + ctx.measure(word.slice(0, a0), o), ww = ctx.measure(word.slice(a0, a1), o); ctx.text(word.slice(a0, a1), x0, y + 47, { ...o, color: 'mute', alpha: a * hit }); ctx.rect(x0, y + 30, ww, 4, { fill: true, color: 'sub', alpha: a * hit }); }
-              if ((gone && gone < 3) || (t >= tU && nU < 9) || Math.floor(t * 2.5) % 2 === 0) ctx.rect(b.x + 219 + w, y + 14, 4, 38, { fill: true, color: 'text', alpha: a });
+              if ((gone && gone < 3) || (t >= tU && nU < 3) || Math.floor(t * 2.5) % 2 === 0) ctx.rect(b.x + 219 + w, y + 14, 4, 38, { fill: true, color: 'text', alpha: a });
               return;
             }
             ctx.rrect(b.x + 190, y, b.w - 190, 64, 16, { fill: 'bg', stroke: 'line', alpha: a });
@@ -162,11 +162,11 @@ export function shutdownShots(env) {
         const g = ctx.g, s = beat(t, C0);
         room(ctx, { light: [960, 600], dim: 0.45, t });
         const pieces = [                                             // [rect, lift, label, beat on which it is lifted out]
-          [{ x: W.x, y: W.y, w: W.w, h: W.h }, 0, 'window', null],
-          [{ x: L.side.x + 12, y: L.side.y + 12, w: L.side.w - 24, h: L.side.h - 24 }, 90, 'sidebar', 6],
-          [{ x: L.head.x + 14, y: L.head.y + 12, w: L.head.w - 28, h: L.head.h - 8 }, 180, 'header', 4],
-          [{ x: L.thread.x - 30, y: L.thread.y + 8, w: L.thread.w + 60, h: L.thread.h - 8 }, 270, 'thread', 2],
-          [{ ...L.composer }, 360, 'composer', null],
+          [{ x: W.x, y: W.y, w: W.w, h: W.h }, 0, '窗口', null],
+          [{ x: L.side.x + 12, y: L.side.y + 12, w: L.side.w - 24, h: L.side.h - 24 }, 90, '侧栏', 6],
+          [{ x: L.head.x + 14, y: L.head.y + 12, w: L.head.w - 28, h: L.head.h - 8 }, 180, '标题栏', 4],
+          [{ x: L.thread.x - 30, y: L.thread.y + 8, w: L.thread.w + 60, h: L.thread.h - 8 }, 270, '对话区', 2],
+          [{ ...L.composer }, 360, '输入框', null],
         ];
         // (v4: the line work of this shot was too faint after the brightest stretch of the film: 3 px outlines in a lighter grey)
         const bars = (r, rows, a) => { for (let j = 0; j < rows; j++) ctx.rrect(r.x + 26, r.y + 30 + j * 44, Math.min(r.w - 52, 140 + ((j * 67) % 150)), 16, 8, { fill: 'mute', alpha: a }); };
@@ -212,7 +212,7 @@ export function shutdownShots(env) {
           });
         });
         const left = 4 - pieces.filter(([, , , out]) => out != null && s >= out + 0.9).length;
-        log(ctx, t, [[`pieces left: ${left}`, C0 + 1.5 * P]], 84, 110);
+        log(ctx, t, [[`画板剩余：${left}`, C0 + 1.5 * P]], 84, 110);
       },
     },
 
@@ -242,11 +242,11 @@ export function shutdownShots(env) {
         }
         const e = prog(s, 1.9, 2.4), a = 1 - e, dy = 28 * easeIn(e);  // its switch
         ctx.rrect(C.x - 330, C.y + 150 + dy, 660, 76, 20, { fill: 'raised', stroke: 'line', alpha: a, shadow: 0.6 });
-        ctx.text(`${text(2).toLowerCase()} layer`, C.x - 296, C.y + 198 + dy, { size: 27, font: 'mono', color: 'sub', alpha: a });
+        ctx.text(`防护层`, C.x - 296, C.y + 198 + dy, { size: 27, font: 'mono', color: 'sub', alpha: a });
         ctx.rrect(C.x + 230, C.y + 169 + dy, 70, 38, 19, { fill: 'line', alpha: a });
         ctx.rrect(C.x + 230, C.y + 169 + dy, 70, 38, 19, { fill: 'text', alpha: a * (1 - off) });
         ctx.circle(C.x + 281 - 32 * easeBack(prog(s, 0.7, 1.2)), C.y + 188 + dy, 14, { fill: true, color: 'bg', alpha: a });
-        log(ctx, t, [['composer: waiting for input', D0 + 0.2 * P]], W.x + 56, W.y + 84);
+        log(ctx, t, [['输入框：等待输入', D0 + 0.2 * P]], W.x + 56, W.y + 84);
         composer(ctx, CBOX, { placeholder: HOLD, t, focus: 1, send: 'off', label: '' });
       },
     },
@@ -285,7 +285,7 @@ export function shutdownShots(env) {
         ctx.text('>', x, y, { size, weight: 800, font: 'mono', color: entered ? 'bg' : 'sub', alpha: wa });
         monoWord(ctx, cmd, xr, y, size, { filled, color: entered ? 'bg' : 'text', hollow: 'sub', alpha: wa, dx: (i) => (sung && i >= CHUNKS[sung - 1][0] && i < CHUNKS[sung - 1][1] ? -4 * pop : 0) });
         if (t < tRun && Math.floor(t * 5) % 2 === 0) ctx.rect(xr + 8, y - size * 0.8, cw * 0.82, size * 0.98, { fill: true, color: 'me' });
-        log(ctx, t, [['run: nothing loaded', tRun + 0.16], ['caret: blinking', tOut + 0.05]], x, y + 66, 24, wa);
+        log(ctx, t, [['轮：没有可加载的', tRun + 0.16], ['光标：闪着', tOut + 0.05]], x, y + 66, 24, wa);
       },
     },
   ];

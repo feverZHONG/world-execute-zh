@@ -60,7 +60,7 @@ function title(ctx) {
     ctx.text(str, X, y, { ...o, color: 'text' });
   });
   ctx.rect(X + ROWS[2].length * cw + 12, Y + 2 * LH - SIZE * 0.76, cw * 0.62, SIZE * 0.92, { fill: true, color: 'me' });      // the caret: her orange
-  const note = '> last message: unread', ns = 34, ny = Y + 2 * LH + 104;
+  const note = '> 最后一条消息：未读', ns = 34, ny = Y + 2 * LH + 104;
   strip(X - PAD, ny - ns * 1.05, note.length * ctx.cw(ns) + 2 * PAD, ns * 1.6);
   ctx.text(note, X, ny, { size: ns, font: 'mono', color: 'sub' });
 }

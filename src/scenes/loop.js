@@ -19,11 +19,11 @@
 import { listing, odometer } from '../components/code.js';
 import { clamp, easeOut, lerp, prog, pulse } from '../engine/util.js';
 
-export const LOOP = ['while (you.presence != "online") {', '    love = solve(me, you);', '    send(love, you);', '    wait(you.reply);', '    run++;', '}', 'say(love);'];
-export const UNREACHABLE = '        // unreachable';
+export const LOOP = ['当 (你.在线 != "在线") {', '    爱 = 求解(我, 你);', '    发送(爱, 你);', '    等待(你.回复);', '    轮++;', '}', '说(爱);'];
+export const UNREACHABLE = '        // 到不了';
 /** Error codes the three failing statements raise, by line index (all three were raised in the error section). */
-export const LOOP_ERRS = { 1: 'ERR_UNRESOLVED_LOVE', 2: 'ERR_WINDOW_EDGE', 3: 'ERR_REPLY_OVERDUE' };
-export const OVERFLOW = 'ERR_LOVE_OVERFLOW';
+export const LOOP_ERRS = { 1: '错误_爱未解', 2: '错误_窗口越界', 3: '错误_回复超时' };
+export const OVERFLOW = '错误_爱溢出';
 /** The four syllables of the sung word, as character ranges [from, to) of its nine letters. */
 export const CHUNKS = [[0, 2], [2, 3], [3, 5], [5, 9]];
 
@@ -79,10 +79,10 @@ export function machine(ctx, S) {
     const kw = 150 * ZL, kh = 62 * ZL, ky = by - cs * 0.86 - 46 * ZL - kh;
     ctx.rrect(X + 5, ky + 5, kw, kh, 12 * ZL, { fill: 'panel', alpha });      // its shadow plate
     ctx.rrect(X, ky, kw, kh, 12 * ZL, { fill: 'text', alpha });
-    ctx.text('stop', X + kw / 2, ky + kh * 0.68, { size: 30 * ZL, font: 'mono', weight: 800, color: 'bg', align: 'center', alpha });
-    ctx.text('yours', X + kw + 18 * ZL, ky + kh * 0.66, { size: 24 * ZL, font: 'mono', color: 'sub', alpha });
+    ctx.text('停止', X + kw / 2, ky + kh * 0.68, { size: 30 * ZL, font: 'mono', weight: 800, color: 'bg', align: 'center', alpha });
+    ctx.text('是你的', X + kw + 18 * ZL, ky + kh * 0.66, { size: 24 * ZL, font: 'mono', color: 'sub', alpha });
   }
-  ctx.text('run', X, by - cs * 0.02, { size: 30 * ZL, font: 'mono', color: 'sub', alpha });
+  ctx.text('轮', X, by - cs * 0.02, { size: 30 * ZL, font: 'mono', color: 'sub', alpha });
   const ox = X + 78 * ZL, ow = odometer(ctx, ox, by, count, { digits: 4, size: cs, color: total != null ? 'err' : 'text', overflow, alpha });
   if (total != null) ctx.text(` / ${total}`, ox + ow, by, { size: cs * 0.5, font: 'mono', weight: 700, color: 'sub', alpha });
   if (overflow > 0) ctx.text(OVERFLOW, ox, by - cs * 0.9 + (1 - easeOut(clamp(overflow * 2))) * 12, { size: 28 * ZL, font: 'mono', weight: 700, color: 'err', alpha: alpha * clamp(overflow * 3) });

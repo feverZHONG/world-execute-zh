@@ -100,14 +100,14 @@ export function verse1Shots(env) {
           const q = project(rot(p, s[0], s[1]), cam), a = i < 8 ? 1 : 1 - gather;
           if (a <= 0) return;
           ctx.glow('me', 16, () => ctx.circle(q[0], q[1], (hot ? 12 : 9.5) * clamp(q[2], 0.7, 1.3), { fill: true, color: hot ? 'meHot' : 'me', alpha: a }), 0.6 * a);
-          if (i < 8) ctx.text(`p${i}`, q[0] + 16, q[1] - 12, { size: 17, font: 'mono', color: 'mute', alpha: prog(t, START + 0.4, START + 0.9) * (1 - prog(t, hitDim, hitDim + 0.4)) });
+          if (i < 8) ctx.text(`点${i}`, q[0] + 16, q[1] - 12, { size: 17, font: 'mono', color: 'mute', alpha: prog(t, START + 0.4, START + 0.9) * (1 - prog(t, hitDim, hitDim + 0.4)) });
         });
         say(ctx, t, 12, 13);
         // the answer carries a code block, as answers do: the live coordinates
         const ca = prog(t, START + P, START + 1.6 * P) * (1 - prog(t, cutCircle - 0.3, cutCircle));
         ctx.rrect(176, 320, 372, 286, 16, { fill: 'raised', stroke: 'line', alpha: ca, shadow: 0.4 });
         ctx.text('点', 198, 352, { size: 16, font: 'mono', color: 'mute', alpha: ca });
-        pts.slice(0, 8).forEach((p, i) => { if (t > START + P + i * 0.06) ctx.text(`p${i} (${fmt(p[0])},${fmt(-p[1])},${fmt(p[2])})`, 198, 384 + 27 * i, { size: 19, font: 'mono', color: 'sub', alpha: ca }); });
+        pts.slice(0, 8).forEach((p, i) => { if (t > START + P + i * 0.06) ctx.text(`点${i} (${fmt(p[0])},${fmt(-p[1])},${fmt(p[2])})`, 198, 384 + 27 * i, { size: 19, font: 'mono', color: 'sub', alpha: ca }); });
         if (t >= hitDim) {                                                   // the word itself gains dimensions: line, plane, solid
           const dims = Math.min(3, 1 + Math.floor((t - hitDim) / (P / 2))), word = text(LINE.DIMENSION);
           const size = ctx.fit(word, 600, { font: 'serif', weight: 900 }), punch = 1 + 0.07 * pulse(t - groupT(dims - 1), 8);
@@ -115,7 +115,7 @@ export function verse1Shots(env) {
             if (dims >= 3) for (let l = 8; l >= 1; l--) big(ctx, word, l * 4.5, -l * 4.5, { size, weight: 900, color: 'sub', alpha: 0.2, stroke: 1.5 });
             big(ctx, word, 0, 0, { size, weight: 900, color: 'text' });
           }, { sx: punch, sy: dims === 1 ? 0.05 : punch });
-          pill(ctx, 1420, 690, `${dims}D`, { align: 'center', font: 'mono', size: 20, color: 'text' });
+          pill(ctx, 1420, 690, ['', '一维', '二维', '三维'][dims], { align: 'center', font: 'mono', size: 20, color: 'text' });
         }
         ctx.flash(0.28 * pulse(t - hitDim, 9), 'text');
         drawCursor(ctx, [{ t: START, x: 1600, y: 320 }, { t: hitDim - 0.3, x: C.x + 330, y: C.y + 30 }, { t: cutCircle, x: C.x + 300, y: C.y - 150 }], t);
@@ -156,7 +156,7 @@ export function verse1Shots(env) {
             const a = a0 + off, k = pulse(swept - off, 2.2);
             ctx.at(C.x + Math.cos(a) * (R_CIRCLE + 62), C.y + Math.sin(a) * (R_CIRCLE + 62), () => ctx.text(word[i], 0, 0, { size: 84, weight: 900, font: 'serif', align: 'center', color: 'text' }), { rot: a + Math.PI / 2, scale: 1 + 0.45 * k });
           }
-          ctx.text(`C = 2 * PI * r = ${(TAU * easeInOut(measured)).toFixed(4)}`, C.x, C.y + 70, { size: 26, font: 'mono', align: 'center', color: 'text' });
+          ctx.text(`周长 = 2πr = ${(TAU * easeInOut(measured)).toFixed(4)}`, C.x, C.y + 70, { size: 26, font: 'mono', align: 'center', color: 'text' });
         }
         ctx.flash(0.25 * pulse(t - hitCirc, 9), 'text');
         // the cursor comes to the rim, then rides the sweep
@@ -238,7 +238,7 @@ export function verse1Shots(env) {
             const ki = easeOut(prog(t, hitLim + i * 0.02, hitLim + i * 0.02 + 0.14));
             if (ki > 0) ctx.text(word[i], X0 + 30 + (i + 0.5) * step, yL - 18 - (1 - ki) * 90, { size: 96, weight: 900, font: 'serif', align: 'center', color: 'text', alpha: ki });
           }
-          pill(ctx, box.send[0] - 44, box.send[1] - 52, 'Stopped', { align: 'right', size: 17, color: 'text', alpha: prog(t, hitLim, hitLim + 0.2) });
+          pill(ctx, box.send[0] - 44, box.send[1] - 52, '已停止', { align: 'right', size: 17, color: 'text', alpha: prog(t, hitLim, hitLim + 0.2) });
         }
         ctx.flash(0.3 * pulse(t - hitLim, 8), 'text');
         drawCursor(ctx, [{ t: cutLimit, x: 1500, y: 560 }, { t: hitLim - 1.2 * P, x: 1380, y: 700 }, { t: hitLim, x: box.send[0] + 3, y: box.send[1] + 4, click: true }, { t: END, x: box.send[0] + 80, y: box.send[1] - 90 }], t);
