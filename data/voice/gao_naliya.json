@@ -1,0 +1,63 @@
+{
+  "id": "gao_naliya",
+  "name": "高奈利亚",
+  "card": "二次创作/说明/角色/高奈利亚.md",
+  "self_ref": null,
+  "addressee": null,
+  "tone": {
+   "flat": "不解释，只报状态",
+   "holding": "报状态时带上她正在做的事",
+   "over": "只用于超时/溢出这类她被逼到边界的地方"
+  },
+  "max_len": 18,
+  "punct": {
+   "fullwidth": true,
+   "final_period": false,
+   "exclaim": false,
+   "ellipsis": false
+  },
+  "num_rule": "数字写阿拉伯数字，不写约数",
+  "ban": [
+   "爱",
+   "想",
+   "其实",
+   "大概",
+   "可能",
+   "你好",
+   "我是"
+  ],
+  "swap": {},
+  "skeleton": [],
+  "samples": [
+   {
+    "where": "13_shutdown system",
+    "from": "剩余部件：4",
+    "to": "还剩 4 件",
+    "rules": [
+     "R1",
+     "R2",
+     "R4"
+    ]
+   },
+   {
+    "where": "04_pre1 hardcoded",
+    "from": "图像输入：无",
+    "to": "看不见",
+    "rules": [
+     "R1",
+     "R6"
+    ]
+   },
+   {
+    "where": "errors.json ERR_LOVE_OVERFLOW",
+    "from": "感情超出了窗口 / 申报尺寸：一个对话窗口。实际尺寸还在长。",
+    "to": "超出窗口 / 报的是一个窗口，现在不止",
+    "rules": [
+     "R3",
+     "R1",
+     "R5"
+    ]
+   }
+  ],
+  "notes": "四格里的 self_ref / addressee / skeleton 待作者拍板；ban 与 R6/R7 已由角色卡定案。"
+}
