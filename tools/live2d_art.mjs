@@ -97,16 +97,69 @@ try {
     const ERASE = arg('erase', '');                             // 手工抹除：输出像素 "x,y,w,h"（多块用 ; 分隔），填成皮肤墨
     const BLUE = +arg('blue', 0.12);                            // 蓝色（头发）判成橙墨所需的最低饱和度；调小可吃掉发面高光留下的白洞
     const ISLAND = +arg('island', 0);                           // 小于这个像素数的墨块并回周围主墨（治碎斑，0 关闭）
+    const SIL = has('silhouette');                              // 真剪影：只认外轮廓，填一整块墨，沿外缘描黑边
+    const FILL = arg('fill', 'orange');                         // 剪影的墨：orange（默认）/ cream / black
+    const STROKE = +arg('stroke', 6);                           // 剪影黑边宽度（输出 px），0 不描
     const dst = outPath(arg('out', dry ? 'out/_ink_dry.png' : 'out/ink.png'));
 
     const page = await browser.newPage({ viewport: { width: 600, height: 400 } });
     page.on('console', (m) => { if (m.type() === 'error') console.log('[page]', m.text()); });
     await page.goto(`${url}/tools/probe.html`);
-    const res = await page.evaluate(async ({ src, W, H, crop, CLEAN, KEY, BLOCK, SKIN, FACELESS, FACEH, ERASE, BLUE, ISLAND }) => {
+    const res = await page.evaluate(async ({ src, W, H, crop, CLEAN, KEY, BLOCK, SKIN, FACELESS, FACEH, ERASE, BLUE, ISLAND, SIL, FILLINK, STROKE }) => {
       const bmp = await createImageBitmap(await (await fetch(src)).blob());
       const sw = bmp.width, sh = bmp.height;
       const rect = crop ? crop.split(',').map(Number) : [0, 0, sw, sh];
       const [cx, cy, cw, ch] = rect;
+      const CREAM = [244, 224, 198], ORANGE = [220, 114, 63], BLACK = [36, 26, 21];
+      // 真剪影（--silhouette）：只认 alpha 外形，填一整块墨，沿外缘描一圈黑边。
+      // 描边在 2× 超采样网格上做，最后缩回输出尺寸 —— 边缘才是原画那种平滑墨线，不是硬台阶。
+      if (SIL) {
+        const SS2 = 2, W2 = W * SS2, H2 = H * SS2;
+        const c2 = document.createElement('canvas'); c2.width = W2; c2.height = H2;
+        const g2 = c2.getContext('2d', { willReadFrequently: true });
+        g2.imageSmoothingQuality = 'high';
+        g2.clearRect(0, 0, W2, H2);
+        g2.drawImage(bmp, cx, cy, cw, ch, 0, 0, W2, H2);
+        const p2 = g2.getImageData(0, 0, W2, H2).data;
+        const lab = new Uint8Array(W2 * H2);
+        for (let i = 0, n = W2 * H2; i < n; i++) lab[i] = p2[i * 4 + 3] >= 128 ? FILLINK : 0;
+        const ST = Math.max(0, Math.round(STROKE * SS2));
+        if (ST > 0) {
+          let edge = new Uint8Array(W2 * H2);
+          for (let i = 0; i < W2 * H2; i++) edge[i] = lab[i] === 0 ? 1 : 0;
+          for (let r = 0; r < ST; r++) {
+            const to = Uint8Array.from(edge);
+            for (let y = 1; y < H2 - 1; y++) for (let x = 1; x < W2 - 1; x++) {
+              const i = y * W2 + x;
+              if (edge[i]) continue;
+              if (edge[i - 1] || edge[i + 1] || edge[i - W2] || edge[i + W2]) to[i] = 1;
+            }
+            edge = to;
+          }
+          for (let i = 0; i < W2 * H2; i++) if (lab[i] !== 0 && edge[i]) lab[i] = 3;
+        }
+        const hits = [0, 0, 0, 0];
+        let bx0 = W, by0 = H, bx1 = -1, by1 = -1;
+        for (let y = 0; y < H2; y++) for (let x = 0; x < W2; x++) {
+          const i = y * W2 + x, L = lab[i];
+          if (L === 0) { p2[i * 4 + 3] = 0; continue; }
+          hits[L]++;
+          const ink = L === 1 ? CREAM : L === 2 ? ORANGE : BLACK;
+          p2[i * 4] = ink[0]; p2[i * 4 + 1] = ink[1]; p2[i * 4 + 2] = ink[2]; p2[i * 4 + 3] = 255;
+          if (L !== 3) {                                  // bbox 只量外形，不含描边
+            const xo = (x / SS2) | 0, yo = (y / SS2) | 0;
+            if (xo < bx0) bx0 = xo; if (xo > bx1) bx1 = xo;
+            if (yo < by0) by0 = yo; if (yo > by1) by1 = yo;
+          }
+        }
+        g2.putImageData(new ImageData(p2, W2, H2), 0, 0);
+        const cOut = document.createElement('canvas'); cOut.width = W; cOut.height = H;
+        const gOut = cOut.getContext('2d'); gOut.imageSmoothingQuality = 'high';
+        gOut.drawImage(c2, 0, 0, W2, H2, 0, 0, W, H);
+        const bbox = bx1 >= 0 ? { x: bx0, y: by0, w: bx1 - bx0 + 1, h: by1 - by0 + 1 } : null;
+        const solid = (hits[1] + hits[2] + hits[3]) / (SS2 * SS2);
+        return { dataUrl: cOut.toDataURL('image/png'), src: { w: sw, h: sh }, solid, hits, bbox, sil: true };
+      }
       const c = document.createElement('canvas'), g = c.getContext('2d', { willReadFrequently: true });
       c.width = W; c.height = H;
       g.imageSmoothingQuality = 'high';
@@ -114,7 +167,6 @@ try {
       g.drawImage(bmp, cx, cy, cw, ch, 0, 0, W, H);
       const px = g.getImageData(0, 0, W, H).data;
 
-      const CREAM = [244, 224, 198], ORANGE = [220, 114, 63], BLACK = [36, 26, 21];
       const label = new Uint8Array(W * H);                     // 0 透明 / 1 cream / 2 orange / 3 black
       const classify = (r8, g8, b8) => {
         const r = r8 / 255, gg = g8 / 255, b = b8 / 255;
@@ -300,7 +352,7 @@ try {
       g.putImageData(new ImageData(px, W, H), 0, 0);
       const bbox = solid ? { x: bx0, y: by0, w: bx1 - bx0 + 1, h: by1 - by0 + 1 } : null;
       return { dataUrl: c.toDataURL('image/png'), src: { w: sw, h: sh }, solid, hits, bbox };
-    }, { src: toUrl(path.resolve(inp)), W, H, crop, CLEAN, KEY, BLOCK, SKIN, FACELESS, FACEH, ERASE, BLUE, ISLAND });
+    }, { src: toUrl(path.resolve(inp)), W, H, crop, CLEAN, KEY, BLOCK, SKIN, FACELESS, FACEH, ERASE, BLUE, ISLAND, SIL, FILLINK: (FILL === 'cream' ? 1 : FILL === 'black' ? 3 : 2), STROKE });
 
     if (res.bbox) {
       const m = { top: res.bbox.y, left: res.bbox.x, right: W - (res.bbox.x + res.bbox.w), bottom: H - (res.bbox.y + res.bbox.h) };
