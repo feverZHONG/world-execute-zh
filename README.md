@@ -37,9 +37,9 @@
 
 | 层 | 内容 | 证据 |
 |:--|:--|:--|
-| 字体层 | 字体栈、按字断行（不按空格）、等宽汉字 1em、字形校验；两角色各 **540 字**的用字表 | `tools/zh_charset.mjs`、`src/engine/draw.js` |
+| 字体层 | 字体栈、按字断行（不按空格）、等宽汉字 1em、字形校验；两角色各 **547 字**的用字表（含注释里的字，比实际画面用字略多） | `tools/zh_charset.mjs`、`src/engine/draw.js` |
 | 文案层 | `chat_script.json`、`errors.json` 全量中文化，场景里硬编码的 UI 字一并改（含警告页整页、片尾署名） | `docs/v4/chat_script.json`、`docs/v4/errors.json`、`src/scenes/*` |
-| 美术层（接线，不出图） | 剪影交付规格单、验收脚本、八张实测基线；坐标基准参数化（1086×1448 不再写死） | `二次创作/说明/剪影规格.md`、`tools/art_check.mjs`、`src/engine/art.js` |
+| 美术层（接线，不出图） | 剪影交付规格单、验收脚本、八张实测基线；坐标基准参数化（1086×1448 不再写死）；**收图流水线**：外来图一键规整到基线构图、量墨、出配准初值 | `二次创作/说明/剪影规格.md`、[`收图流程.md`](二次创作/说明/收图流程.md)、`tools/art_check.mjs`、`tools/art_intake.py`、`src/engine/art.js` |
 | 导出层 | 修本机 ffmpeg 4.2.2 不认 `adelay=...:all=1`；1080p60 全片已出；自检脚本量音画滞后 | `export/export.mjs`、`tools/check_export.py` |
 | 试验线（未采用） | SVG 位图矢量化（无画质收益）、Live2D 模型顶剪影（能跑通但不能当成品） | `二次创作/说明/踩坑与经验.md` 3.3 / 3.4 |
 
@@ -81,7 +81,7 @@ python tools/check_export.py out/wem_zh_1080p60.mp4 --frames -2.5,45.4,170.19,20
 ```
 
 - 时间参数一律是**歌时间**（音频开头 = 0）；成片前有 `safety.preroll: 5` 秒警告页，影片时间 = 歌时间 + 5。
-- 换中文文案后先跑 `node tools/zh_charset.mjs`，540 字表之外的新字会被拦下。
+- 换中文文案后先跑 `node tools/zh_charset.mjs`，547 字表之外的新字会被拦下。
 - 字体包在 `assets/fonts`（`@fontsource/noto-sans-sc`、`noto-serif-sc`），`npm install` 装在工程根另需 `playwright-core` 与 `ffmpeg-static`。
 - 本机只有 Edge → playwright 回落 `msedge`；ffmpeg 用系统 4.2.2（nvenc 探测失败时回落 libx264，属正常）。
 

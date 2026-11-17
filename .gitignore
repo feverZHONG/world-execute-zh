@@ -44,3 +44,8 @@ Thumbs.db
 /assets/character_pic/
 # 空白素材目录（本地占位）
 /素材箱/
+# 收图流水线的落地区（规整结果与自检产物，可重跑）
+/assets/_intake/
+/assets/_intake_selftest/
+/assets/_intake_test/
+/assets/character_prev/

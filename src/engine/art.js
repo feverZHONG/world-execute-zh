@@ -96,8 +96,8 @@ export async function loadArt(cfg, step = () => {}) {
   const dir = cfg.paths.art, art = new Art();
   const svgDir = cfg.paths.artSvg || '';                       // optional: the same silhouettes as vector plates
   // raw.json: ["f_bust", ...] — these are PICTURES, not silhouettes: they are printed as they are (see Art.inks).
-  try { art.raw = await (await fetch(`/${dir}/raw.json`)).json(); } catch { art.raw = {}; }
-  if (!Array.isArray(art.raw)) art.raw = {};
+  try { art.raw = await (await fetch(`/${dir}/raw.json`)).json(); } catch { art.raw = []; }
+  if (!Array.isArray(art.raw)) art.raw = [];                       // no raw.json (or a malformed one): every name is a silhouette
   await Promise.all(ART_NAMES.map(async (name) => {
     let img = null;
     if (svgDir) {
