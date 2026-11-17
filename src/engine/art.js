@@ -41,7 +41,10 @@ const INK_KEY = { cream: 0, orange: 1, black: 2 };
  * Registration onto f_bust: p' = s * p + [tx, ty] in source px (measured, docs/v4/maps/map_assets.json):
  * the chin, the flower and the collar then coincide.
  */
-const REGISTER = { cat_bust: [1.0, -28, -49], boy_bust: [0.89, 60, -18], man_bust: [0.873, 81, -4] };
+// Plate-to-plate registration, in DESIGN px on f_bust's basis: [scale, dx, dy].
+// Re-measured 2026-11-17 when the plates became Live2D pictures (all three are edge-to-edge busts, so the scale is
+// 1.00 and only a small sideways nudge remains). Aligning them face-to-face by landmark is still a TODO.
+const REGISTER = { cat_bust: [1.0, -40, -2], boy_bust: [1.0, -10, 0], man_bust: [1.0, 0, -3] };
 
 /**
  * The DESIGN BASIS: the source size of the v4 files, i.e. the coordinates every number in the film is written in —
