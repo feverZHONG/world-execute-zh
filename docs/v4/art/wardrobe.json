@@ -1,0 +1,42 @@
+{
+  "_doc": "高奈利亚的 24 套 Live2D，本片可用的形体目录。usedBy 指向 assets/character 里的画板名；engine 侧 raw.json 决定该画板是原图直印。生成：tools/live2d_index.py + tools/live2d_art.mjs render + tools/plate_cut.py。图：docs/v4/art/wardrobe.png",
+  "character": "高奈利亚 (Kannaria)",
+  "library": "E:/DCIM/【OST】音乐、音效、视频/双生视界/【Live2D】（23.12.21）/live2d",
+  "suits": [
+    { "no": 1, "dir": "9t07__l2d_103.u", "model": "【奈乐】泳装.model3.json", "label": "泳装", "look": "黄色透明外套罩在泳装上，短裤", "usedBy": [] },
+    { "no": 2, "dir": "l2d00.u", "model": "l2d00.u.model3.json", "label": "素体", "look": "无衣的底模，仅作对照", "usedBy": [] },
+    { "no": 3, "dir": "l2d01.u", "model": "【奈乐】私服.model3.json", "label": "私服", "look": "橙格纹针织连帽外套＋白裤", "usedBy": ["boy_bust"] },
+    { "no": 4, "dir": "l2d02.u", "model": "【奈乐】训练服.model3.json", "label": "训练服", "look": "深蓝短披肩外套＋羽毛贝雷帽＋短裤", "usedBy": [] },
+    { "no": 5, "dir": "l2d03.u", "model": "【奈乐】啦啦队.model3.json", "label": "啦啦队", "look": "黄白啦啦队服，短裙", "usedBy": [] },
+    { "no": 6, "dir": "l2d04.u", "model": "【奈乐】女仆.model3.json", "label": "女仆", "look": "黑白女仆装＋围裙＋发带", "usedBy": [] },
+    { "no": 7, "dir": "l2d06.u", "model": "l2d06.u.model3.json", "label": "猫耳连帽衫", "look": "白色连帽＋青蓝猫耳＋耳机＋围巾", "usedBy": ["cat_bust"] },
+    { "no": 8, "dir": "l2d07.u", "model": "【奈乐】战术.model3.json", "label": "战术猫耳", "look": "黑绿战术连身＋猫耳耳机＋长尾", "usedBy": ["cat_paws"] },
+    { "no": 9, "dir": "l2d08.u", "model": "l2d08.u.model3.json", "label": "便服（黄）", "look": "黄色连帽＋短裤，最接近泳装那套的完整版", "usedBy": [] },
+    { "no": 10, "dir": "l2d09.u", "model": "【奈乐】污染者.model3.json", "label": "污染者", "look": "紫黑暗色破布＋绷带，气场最重", "usedBy": [] },
+    { "no": 11, "dir": "l2d12.u", "model": "l2d12.u.model3.json", "label": "红裙", "look": "暗红连衣裙＋黑手套＋长靴", "usedBy": [] },
+    { "no": 12, "dir": "l2d16.u", "model": "【奈乐】西洋棋.model3.json", "label": "西洋棋", "look": "棋盘格礼装＋王后棋帽，本片的正身", "usedBy": ["f_bust", "f_eye", "f_reach"] },
+    { "no": 13, "dir": "l2d17.u", "model": "【奈乐】誓约初.model3.json", "label": "誓约初", "look": "白色小礼服＋发带，站姿", "usedBy": [] },
+    { "no": 14, "dir": "l2d19.u", "model": "警署奈乐.model3.json", "label": "警署", "look": "全覆式头盔＋面罩＋战术背心", "usedBy": ["man_bust"] },
+    { "no": 15, "dir": "l2d20.u", "model": "l2d20.u.model3.json", "label": "红夹克", "look": "红夹克＋百褶短裙", "usedBy": [] },
+    { "no": 16, "dir": "l2d22.u", "model": "l2d22.u.model3.json", "label": "橙格纹冬装", "look": "橙格纹连帽＋毛边，同私服的厚版", "usedBy": [] },
+    { "no": 17, "dir": "l2d27.u", "model": "l2d27.u.model3.json", "label": "菱格毛衣", "look": "米色菱格毛衣＋棕色贝雷帽＋围巾", "usedBy": [] },
+    { "no": 18, "dir": "l2d33.u", "model": "l2d33.u.model3.json", "label": "黑灰制服", "look": "黑灰束腰制服＋皮扣", "usedBy": [] },
+    { "no": 19, "dir": "l2d401.u", "model": "l2d401.u.model3.json", "label": "白裙", "look": "白吊带裙，近似誓约初", "usedBy": [] },
+    { "no": 20, "dir": "l2d5017.u", "model": "【奈乐】誓约终.model3.json", "label": "誓约终", "look": "白色婚纱，坐姿、手按胸前；celian 是库里唯一的真侧脸动作", "usedBy": ["f_profile"] },
+    { "no": 21, "dir": "l2d7017.u", "model": "l2d7017.u.model3.json", "label": "轻战术", "look": "灰白绑带轻装＋短裤", "usedBy": [] },
+    { "no": 22, "dir": "l2d8001.u", "model": "【奈乐】赏月.model3.json", "label": "赏月", "look": "和服＋红色纸伞＋月亮道具，坐姿", "usedBy": [] },
+    { "no": 23, "dir": "l2d80011.u", "model": ".model3.json", "label": "残件", "look": "只有一把纸伞的部件集，不可单独成画", "usedBy": [] },
+    { "no": 24, "dir": "qy05__l2d_204.u", "model": "【高奈利亚】音乐节.model3.json", "label": "音乐节", "look": "红夹克＋短裤＋挂饰，舞台感", "usedBy": [] }
+  ],
+  "howToUse": [
+    "render: node tools/live2d_art.mjs render --model \"高奈利亚/<dir>\" --out out/_lib/<name>.png --w 3000 --h 3000 --pad 0.96 [--motion motions/<x>.motion3.json --t 0.9]",
+    "cut:    python tools/plate_cut.py --in out/_lib/<name>.png --out assets/character/<plate>.png --zoom 0.75 --top 0.0",
+    "登记:   assets/character/raw.json 里加画板名 → 引擎 printRaw 原图直印，不压墨不染色"
+  ],
+  "notes": [
+    "库内全是少女体态：没有男性、没有动物；少年/男人/猫都靠她本人换装束来演。",
+    "带猫耳元素的只有 06（连帽衫）与 07（战术耳机＋尾巴）。",
+    "真有侧脸的只有 l2d5017 的 Mgirl02_celian，调 PARAM_ANGLE_X 转不过去。",
+    "手臂能真伸出去的：dazhaohu 系列（06/07 这套都有），dazhaohu t=0.9 是一条手臂横伸。"
+  ]
+}
