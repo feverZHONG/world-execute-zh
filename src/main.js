@@ -41,6 +41,14 @@ try {
   if (qs.get('artsvg')) cfg.paths.artSvg = qs.get('artsvg');
   // ?art=<dir> 换一套剪影目录（试验新图时用，不动 assets/character）
   if (qs.get('art')) cfg.paths.art = qs.get('art');
+  // ?pal=<file> 覆盖配色：文件形如 { "on": { "me": "#3e93ae", ... }, "warm": { ... } }，按状态逐项覆盖
+  if (qs.get('pal')) {
+    const ov = await getJson(qs.get('pal'));
+    for (const [state, roles] of Object.entries(ov)) {
+      if (state.startsWith('_') || !cfg.palettes[state]) continue;
+      Object.assign(cfg.palettes[state], roles);
+    }
+  }
   boot.expect(2 + loadSteps(cfg));
   boot.step('config.json');
   const [featuresData, lyricsData] = await Promise.all([

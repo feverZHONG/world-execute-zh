@@ -32,6 +32,7 @@ const SHEET = arg('sheet', null);
 const LAB = arg('lab', null);                         // --lab <set>: the check cards of src/scenes/lab.js, one per second from t = 0
 const ARTSVG = arg('artsvg', '');                     // --artsvg <dir>: take the silhouettes from that folder as SVG (tools/raster_to_svg.mjs)
 const ARTDIR = arg('art', '');                        // --art <dir>: use another silhouette folder (test plates, without touching assets/character)
+const PAL = arg('pal', '');                           // --pal <file>: override palette roles per state (out/_pal/*.json)
 const W = +arg('width', SHEET ? 960 : cfg.video.width), H = +arg('height', SHEET ? 540 : cfg.video.height), FPS = +arg('fps', cfg.video.fps);
 const PRE = cfg.safety?.preroll ?? 0;                 // seconds of film before the song
 const START = Math.max(-PRE, +arg('start', LAB ? 0 : -PRE)), END = Math.min(+arg('end', features.meta.duration), features.meta.duration);
@@ -125,7 +126,7 @@ try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   page.on('pageerror', (e) => { failed = e; console.error('[page error]', e.message); });
   page.on('console', (m) => { if (m.type() === 'error') console.error('[page]', m.text()); });
-  await page.goto(`${url}/?mode=export&w=${W}&h=${H}${LAB ? `&lab=${encodeURIComponent(LAB)}` : ''}${ARTSVG ? `&artsvg=${encodeURIComponent(ARTSVG)}` : ''}${ARTDIR ? `&art=${encodeURIComponent(ARTDIR)}` : ''}`);
+  await page.goto(`${url}/?mode=export&w=${W}&h=${H}${LAB ? `&lab=${encodeURIComponent(LAB)}` : ''}${ARTSVG ? `&artsvg=${encodeURIComponent(ARTSVG)}` : ''}${ARTDIR ? `&art=${encodeURIComponent(ARTDIR)}` : ''}${PAL ? `&pal=${encodeURIComponent(PAL)}` : ''}`);
   await page.waitForFunction(() => window.__mv && window.__mv.ready, null, { timeout: 60000 });
   const renderer = await page.evaluate(() => window.__mv.renderer);
   if (/swiftshader|llvmpipe|basic render/i.test(renderer)) console.warn('[export] WARNING: software WebGL - GPU not in use');
