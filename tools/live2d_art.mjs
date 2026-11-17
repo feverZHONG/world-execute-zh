@@ -95,12 +95,14 @@ try {
     const FACELESS = has('faceless');                           // 去五官：把头部里被皮肤包住的封闭块（眉/眼/鼻影/嘴）填成皮肤墨
     const FACEH = +arg('face-h', 0.45);                         // 去五官时作用的头部高度占比（从图顶算）
     const ERASE = arg('erase', '');                             // 手工抹除：输出像素 "x,y,w,h"（多块用 ; 分隔），填成皮肤墨
+    const BLUE = +arg('blue', 0.12);                            // 蓝色（头发）判成橙墨所需的最低饱和度；调小可吃掉发面高光留下的白洞
+    const ISLAND = +arg('island', 0);                           // 小于这个像素数的墨块并回周围主墨（治碎斑，0 关闭）
     const dst = outPath(arg('out', dry ? 'out/_ink_dry.png' : 'out/ink.png'));
 
     const page = await browser.newPage({ viewport: { width: 600, height: 400 } });
     page.on('console', (m) => { if (m.type() === 'error') console.log('[page]', m.text()); });
     await page.goto(`${url}/tools/probe.html`);
-    const res = await page.evaluate(async ({ src, W, H, crop, CLEAN, KEY, BLOCK, SKIN, FACELESS, FACEH, ERASE }) => {
+    const res = await page.evaluate(async ({ src, W, H, crop, CLEAN, KEY, BLOCK, SKIN, FACELESS, FACEH, ERASE, BLUE, ISLAND }) => {
       const bmp = await createImageBitmap(await (await fetch(src)).blob());
       const sw = bmp.width, sh = bmp.height;
       const rect = crop ? crop.split(',').map(Number) : [0, 0, sw, sh];
@@ -123,7 +125,7 @@ try {
           if (h < 0) h += 360;
         }
         return v < 0.30 ? 3                                    // 近黑：线稿、深色布料
-          : (h >= 150 && h <= 265 && s >= 0.12) ? 2            // 青蓝：头发 → 橙墨
+          : (h >= 150 && h <= 265 && s >= BLUE) ? 2           // 青蓝：头发 → 橙墨（阈值放低才吃得掉发面高光）
             : s < 0.20 ? 1                                     // 白布、无彩 → 米白
               : (h >= 5 && h <= 55 && s < 0.42) ? (SKIN === 'black' ? 3 : 1)   // 暖白：皮肤 → 米白（原片无脸，皮肤走黑更贴原设计）
                 : 2;                                           // 其余中间调 → 橙
@@ -235,6 +237,41 @@ try {
           }
         }
       }
+      // 去碎斑（--island）：把小于阈值的整块墨并回它周围占多数的墨。
+      // 和 --block 是两件事：block 是"看不清就不画"，island 是"看得清但太小就不留"。
+      // 用它是为了在全分辨率分类（边缘平滑）之下，把蕾丝、花纹、发高光这些细碎块吃掉。
+      if (ISLAND > 0) {
+        const seen = new Uint8Array(W * H);
+        const stack = new Int32Array(W * H);
+        for (let start = 0; start < W * H; start++) {
+          if (seen[start]) continue;
+          const own = lab2[start];
+          seen[start] = 1;
+          let sp = 0; stack[sp++] = start;
+          const comp = []; const nb = [0, 0, 0, 0];
+          let touchesBorder = false;
+          while (sp > 0) {
+            const i = stack[--sp]; comp.push(i);
+            const x = i % W, y = (i - x) / W;
+            if (x === 0 || y === 0 || x === W - 1 || y === H - 1) touchesBorder = true;
+            if (x > 0) { const j = i - 1; if (lab2[j] === own) { if (!seen[j]) { seen[j] = 1; stack[sp++] = j; } } else nb[lab2[j]]++; }
+            if (x < W - 1) { const j = i + 1; if (lab2[j] === own) { if (!seen[j]) { seen[j] = 1; stack[sp++] = j; } } else nb[lab2[j]]++; }
+            if (y > 0) { const j = i - W; if (lab2[j] === own) { if (!seen[j]) { seen[j] = 1; stack[sp++] = j; } } else nb[lab2[j]]++; }
+            if (y < H - 1) { const j = i + W; if (lab2[j] === own) { if (!seen[j]) { seen[j] = 1; stack[sp++] = j; } } else nb[lab2[j]]++; }
+          }
+          if (own !== 0 && comp.length < ISLAND) {
+            // 小色块 → 并回周围占多数的墨
+            let bi = 0, bc = -1;
+            for (let k = 0; k < 4; k++) if (nb[k] > bc) { bc = nb[k]; bi = k; }
+            for (const i of comp) lab2[i] = bi;
+          } else if (own === 0 && !touchesBorder && comp.length < ISLAND) {
+            // 形状内部的透明小洞 → 用周围主墨堵上（否则 blackline 会沿洞勾出一圈黑点）
+            let bi = 0, bc = 0;
+            for (let k = 1; k < 4; k++) if (nb[k] > bc) { bc = nb[k]; bi = k; }
+            if (bi !== 0) for (const i of comp) lab2[i] = bi;
+          }
+        }
+      }
       // 黑边：把贴着实心外缘的一圈（KEY px）改成黑，补回原图那种墨线勾边
       if (KEY > 0) {
         let edge = new Uint8Array(W * H);
@@ -263,7 +300,7 @@ try {
       g.putImageData(new ImageData(px, W, H), 0, 0);
       const bbox = solid ? { x: bx0, y: by0, w: bx1 - bx0 + 1, h: by1 - by0 + 1 } : null;
       return { dataUrl: c.toDataURL('image/png'), src: { w: sw, h: sh }, solid, hits, bbox };
-    }, { src: toUrl(path.resolve(inp)), W, H, crop, CLEAN, KEY, BLOCK, SKIN, FACELESS, FACEH, ERASE });
+    }, { src: toUrl(path.resolve(inp)), W, H, crop, CLEAN, KEY, BLOCK, SKIN, FACELESS, FACEH, ERASE, BLUE, ISLAND });
 
     if (res.bbox) {
       const m = { top: res.bbox.y, left: res.bbox.x, right: W - (res.bbox.x + res.bbox.w), bottom: H - (res.bbox.y + res.bbox.h) };
