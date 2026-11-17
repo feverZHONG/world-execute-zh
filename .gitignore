@@ -36,6 +36,8 @@ Thumbs.db
 /assets/fonts/node_modules/
 # Live2D 试验素材：第三方版权，不入库、不可发布
 /assets/live2d/
+# 双生视界 Live2D 素材库的目录联结（1.84 GB，在本机 E:\DCIM 下，不入库）
+/assets/live2d_lib/
 # 换图试拍用的临时剪影套
 /assets/_test_art/
 /assets/_test_art3/

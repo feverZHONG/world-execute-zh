@@ -40,6 +40,7 @@
 | 字体层 | 字体栈、按字断行（不按空格）、等宽汉字 1em、字形校验；两角色各 **547 字**的用字表（含注释里的字，比实际画面用字略多） | `tools/zh_charset.mjs`、`src/engine/draw.js` |
 | 文案层 | `chat_script.json`、`errors.json` 全量中文化，场景里硬编码的 UI 字一并改（含警告页整页、片尾署名） | `docs/v4/chat_script.json`、`docs/v4/errors.json`、`src/scenes/*` |
 | 美术层（接线，不出图） | 剪影交付规格单、验收脚本、八张实测基线；坐标基准参数化（1086×1448 不再写死）；**收图流水线**：外来图一键规整到基线构图、量墨、出配准初值 | `二次创作/说明/剪影规格.md`、[`收图流程.md`](二次创作/说明/收图流程.md)、`tools/art_check.mjs`、`tools/art_intake.py`、`src/engine/art.js` |
+| 美术层（形体来源） | 接入本机**双生视界 Live2D 素材库**（15 角色 / 204 套模型 / 1.84 GB）：建墨色索引、渲染工具认库路径、三墨压图配方 | [`素材库.md`](二次创作/说明/素材库.md)、`tools/live2d_index.py`、`docs/v4/art/live2d_index.json`、`tools/live2d_art.mjs` |
 | 导出层 | 修本机 ffmpeg 4.2.2 不认 `adelay=...:all=1`；1080p60 全片已出；自检脚本量音画滞后 | `export/export.mjs`、`tools/check_export.py` |
 | 试验线（未采用） | SVG 位图矢量化（无画质收益）、Live2D 模型顶剪影（能跑通但不能当成品） | `二次创作/说明/踩坑与经验.md` 3.3 / 3.4 |
 
@@ -52,7 +53,7 @@ src/            canvas 渲染引擎与全部场景（engine / scenes）
 export/         export.mjs（逐帧 + ffmpeg 合成）、server.mjs（静态服务与预览）
 tools/          字表、台词稿、量图、验收、自检、Live2D 试验等脚本
 docs/           v4 的对话文案、错误文案、上游提示词与进度记录
-assets/         角色剪影（8 张 PNG + regions.json）、SVG 验证副本、字体包清单
+assets/         角色剪影（8 张 PNG + regions.json）、SVG 验证副本、字体包清单（另：`live2d_lib` 是指向本机素材库的目录联结，不入库）
 二次创作/        中文化相关的说明与文稿（规格单、清单、踩坑经验、台词稿）
 音頻&歌詞/       自备歌曲与歌词（不入库，只留 README）
 out/            渲染产物与成片（不入库）

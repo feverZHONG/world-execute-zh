@@ -1,0 +1,5168 @@
+{
+ "lib": "E:\\DCIM\\doubaoWS\\workspace\\world-execute-中文版\\assets\\live2d_lib",
+ "sampled": 192,
+ "models": [
+  {
+   "character": "丽达",
+   "model_dir": "丽达/6t07__l2d_20.u",
+   "model3": "6t07__l2d_20.u.model3.json",
+   "moc": "6t07__l2d_20.u.moc3",
+   "moc_mb": 4.12,
+   "textures": 1,
+   "texture_max_px": [
+    1024,
+    1024
+   ],
+   "inks": {
+    "cream": 71.3,
+    "orange": 22.5,
+    "black": 6.2
+   },
+   "motions": 66,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【丽达】泳装.model3.json"
+   ],
+   "warm_fit": 93.8
+  },
+  {
+   "character": "丽达",
+   "model_dir": "丽达/8t09__l2d_75.u",
+   "model3": "8t09__l2d_75.u.model3.json",
+   "moc": "8t09__l2d_75.u.moc3",
+   "moc_mb": 5.76,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 65.3,
+    "orange": 24.9,
+    "black": 9.8
+   },
+   "motions": 30,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【丽达】事务官.model3.json"
+   ],
+   "warm_fit": 90.2
+  },
+  {
+   "character": "丽达",
+   "model_dir": "丽达/l2d00.u",
+   "model3": "l2d00.u.model3.json",
+   "moc": "l2d00.u.moc3",
+   "moc_mb": 3.81,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 94.9,
+    "orange": 3.9,
+    "black": 1.1
+   },
+   "motions": 2,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.8
+  },
+  {
+   "character": "丽达",
+   "model_dir": "丽达/l2d01.u",
+   "model3": "l2d01.u.model3.json",
+   "moc": "l2d01.u.moc3",
+   "moc_mb": 3.28,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 67.0,
+    "orange": 32.2,
+    "black": 0.7
+   },
+   "motions": 67,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.2
+  },
+  {
+   "character": "丽达",
+   "model_dir": "丽达/l2d02.u",
+   "model3": "l2d02.u.model3.json",
+   "moc": "l2d02.u.moc3",
+   "moc_mb": 0.89,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 77.9,
+    "orange": 21.0,
+    "black": 1.1
+   },
+   "motions": 20,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.9
+  },
+  {
+   "character": "丽达",
+   "model_dir": "丽达/l2d03.u",
+   "model3": "l2d03.u.model3.json",
+   "moc": "l2d03.u.moc3",
+   "moc_mb": 1.4,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 80.0,
+    "orange": 19.1,
+    "black": 1.0
+   },
+   "motions": 20,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.1
+  },
+  {
+   "character": "丽达",
+   "model_dir": "丽达/l2d04.u",
+   "model3": "l2d04.u.model3.json",
+   "moc": "l2d04.u.moc3",
+   "moc_mb": 4.01,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 83.7,
+    "orange": 15.6,
+    "black": 0.7
+   },
+   "motions": 59,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.3
+  },
+  {
+   "character": "丽达",
+   "model_dir": "丽达/l2d07.u",
+   "model3": "l2d07.u.model3.json",
+   "moc": "l2d07.u.moc3",
+   "moc_mb": 3.78,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 62.7,
+    "orange": 35.4,
+    "black": 1.9
+   },
+   "motions": 57,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.1
+  },
+  {
+   "character": "丽达",
+   "model_dir": "丽达/l2d17.u",
+   "model3": "l2d17.u.model3.json",
+   "moc": "l2d17.u.moc3",
+   "moc_mb": 5.19,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 93.1,
+    "orange": 5.6,
+    "black": 1.3
+   },
+   "motions": 73,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.7
+  },
+  {
+   "character": "丽达",
+   "model_dir": "丽达/l2d22.u",
+   "model3": "l2d22.u.model3.json",
+   "moc": "l2d22.u.moc3",
+   "moc_mb": 3.28,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 67.0,
+    "orange": 32.2,
+    "black": 0.7
+   },
+   "motions": 80,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.2
+  },
+  {
+   "character": "丽达",
+   "model_dir": "丽达/l2d25.u",
+   "model3": "l2d25.u.model3.json",
+   "moc": "l2d25.u.moc3",
+   "moc_mb": 10.11,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 74.0,
+    "orange": 10.7,
+    "black": 15.3
+   },
+   "motions": 34,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 84.7
+  },
+  {
+   "character": "丽达",
+   "model_dir": "丽达/l2d3007.u",
+   "model3": "l2d3007.u.model3.json",
+   "moc": "l2d3007.u.moc3",
+   "moc_mb": 0.16,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 64.1,
+    "orange": 27.7,
+    "black": 8.2
+   },
+   "motions": 2,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 91.8
+  },
+  {
+   "character": "丽达",
+   "model_dir": "丽达/l2d5017.u",
+   "model3": "l2d5017.u.model3.json",
+   "moc": "l2d5017.u.moc3",
+   "moc_mb": 0.71,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 36.4,
+    "orange": 55.9,
+    "black": 7.8
+   },
+   "motions": 24,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 92.3
+  },
+  {
+   "character": "丽达",
+   "model_dir": "丽达/qlzl2d__l2d_188.u",
+   "model3": "qlzl2d__l2d_188.u.model3.json",
+   "moc": "qlzl2d__l2d_188.u.moc3",
+   "moc_mb": 4.16,
+   "textures": 2,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 93.9,
+    "orange": 5.2,
+    "black": 0.8
+   },
+   "motions": 55,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【丽达】未知需确认.model3.json"
+   ],
+   "warm_fit": 99.1
+  },
+  {
+   "character": "丽达",
+   "model_dir": "丽达/yh11__l2d_195.u",
+   "model3": "yh11__l2d_195.u.model3.json",
+   "moc": "yh11__l2d_195.u.moc3",
+   "moc_mb": 0.77,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 76.2,
+    "orange": 22.9,
+    "black": 0.8
+   },
+   "motions": 42,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【丽达】闲趣.model3.json"
+   ],
+   "warm_fit": 99.1
+  },
+  {
+   "character": "伊珂丝",
+   "model_dir": "伊珂丝/10t10__l2d_134.u",
+   "model3": "10t10__l2d_134.u.model3.json",
+   "moc": "10t10__l2d_134.u.moc3",
+   "moc_mb": 2.28,
+   "textures": 2,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 35.5,
+    "orange": 35.8,
+    "black": 28.6
+   },
+   "motions": 39,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【伊珂丝】童话.model3.json"
+   ],
+   "warm_fit": 71.3
+  },
+  {
+   "character": "伊珂丝",
+   "model_dir": "伊珂丝/7t06__l2d_47.u",
+   "model3": "7t06__l2d_47.u.model3.json",
+   "moc": "7t06__l2d_47.u.moc3",
+   "moc_mb": 2.08,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 52.2,
+    "orange": 37.6,
+    "black": 10.2
+   },
+   "motions": 55,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【伊珂丝】战术.model3.json"
+   ],
+   "warm_fit": 89.8
+  },
+  {
+   "character": "伊珂丝",
+   "model_dir": "伊珂丝/l2d00.u",
+   "model3": "l2d00.u.model3.json",
+   "moc": "l2d00.u.moc3",
+   "moc_mb": 1.63,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 62.5,
+    "orange": 35.7,
+    "black": 1.8
+   },
+   "motions": 0,
+   "motion_groups": [],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.2
+  },
+  {
+   "character": "伊珂丝",
+   "model_dir": "伊珂丝/l2d01.u",
+   "model3": "l2d01.u.model3.json",
+   "moc": "l2d01.u.moc3",
+   "moc_mb": 3.6,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    1024
+   ],
+   "inks": {
+    "cream": 63.4,
+    "orange": 34.8,
+    "black": 1.7
+   },
+   "motions": 56,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.2
+  },
+  {
+   "character": "伊珂丝",
+   "model_dir": "伊珂丝/l2d02.u",
+   "model3": "l2d02.u.model3.json",
+   "moc": "l2d02.u.moc3",
+   "moc_mb": 1.95,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 47.1,
+    "orange": 51.5,
+    "black": 1.4
+   },
+   "motions": 19,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.6
+  },
+  {
+   "character": "伊珂丝",
+   "model_dir": "伊珂丝/l2d03.u",
+   "model3": "l2d03.u.model3.json",
+   "moc": "l2d03.u.moc3",
+   "moc_mb": 1.8,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 57.5,
+    "orange": 41.0,
+    "black": 1.5
+   },
+   "motions": 20,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.5
+  },
+  {
+   "character": "伊珂丝",
+   "model_dir": "伊珂丝/l2d04.u",
+   "model3": "l2d04.u.model3.json",
+   "moc": "l2d04.u.moc3",
+   "moc_mb": 2.01,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 53.2,
+    "orange": 44.7,
+    "black": 2.1
+   },
+   "motions": 56,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "nvpuzhuang.model3.json"
+   ],
+   "warm_fit": 97.9
+  },
+  {
+   "character": "伊珂丝",
+   "model_dir": "伊珂丝/l2d08.u",
+   "model3": "l2d08.u.model3.json",
+   "moc": "l2d08.u.moc3",
+   "moc_mb": 2.0,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 63.0,
+    "orange": 35.1,
+    "black": 1.9
+   },
+   "motions": 53,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "yongzhuang.model3.json"
+   ],
+   "warm_fit": 98.1
+  },
+  {
+   "character": "伊珂丝",
+   "model_dir": "伊珂丝/l2d10.u",
+   "model3": "l2d10.u.model3.json",
+   "moc": "l2d10.u.moc3",
+   "moc_mb": 2.73,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 39.9,
+    "orange": 58.9,
+    "black": 1.2
+   },
+   "motions": 71,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.8
+  },
+  {
+   "character": "伊珂丝",
+   "model_dir": "伊珂丝/l2d16.u",
+   "model3": "l2d16.u.model3.json",
+   "moc": "l2d16.u.moc3",
+   "moc_mb": 2.55,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    1024
+   ],
+   "inks": {
+    "cream": 52.8,
+    "orange": 45.8,
+    "black": 1.4
+   },
+   "motions": 34,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "西洋棋.model3.json"
+   ],
+   "warm_fit": 98.6
+  },
+  {
+   "character": "伊珂丝",
+   "model_dir": "伊珂丝/l2d18.u",
+   "model3": "l2d18.u.model3.json",
+   "moc": "l2d18.u.moc3",
+   "moc_mb": 2.17,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 50.1,
+    "orange": 43.9,
+    "black": 6.0
+   },
+   "motions": 37,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 94.0
+  },
+  {
+   "character": "伊珂丝",
+   "model_dir": "伊珂丝/l2d22.u",
+   "model3": "l2d22.u.model3.json",
+   "moc": "l2d22.u.moc3",
+   "moc_mb": 3.6,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    1024
+   ],
+   "inks": {
+    "cream": 63.4,
+    "orange": 34.8,
+    "black": 1.7
+   },
+   "motions": 61,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.2
+  },
+  {
+   "character": "伊珂丝",
+   "model_dir": "伊珂丝/l2d401.u",
+   "model3": "l2d401.u.model3.json",
+   "moc": "l2d401.u.moc3",
+   "moc_mb": 3.6,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    1024
+   ],
+   "inks": {
+    "cream": 63.4,
+    "orange": 34.8,
+    "black": 1.7
+   },
+   "motions": 44,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.2
+  },
+  {
+   "character": "伊珂丝",
+   "model_dir": "伊珂丝/l2d8001.u",
+   "model3": "l2d8001.u.model3.json",
+   "moc": "l2d8001.u.moc3",
+   "moc_mb": 0.71,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 53.5,
+    "orange": 40.4,
+    "black": 6.1
+   },
+   "motions": 52,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 93.9
+  },
+  {
+   "character": "伊珂丝",
+   "model_dir": "伊珂丝/qy07__l2d_206.u",
+   "model3": "qy07__l2d_206.u.model3.json",
+   "moc": "qy07__l2d_206.u.moc3",
+   "moc_mb": 5.22,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 40.7,
+    "orange": 57.3,
+    "black": 2.0
+   },
+   "motions": 73,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【伊珂丝】音乐节.model3.json"
+   ],
+   "warm_fit": 98.0
+  },
+  {
+   "character": "唯",
+   "model_dir": "唯/l2d00.u",
+   "model3": "l2d00.u.model3.json",
+   "moc": "l2d00.u.moc3",
+   "moc_mb": 9.13,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 71.8,
+    "orange": 26.7,
+    "black": 1.5
+   },
+   "motions": 2,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.5
+  },
+  {
+   "character": "唯",
+   "model_dir": "唯/l2d01.u",
+   "model3": "l2d01.u.model3.json",
+   "moc": "l2d01.u.moc3",
+   "moc_mb": 10.6,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 62.0,
+    "orange": 36.2,
+    "black": 1.8
+   },
+   "motions": 42,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.2
+  },
+  {
+   "character": "唯",
+   "model_dir": "唯/l2d14.u",
+   "model3": "l2d14.u.model3.json",
+   "moc": "l2d14.u.moc3",
+   "moc_mb": 13.02,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 54.8,
+    "orange": 43.3,
+    "black": 1.8
+   },
+   "motions": 34,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.1
+  },
+  {
+   "character": "唯",
+   "model_dir": "唯/l2d22.u",
+   "model3": "l2d22.u.model3.json",
+   "moc": "l2d22.u.moc3",
+   "moc_mb": 10.6,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 62.3,
+    "orange": 36.1,
+    "black": 1.7
+   },
+   "motions": 41,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.4
+  },
+  {
+   "character": "唯",
+   "model_dir": "唯/l2d28.u",
+   "model3": "dw.model3.json",
+   "moc": "l2d28.u.moc3",
+   "moc_mb": 12.24,
+   "textures": 2,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 85.5,
+    "orange": 13.6,
+    "black": 0.9
+   },
+   "motions": 0,
+   "motion_groups": [],
+   "expressions": 0,
+   "extra_model3": [
+    "l2d28.u.model3.json",
+    "tianshiemowei.model3.json"
+   ],
+   "warm_fit": 99.1
+  },
+  {
+   "character": "唯",
+   "model_dir": "唯/l2d401.u",
+   "model3": "l2d401.u.model3.json",
+   "moc": "l2d401.u.moc3",
+   "moc_mb": 10.6,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 62.3,
+    "orange": 36.1,
+    "black": 1.7
+   },
+   "motions": 26,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.4
+  },
+  {
+   "character": "唯",
+   "model_dir": "唯/l2d8001.u",
+   "model3": "l2d8001.u.model3.json",
+   "moc": "l2d8001.u.moc3",
+   "moc_mb": 2.32,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 63.1,
+    "orange": 27.7,
+    "black": 9.2
+   },
+   "motions": 48,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 90.8
+  },
+  {
+   "character": "时无忧",
+   "model_dir": "时无忧/l2d00.u",
+   "model3": "l2d00.u.model3.json",
+   "moc": "l2d00.u.moc3",
+   "moc_mb": 1.21,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 68.3,
+    "orange": 29.9,
+    "black": 1.9
+   },
+   "motions": 2,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.2
+  },
+  {
+   "character": "时无忧",
+   "model_dir": "时无忧/l2d01.u",
+   "model3": "l2d01.u.model3.json",
+   "moc": "l2d01.u.moc3",
+   "moc_mb": 1.48,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 66.1,
+    "orange": 32.4,
+    "black": 1.5
+   },
+   "motions": 55,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.5
+  },
+  {
+   "character": "时无忧",
+   "model_dir": "时无忧/l2d02.u",
+   "model3": "l2d02.u.model3.json",
+   "moc": "l2d02.u.moc3",
+   "moc_mb": 1.46,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 53.4,
+    "orange": 45.3,
+    "black": 1.4
+   },
+   "motions": 11,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.7
+  },
+  {
+   "character": "时无忧",
+   "model_dir": "时无忧/l2d03.u",
+   "model3": "l2d03.u.model3.json",
+   "moc": "l2d03.u.moc3",
+   "moc_mb": 1.36,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 62.1,
+    "orange": 36.4,
+    "black": 1.5
+   },
+   "motions": 11,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.5
+  },
+  {
+   "character": "时无忧",
+   "model_dir": "时无忧/l2d04.u",
+   "model3": "l2d04.u.model3.json",
+   "moc": "l2d04.u.moc3",
+   "moc_mb": 1.49,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 65.9,
+    "orange": 18.5,
+    "black": 15.6
+   },
+   "motions": 57,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 84.4
+  },
+  {
+   "character": "时无忧",
+   "model_dir": "时无忧/l2d07.u",
+   "model3": "l2d07.u.model3.json",
+   "moc": "l2d07.u.moc3",
+   "moc_mb": 1.43,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 31.4,
+    "orange": 67.4,
+    "black": 1.1
+   },
+   "motions": 56,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.8
+  },
+  {
+   "character": "时无忧",
+   "model_dir": "时无忧/l2d08.u",
+   "model3": "l2d08.u.model3.json",
+   "moc": "l2d08.u.moc3",
+   "moc_mb": 1.99,
+   "textures": 1,
+   "texture_max_px": [
+    1024,
+    1024
+   ],
+   "inks": {
+    "cream": 58.7,
+    "orange": 39.9,
+    "black": 1.4
+   },
+   "motions": 32,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.6
+  },
+  {
+   "character": "时无忧",
+   "model_dir": "时无忧/l2d10.u",
+   "model3": "l2d10.u.model3.json",
+   "moc": "l2d10.u.moc3",
+   "moc_mb": 2.78,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 41.1,
+    "orange": 55.7,
+    "black": 3.3
+   },
+   "motions": 53,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 96.8
+  },
+  {
+   "character": "时无忧",
+   "model_dir": "时无忧/l2d12.u",
+   "model3": "l2d12.u.model3.json",
+   "moc": "l2d12.u.moc3",
+   "moc_mb": 1.78,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 40.4,
+    "orange": 58.3,
+    "black": 1.3
+   },
+   "motions": 34,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.7
+  },
+  {
+   "character": "时无忧",
+   "model_dir": "时无忧/l2d16.u",
+   "model3": "l2d16.u.model3.json",
+   "moc": "l2d16.u.moc3",
+   "moc_mb": 1.65,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    1024
+   ],
+   "inks": {
+    "cream": 49.7,
+    "orange": 49.1,
+    "black": 1.2
+   },
+   "motions": 32,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.8
+  },
+  {
+   "character": "时无忧",
+   "model_dir": "时无忧/l2d17.u",
+   "model3": "l2d17.u.model3.json",
+   "moc": "l2d17.u.moc3",
+   "moc_mb": 2.44,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 79.7,
+    "orange": 19.1,
+    "black": 1.2
+   },
+   "motions": 58,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.8
+  },
+  {
+   "character": "时无忧",
+   "model_dir": "时无忧/l2d3008.u",
+   "model3": "l2d3008.u.model3.json",
+   "moc": "l2d3008.u.moc3",
+   "moc_mb": 0.23,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 55.8,
+    "orange": 42.5,
+    "black": 1.8
+   },
+   "motions": 2,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.3
+  },
+  {
+   "character": "时无忧",
+   "model_dir": "时无忧/l2d3012.u",
+   "model3": "l2d3012.u.model3.json",
+   "moc": "l2d3012.u.moc3",
+   "moc_mb": 0.12,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 46.4,
+    "orange": 49.9,
+    "black": 3.6
+   },
+   "motions": 2,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 96.3
+  },
+  {
+   "character": "时无忧",
+   "model_dir": "时无忧/l2d3015.u",
+   "model3": "l2d3015.u.model3.json",
+   "moc": "l2d3015.u.moc3",
+   "moc_mb": 0.15,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 23.8,
+    "orange": 65.9,
+    "black": 10.3
+   },
+   "motions": 2,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 89.7
+  },
+  {
+   "character": "时无忧",
+   "model_dir": "时无忧/l2d5017.u",
+   "model3": "l2d5017.u.model3.json",
+   "moc": "l2d5017.u.moc3",
+   "moc_mb": 1.03,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 65.6,
+    "orange": 33.7,
+    "black": 0.7
+   },
+   "motions": 23,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.3
+  },
+  {
+   "character": "时无忧",
+   "model_dir": "时无忧/qy04__l2d_203.u",
+   "model3": "qy04__l2d_203.u.model3.json",
+   "moc": "qy04__l2d_203.u.moc3",
+   "moc_mb": 2.69,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 46.4,
+    "orange": 37.5,
+    "black": 16.2
+   },
+   "motions": 75,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【时无忧】音乐节.model3.json"
+   ],
+   "warm_fit": 83.9
+  },
+  {
+   "character": "时无忧",
+   "model_dir": "时无忧/yh10__l2d_194.u",
+   "model3": "yh10__l2d_194.u.model3.json",
+   "moc": "yh10__l2d_194.u.moc3",
+   "moc_mb": 1.82,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 21.8,
+    "orange": 77.3,
+    "black": 0.9
+   },
+   "motions": 42,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【时无忧】假日.model3.json"
+   ],
+   "warm_fit": 99.1
+  },
+  {
+   "character": "时无忧",
+   "model_dir": "时无忧/yh10__l2d_196.u",
+   "model3": "yh10__l2d_196.u.model3.json",
+   "moc": "yh10__l2d_196.u.moc3",
+   "moc_mb": 1.82,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 21.8,
+    "orange": 77.3,
+    "black": 0.9
+   },
+   "motions": 42,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.1
+  },
+  {
+   "character": "时无瑕",
+   "model_dir": "时无瑕/6t06__l2d_19.u",
+   "model3": "6t06__l2d_19.u.model3.json",
+   "moc": "6t06__l2d_19.u.moc3",
+   "moc_mb": 1.54,
+   "textures": 2,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 56.7,
+    "orange": 40.8,
+    "black": 2.4
+   },
+   "motions": 57,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【时无瑕】泳装.model3.json"
+   ],
+   "warm_fit": 97.5
+  },
+  {
+   "character": "时无瑕",
+   "model_dir": "时无瑕/8t10__l2d_76.u",
+   "model3": "8t10__l2d_76.u.model3.json",
+   "moc": "8t10__l2d_76.u.moc3",
+   "moc_mb": 2.21,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 59.9,
+    "orange": 38.3,
+    "black": 1.8
+   },
+   "motions": 30,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【时无瑕】事务官.model3.json"
+   ],
+   "warm_fit": 98.2
+  },
+  {
+   "character": "时无瑕",
+   "model_dir": "时无瑕/l2d00.u",
+   "model3": "l2d00.u.model3.json",
+   "moc": "l2d00.u.moc3",
+   "moc_mb": 1.18,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 64.8,
+    "orange": 32.7,
+    "black": 2.5
+   },
+   "motions": 2,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 97.5
+  },
+  {
+   "character": "时无瑕",
+   "model_dir": "时无瑕/l2d01.u",
+   "model3": "l2d01.u.model3.json",
+   "moc": "l2d01.u.moc3",
+   "moc_mb": 1.49,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 50.5,
+    "orange": 47.7,
+    "black": 1.8
+   },
+   "motions": 72,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.2
+  },
+  {
+   "character": "时无瑕",
+   "model_dir": "时无瑕/l2d02.u",
+   "model3": "l2d02.u.model3.json",
+   "moc": "l2d02.u.moc3",
+   "moc_mb": 1.3,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 45.0,
+    "orange": 53.2,
+    "black": 1.9
+   },
+   "motions": 11,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.2
+  },
+  {
+   "character": "时无瑕",
+   "model_dir": "时无瑕/l2d03.u",
+   "model3": "l2d03.u.model3.json",
+   "moc": "l2d03.u.moc3",
+   "moc_mb": 1.38,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 61.3,
+    "orange": 36.8,
+    "black": 2.0
+   },
+   "motions": 20,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.1
+  },
+  {
+   "character": "时无瑕",
+   "model_dir": "时无瑕/l2d04.u",
+   "model3": "l2d04.u.model3.json",
+   "moc": "l2d04.u.moc3",
+   "moc_mb": 1.37,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 60.8,
+    "orange": 26.2,
+    "black": 13.0
+   },
+   "motions": 66,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 87.0
+  },
+  {
+   "character": "时无瑕",
+   "model_dir": "时无瑕/l2d07.u",
+   "model3": "l2d07.u.model3.json",
+   "moc": "l2d07.u.moc3",
+   "moc_mb": 1.42,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 49.7,
+    "orange": 48.5,
+    "black": 1.8
+   },
+   "motions": 68,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "战术无瑕.model3.json"
+   ],
+   "warm_fit": 98.2
+  },
+  {
+   "character": "时无瑕",
+   "model_dir": "时无瑕/l2d09.u",
+   "model3": "l2d09.u.model3.json",
+   "moc": "l2d09.u.moc3",
+   "moc_mb": 1.48,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 42.3,
+    "orange": 36.9,
+    "black": 20.7
+   },
+   "motions": 57,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "污染者无瑕.model3.json"
+   ],
+   "warm_fit": 79.2
+  },
+  {
+   "character": "时无瑕",
+   "model_dir": "时无瑕/l2d12.u",
+   "model3": "l2d12.u.model3.json",
+   "moc": "l2d12.u.moc3",
+   "moc_mb": 2.24,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 48.6,
+    "orange": 49.6,
+    "black": 1.8
+   },
+   "motions": 34,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "旗袍无瑕.model3.json"
+   ],
+   "warm_fit": 98.2
+  },
+  {
+   "character": "时无瑕",
+   "model_dir": "时无瑕/l2d22.u",
+   "model3": "l2d22.u.model3.json",
+   "moc": "l2d22.u.moc3",
+   "moc_mb": 1.49,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 50.5,
+    "orange": 47.7,
+    "black": 1.8
+   },
+   "motions": 78,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.2
+  },
+  {
+   "character": "时无瑕",
+   "model_dir": "时无瑕/l2d25.u",
+   "model3": "l2d25.u.model3.json",
+   "moc": "l2d25.u.moc3",
+   "moc_mb": 7.63,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 46.4,
+    "orange": 51.7,
+    "black": 1.9
+   },
+   "motions": 34,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.1
+  },
+  {
+   "character": "时无瑕",
+   "model_dir": "时无瑕/l2d28.u",
+   "model3": "l2d28.u.model3.json",
+   "moc": "l2d28.u.moc3",
+   "moc_mb": 10.29,
+   "textures": 2,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 84.9,
+    "orange": 14.3,
+    "black": 0.9
+   },
+   "motions": 0,
+   "motion_groups": [],
+   "expressions": 0,
+   "extra_model3": [
+    "tianshiemoshiwuxia.model3.json"
+   ],
+   "warm_fit": 99.2
+  },
+  {
+   "character": "时无瑕",
+   "model_dir": "时无瑕/l2d3008.u",
+   "model3": "l2d3008.u.model3.json",
+   "moc": "l2d3008.u.moc3",
+   "moc_mb": 0.13,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 58.6,
+    "orange": 38.6,
+    "black": 2.8
+   },
+   "motions": 2,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【时无瑕】泳装（立绘）.model3.json"
+   ],
+   "warm_fit": 97.2
+  },
+  {
+   "character": "时无瑕",
+   "model_dir": "时无瑕/l2d3009.u",
+   "model3": "l2d3009.u.model3.json",
+   "moc": "l2d3009.u.moc3",
+   "moc_mb": 0.2,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    1024
+   ],
+   "inks": {
+    "cream": 29.8,
+    "orange": 57.4,
+    "black": 12.8
+   },
+   "motions": 2,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 87.2
+  },
+  {
+   "character": "时无瑕",
+   "model_dir": "时无瑕/l2d8001.u",
+   "model3": "l2d8001.u.model3.json",
+   "moc": "l2d8001.u.moc3",
+   "moc_mb": 0.79,
+   "textures": 2,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 31.5,
+    "orange": 58.9,
+    "black": 9.6
+   },
+   "motions": 44,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 90.4
+  },
+  {
+   "character": "时无瑕",
+   "model_dir": "时无瑕/qy03__l2d_202.u",
+   "model3": "qy03__l2d_202.u.model3.json",
+   "moc": "qy03__l2d_202.u.moc3",
+   "moc_mb": 1.71,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 38.5,
+    "orange": 52.8,
+    "black": 8.6
+   },
+   "motions": 80,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【时无暇】音乐节.model3.json"
+   ],
+   "warm_fit": 91.3
+  },
+  {
+   "character": "朱诺",
+   "model_dir": "朱诺/10t08__l2d_132.u",
+   "model3": "10t08__l2d_132.u.model3.json",
+   "moc": "10t08__l2d_132.u.moc3",
+   "moc_mb": 5.27,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 45.1,
+    "orange": 49.5,
+    "black": 5.4
+   },
+   "motions": 33,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【朱诺】童话.model3.json"
+   ],
+   "warm_fit": 94.6
+  },
+  {
+   "character": "朱诺",
+   "model_dir": "朱诺/7t03__l2d_44.u",
+   "model3": "7t03__l2d_44.u.model3.json",
+   "moc": "7t03__l2d_44.u.moc3",
+   "moc_mb": 6.61,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 49.1,
+    "orange": 42.1,
+    "black": 8.8
+   },
+   "motions": 51,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【朱诺】战术.model3.json"
+   ],
+   "warm_fit": 91.2
+  },
+  {
+   "character": "朱诺",
+   "model_dir": "朱诺/l2d00.u",
+   "model3": "l2d00.u.model3.json",
+   "moc": "l2d00.u.moc3",
+   "moc_mb": 4.65,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 69.1,
+    "orange": 29.8,
+    "black": 1.1
+   },
+   "motions": 2,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.9
+  },
+  {
+   "character": "朱诺",
+   "model_dir": "朱诺/l2d01.u",
+   "model3": "l2d01.u.model3.json",
+   "moc": "l2d01.u.moc3",
+   "moc_mb": 6.09,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 70.2,
+    "orange": 28.4,
+    "black": 1.4
+   },
+   "motions": 48,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.6
+  },
+  {
+   "character": "朱诺",
+   "model_dir": "朱诺/l2d02.u",
+   "model3": "l2d02.u.model3.json",
+   "moc": "l2d02.u.moc3",
+   "moc_mb": 13.19,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 44.8,
+    "orange": 50.7,
+    "black": 4.5
+   },
+   "motions": 10,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 95.5
+  },
+  {
+   "character": "朱诺",
+   "model_dir": "朱诺/l2d03.u",
+   "model3": "l2d03.u.model3.json",
+   "moc": "l2d03.u.moc3",
+   "moc_mb": 6.03,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 67.3,
+    "orange": 31.6,
+    "black": 1.1
+   },
+   "motions": 10,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.9
+  },
+  {
+   "character": "朱诺",
+   "model_dir": "朱诺/l2d04.u",
+   "model3": "l2d04.u.model3.json",
+   "moc": "l2d04.u.moc3",
+   "moc_mb": 5.36,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 64.4,
+    "orange": 30.2,
+    "black": 5.5
+   },
+   "motions": 47,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 94.6
+  },
+  {
+   "character": "朱诺",
+   "model_dir": "朱诺/l2d08.u",
+   "model3": "l2d08.u.model3.json",
+   "moc": "l2d08.u.moc3",
+   "moc_mb": 5.2,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 66.3,
+    "orange": 30.5,
+    "black": 3.2
+   },
+   "motions": 56,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【朱诺】泳装.model3.json"
+   ],
+   "warm_fit": 96.8
+  },
+  {
+   "character": "朱诺",
+   "model_dir": "朱诺/l2d15.u",
+   "model3": "l2d15.u.model3.json",
+   "moc": "l2d15.u.moc3",
+   "moc_mb": 5.31,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    1024
+   ],
+   "inks": {
+    "cream": 60.1,
+    "orange": 30.9,
+    "black": 9.1
+   },
+   "motions": 37,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 91.0
+  },
+  {
+   "character": "朱诺",
+   "model_dir": "朱诺/l2d17.u",
+   "model3": "l2d17.u.model3.json",
+   "moc": "l2d17.u.moc3",
+   "moc_mb": 4.94,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 63.2,
+    "orange": 35.8,
+    "black": 1.0
+   },
+   "motions": 52,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.0
+  },
+  {
+   "character": "朱诺",
+   "model_dir": "朱诺/l2d22.u",
+   "model3": "l2d22.u.model3.json",
+   "moc": "l2d22.u.moc3",
+   "moc_mb": 6.09,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 70.2,
+    "orange": 28.4,
+    "black": 1.4
+   },
+   "motions": 72,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【朱诺】生日.model3.json"
+   ],
+   "warm_fit": 98.6
+  },
+  {
+   "character": "朱诺",
+   "model_dir": "朱诺/l2d5017.u",
+   "model3": "l2d5017.u.model3.json",
+   "moc": "l2d5017.u.moc3",
+   "moc_mb": 0.69,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 36.2,
+    "orange": 63.7,
+    "black": 0.1
+   },
+   "motions": 24,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.9
+  },
+  {
+   "character": "朱诺",
+   "model_dir": "朱诺/yh03__l2d_194.u",
+   "model3": "yh03__l2d_194.u.model3.json",
+   "moc": "yh03__l2d_194.u.moc3",
+   "moc_mb": 0.9,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 41.5,
+    "orange": 47.6,
+    "black": 10.9
+   },
+   "motions": 62,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 89.1
+  },
+  {
+   "character": "格兰妮",
+   "model_dir": "格兰妮/10t09__l2d_133.u",
+   "model3": "10t09__l2d_133.u.model3.json",
+   "moc": "10t09__l2d_133.u.moc3",
+   "moc_mb": 6.7,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 62.8,
+    "orange": 34.9,
+    "black": 2.3
+   },
+   "motions": 33,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【格兰妮】童话.model3.json"
+   ],
+   "warm_fit": 97.7
+  },
+  {
+   "character": "格兰妮",
+   "model_dir": "格兰妮/9t08__l2d_104.u",
+   "model3": "9t08__l2d_104.u.model3.json",
+   "moc": "9t08__l2d_104.u.moc3",
+   "moc_mb": 8.1,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 75.7,
+    "orange": 21.6,
+    "black": 2.7
+   },
+   "motions": 39,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【格兰妮】泳装.model3.json"
+   ],
+   "warm_fit": 97.3
+  },
+  {
+   "character": "格兰妮",
+   "model_dir": "格兰妮/l2d00.u",
+   "model3": "l2d00.u.model3.json",
+   "moc": "l2d00.u.moc3",
+   "moc_mb": 5.2,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 83.8,
+    "orange": 12.7,
+    "black": 3.5
+   },
+   "motions": 2,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 96.5
+  },
+  {
+   "character": "格兰妮",
+   "model_dir": "格兰妮/l2d01.u",
+   "model3": "l2d01.u.model3.json",
+   "moc": "l2d01.u.moc3",
+   "moc_mb": 7.52,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 71.8,
+    "orange": 25.5,
+    "black": 2.7
+   },
+   "motions": 52,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 97.3
+  },
+  {
+   "character": "格兰妮",
+   "model_dir": "格兰妮/l2d02.u",
+   "model3": "l2d02.u.model3.json",
+   "moc": "l2d02.u.moc3",
+   "moc_mb": 12.45,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 68.3,
+    "orange": 29.1,
+    "black": 2.6
+   },
+   "motions": 18,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 97.4
+  },
+  {
+   "character": "格兰妮",
+   "model_dir": "格兰妮/l2d03.u",
+   "model3": "l2d03.u.model3.json",
+   "moc": "l2d03.u.moc3",
+   "moc_mb": 5.63,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 80.9,
+    "orange": 16.4,
+    "black": 2.7
+   },
+   "motions": 18,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 97.3
+  },
+  {
+   "character": "格兰妮",
+   "model_dir": "格兰妮/l2d04.u",
+   "model3": "l2d04.u.model3.json",
+   "moc": "l2d04.u.moc3",
+   "moc_mb": 5.86,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 83.6,
+    "orange": 13.9,
+    "black": 2.5
+   },
+   "motions": 57,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 97.5
+  },
+  {
+   "character": "格兰妮",
+   "model_dir": "格兰妮/l2d07.u",
+   "model3": "l2d07.u.model3.json",
+   "moc": "l2d07.u.moc3",
+   "moc_mb": 6.92,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 78.1,
+    "orange": 17.6,
+    "black": 4.3
+   },
+   "motions": 64,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 95.7
+  },
+  {
+   "character": "格兰妮",
+   "model_dir": "格兰妮/l2d09.u",
+   "model3": "l2d09.u.model3.json",
+   "moc": "l2d09.u.moc3",
+   "moc_mb": 9.21,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 60.8,
+    "orange": 33.6,
+    "black": 5.5
+   },
+   "motions": 68,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 94.4
+  },
+  {
+   "character": "格兰妮",
+   "model_dir": "格兰妮/l2d16.u",
+   "model3": "l2d16.u.model3.json",
+   "moc": "l2d16.u.moc3",
+   "moc_mb": 7.4,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    1024
+   ],
+   "inks": {
+    "cream": 70.1,
+    "orange": 27.9,
+    "black": 1.9
+   },
+   "motions": 32,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.0
+  },
+  {
+   "character": "格兰妮",
+   "model_dir": "格兰妮/l2d17.u",
+   "model3": "l2d17.u.model3.json",
+   "moc": "l2d17.u.moc3",
+   "moc_mb": 5.78,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 67.8,
+    "orange": 29.6,
+    "black": 2.6
+   },
+   "motions": 39,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 97.4
+  },
+  {
+   "character": "格兰妮",
+   "model_dir": "格兰妮/l2d22.u",
+   "model3": "l2d22.u.model3.json",
+   "moc": "l2d22.u.moc3",
+   "moc_mb": 7.52,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 71.8,
+    "orange": 25.5,
+    "black": 2.7
+   },
+   "motions": 138,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 97.3
+  },
+  {
+   "character": "格兰妮",
+   "model_dir": "格兰妮/l2d5017.u",
+   "model3": "l2d5017.u.model3.json",
+   "moc": "l2d5017.u.moc3",
+   "moc_mb": 1.05,
+   "textures": 2,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 66.3,
+    "orange": 32.2,
+    "black": 1.5
+   },
+   "motions": 30,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.5
+  },
+  {
+   "character": "格兰妮",
+   "model_dir": "格兰妮/l2d8001.u",
+   "model3": "l2d8001.u.model3.json",
+   "moc": "l2d8001.u.moc3",
+   "moc_mb": 0.87,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 74.3,
+    "orange": 19.7,
+    "black": 6.0
+   },
+   "motions": 46,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 94.0
+  },
+  {
+   "character": "沐恩",
+   "model_dir": "沐恩/7t04__l2d_45.u",
+   "model3": "7t04__l2d_45.u.model3.json",
+   "moc": "7t04__l2d_45.u.moc3",
+   "moc_mb": 7.98,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 40.6,
+    "orange": 57.6,
+    "black": 1.8
+   },
+   "motions": 55,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【沐恩】战术.model3.json"
+   ],
+   "warm_fit": 98.2
+  },
+  {
+   "character": "沐恩",
+   "model_dir": "沐恩/l2d00.u",
+   "model3": "l2d00.u.model3.json",
+   "moc": "l2d00.u.moc3",
+   "moc_mb": 6.14,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 58.7,
+    "orange": 40.4,
+    "black": 0.9
+   },
+   "motions": 2,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.1
+  },
+  {
+   "character": "沐恩",
+   "model_dir": "沐恩/l2d01.u",
+   "model3": "l2d01.u.model3.json",
+   "moc": "l2d01.u.moc3",
+   "moc_mb": 6.85,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    1024
+   ],
+   "inks": {
+    "cream": 30.0,
+    "orange": 65.8,
+    "black": 4.1
+   },
+   "motions": 51,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "muen.model3.json"
+   ],
+   "warm_fit": 95.8
+  },
+  {
+   "character": "沐恩",
+   "model_dir": "沐恩/l2d02.u",
+   "model3": "l2d02.u.model3.json",
+   "moc": "l2d02.u.moc3",
+   "moc_mb": 11.31,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    1024
+   ],
+   "inks": {
+    "cream": 37.4,
+    "orange": 56.5,
+    "black": 6.1
+   },
+   "motions": 11,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 93.9
+  },
+  {
+   "character": "沐恩",
+   "model_dir": "沐恩/l2d03.u",
+   "model3": "l2d03.u.model3.json",
+   "moc": "l2d03.u.moc3",
+   "moc_mb": 7.66,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 58.6,
+    "orange": 39.4,
+    "black": 2.0
+   },
+   "motions": 11,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.0
+  },
+  {
+   "character": "沐恩",
+   "model_dir": "沐恩/l2d04.u",
+   "model3": "l2d04.u.model3.json",
+   "moc": "l2d04.u.moc3",
+   "moc_mb": 6.71,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 48.1,
+    "orange": 32.1,
+    "black": 19.7
+   },
+   "motions": 53,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 80.2
+  },
+  {
+   "character": "沐恩",
+   "model_dir": "沐恩/l2d05.u",
+   "model3": "l2d05.u.model3.json",
+   "moc": "l2d05.u.moc3",
+   "moc_mb": 8.97,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 40.6,
+    "orange": 54.6,
+    "black": 4.8
+   },
+   "motions": 3,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 95.2
+  },
+  {
+   "character": "沐恩",
+   "model_dir": "沐恩/l2d08.u",
+   "model3": "l2d08.u.model3.json",
+   "moc": "l2d08.u.moc3",
+   "moc_mb": 7.86,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 49.4,
+    "orange": 49.6,
+    "black": 0.9
+   },
+   "motions": 32,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.0
+  },
+  {
+   "character": "沐恩",
+   "model_dir": "沐恩/l2d12.u",
+   "model3": "l2d12.u.model3.json",
+   "moc": "l2d12.u.moc3",
+   "moc_mb": 6.9,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 60.5,
+    "orange": 21.7,
+    "black": 17.8
+   },
+   "motions": 32,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 82.2
+  },
+  {
+   "character": "沐恩",
+   "model_dir": "沐恩/l2d15.u",
+   "model3": "l2d15.u.model3.json",
+   "moc": "l2d15.u.moc3",
+   "moc_mb": 7.71,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 64.5,
+    "orange": 34.6,
+    "black": 0.9
+   },
+   "motions": 31,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.1
+  },
+  {
+   "character": "沐恩",
+   "model_dir": "沐恩/l2d17.u",
+   "model3": "l2d17.u.model3.json",
+   "moc": "l2d17.u.moc3",
+   "moc_mb": 6.61,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 49.7,
+    "orange": 49.6,
+    "black": 0.7
+   },
+   "motions": 70,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.3
+  },
+  {
+   "character": "沐恩",
+   "model_dir": "沐恩/l2d22.u",
+   "model3": "l2d22.u.model3.json",
+   "moc": "l2d22.u.moc3",
+   "moc_mb": 6.85,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    1024
+   ],
+   "inks": {
+    "cream": 30.0,
+    "orange": 65.8,
+    "black": 4.1
+   },
+   "motions": 69,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 95.8
+  },
+  {
+   "character": "沐恩",
+   "model_dir": "沐恩/l2d3008.u",
+   "model3": "l2d3008.u.model3.json",
+   "moc": "l2d3008.u.moc3",
+   "moc_mb": 0.2,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    1024
+   ],
+   "inks": {
+    "cream": 30.7,
+    "orange": 69.3,
+    "black": 0.0
+   },
+   "motions": 2,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 100.0
+  },
+  {
+   "character": "沐恩",
+   "model_dir": "沐恩/l2d5017.u",
+   "model3": "l2d5017.u.model3.json",
+   "moc": "l2d5017.u.moc3",
+   "moc_mb": 1.35,
+   "textures": 2,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 16.0,
+    "orange": 83.0,
+    "black": 1.0
+   },
+   "motions": 24,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.0
+  },
+  {
+   "character": "沐恩",
+   "model_dir": "沐恩/qy02__l2d_201.u",
+   "model3": "qy02__l2d_201.u.model3.json",
+   "moc": "qy02__l2d_201.u.moc3",
+   "moc_mb": 6.97,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 50.7,
+    "orange": 35.8,
+    "black": 13.5
+   },
+   "motions": 57,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【沐恩】音乐节.model3.json"
+   ],
+   "warm_fit": 86.5
+  },
+  {
+   "character": "洛可可",
+   "model_dir": "洛可可/10t07__l2d_131.u",
+   "model3": "10t07__l2d_131.u.model3.json",
+   "moc": "10t07__l2d_131.u.moc3",
+   "moc_mb": 2.62,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 35.8,
+    "orange": 63.4,
+    "black": 0.8
+   },
+   "motions": 33,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【洛可可】童话.model3.json"
+   ],
+   "warm_fit": 99.2
+  },
+  {
+   "character": "洛可可",
+   "model_dir": "洛可可/6t08__l2d_21.u",
+   "model3": "6t08__l2d_21.u.model3.json",
+   "moc": "6t08__l2d_21.u.moc3",
+   "moc_mb": 3.92,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 56.1,
+    "orange": 42.9,
+    "black": 1.0
+   },
+   "motions": 34,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【洛可可】泳装.model3.json"
+   ],
+   "warm_fit": 99.0
+  },
+  {
+   "character": "洛可可",
+   "model_dir": "洛可可/8t08__l2d_74.u",
+   "model3": "8t08__l2d_74.u.model3.json",
+   "moc": "8t08__l2d_74.u.moc3",
+   "moc_mb": 2.99,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 62.8,
+    "orange": 36.4,
+    "black": 0.8
+   },
+   "motions": 33,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【洛可可】事务官.model3.json"
+   ],
+   "warm_fit": 99.2
+  },
+  {
+   "character": "洛可可",
+   "model_dir": "洛可可/l2d00.u",
+   "model3": "l2d00.u.model3.json",
+   "moc": "l2d00.u.moc3",
+   "moc_mb": 2.26,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 65.5,
+    "orange": 33.2,
+    "black": 1.3
+   },
+   "motions": 2,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.7
+  },
+  {
+   "character": "洛可可",
+   "model_dir": "洛可可/l2d01.u",
+   "model3": "l2d01.u.model3.json",
+   "moc": "l2d01.u.moc3",
+   "moc_mb": 2.72,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 62.6,
+    "orange": 36.4,
+    "black": 1.0
+   },
+   "motions": 0,
+   "motion_groups": [],
+   "expressions": 0,
+   "extra_model3": [
+    "【洛可可】私服.model3.json"
+   ],
+   "warm_fit": 99.0
+  },
+  {
+   "character": "洛可可",
+   "model_dir": "洛可可/l2d02.u",
+   "model3": "l2d02.u.model3.json",
+   "moc": "l2d02.u.moc3",
+   "moc_mb": 2.4,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 47.5,
+    "orange": 51.5,
+    "black": 1.0
+   },
+   "motions": 10,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【洛可可】训练.model3.json"
+   ],
+   "warm_fit": 99.0
+  },
+  {
+   "character": "洛可可",
+   "model_dir": "洛可可/l2d03.u",
+   "model3": "l2d03.u.model3.json",
+   "moc": "l2d03.u.moc3",
+   "moc_mb": 2.35,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 69.6,
+    "orange": 29.4,
+    "black": 0.9
+   },
+   "motions": 10,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【洛可可】啦啦队.model3.json"
+   ],
+   "warm_fit": 99.0
+  },
+  {
+   "character": "洛可可",
+   "model_dir": "洛可可/l2d04.u",
+   "model3": "l2d04.u.model3.json",
+   "moc": "l2d04.u.moc3",
+   "moc_mb": 2.73,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 71.8,
+    "orange": 24.5,
+    "black": 3.7
+   },
+   "motions": 47,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【洛可可】女仆.model3.json"
+   ],
+   "warm_fit": 96.3
+  },
+  {
+   "character": "洛可可",
+   "model_dir": "洛可可/l2d07.u",
+   "model3": "l2d07.u.model3.json",
+   "moc": "l2d07.u.moc3",
+   "moc_mb": 2.7,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 57.2,
+    "orange": 40.2,
+    "black": 2.5
+   },
+   "motions": 48,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【洛可可】战术.model3.json"
+   ],
+   "warm_fit": 97.4
+  },
+  {
+   "character": "洛可可",
+   "model_dir": "洛可可/l2d10.u",
+   "model3": "l2d10.u.model3.json",
+   "moc": "l2d10.u.moc3",
+   "moc_mb": 3.38,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 60.9,
+    "orange": 38.5,
+    "black": 0.7
+   },
+   "motions": 61,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【洛可可】浴衣.model3.json"
+   ],
+   "warm_fit": 99.4
+  },
+  {
+   "character": "洛可可",
+   "model_dir": "洛可可/l2d22.u",
+   "model3": "l2d22.u.model3.json",
+   "moc": "l2d22.u.moc3",
+   "moc_mb": 2.72,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 62.6,
+    "orange": 36.4,
+    "black": 1.0
+   },
+   "motions": 69,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【洛可可】生日.model3.json"
+   ],
+   "warm_fit": 99.0
+  },
+  {
+   "character": "洛可可",
+   "model_dir": "洛可可/qy01__l2d_200.u",
+   "model3": "qy01__l2d_200.u.model3.json",
+   "moc": "qy01__l2d_200.u.moc3",
+   "moc_mb": 2.92,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 48.9,
+    "orange": 47.1,
+    "black": 4.0
+   },
+   "motions": 54,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【洛可可】音乐节.model3.json"
+   ],
+   "warm_fit": 96.0
+  },
+  {
+   "character": "洛可可",
+   "model_dir": "洛可可/yh01__l2d_193.u",
+   "model3": "yh01__l2d_193.u.model3.json",
+   "moc": "yh01__l2d_193.u.moc3",
+   "moc_mb": 2.27,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 45.6,
+    "orange": 51.1,
+    "black": 3.4
+   },
+   "motions": 67,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【洛可可】捕心.model3.json"
+   ],
+   "warm_fit": 96.7
+  },
+  {
+   "character": "聂诗柔",
+   "model_dir": "聂诗柔/9t09__l2d_105.u",
+   "model3": "9t09__l2d_105.u.model3.json",
+   "moc": "9t09__l2d_105.u.moc3",
+   "moc_mb": 7.91,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 39.0,
+    "orange": 59.7,
+    "black": 1.3
+   },
+   "motions": 34,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【聂诗柔】泳装.model3.json"
+   ],
+   "warm_fit": 98.7
+  },
+  {
+   "character": "聂诗柔",
+   "model_dir": "聂诗柔/newg01__l2d_189.u",
+   "model3": "newg01__l2d_189.u.model3.json",
+   "moc": "newg01__l2d_189.u.moc3",
+   "moc_mb": 7.77,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 67.6,
+    "orange": 30.8,
+    "black": 1.7
+   },
+   "motions": 37,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【聂诗柔】私服.model3.json"
+   ],
+   "warm_fit": 98.4
+  },
+  {
+   "character": "聂诗柔",
+   "model_dir": "聂诗柔/newg03__l2d_191.u",
+   "model3": "newg03__l2d_191.u.model3.json",
+   "moc": "newg03__l2d_191.u.moc3",
+   "moc_mb": 8.87,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 61.6,
+    "orange": 35.0,
+    "black": 3.4
+   },
+   "motions": 47,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【聂诗柔】机动.model3.json"
+   ],
+   "warm_fit": 96.6
+  },
+  {
+   "character": "聂诗柔",
+   "model_dir": "聂诗柔/yh14__l2d_196.u",
+   "model3": "yh14__l2d_196.u.model3.json",
+   "moc": "yh14__l2d_196.u.moc3",
+   "moc_mb": 1.55,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 71.3,
+    "orange": 23.9,
+    "black": 4.8
+   },
+   "motions": 40,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【聂诗柔】爱好.model3.json"
+   ],
+   "warm_fit": 95.2
+  },
+  {
+   "character": "艾琳",
+   "model_dir": "艾琳/6t09__l2d_22.u",
+   "model3": "6t09__l2d_22.u.model3.json",
+   "moc": "6t09__l2d_22.u.moc3",
+   "moc_mb": 5.16,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 56.4,
+    "orange": 42.1,
+    "black": 1.5
+   },
+   "motions": 30,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【艾琳】泳装.model3.json"
+   ],
+   "warm_fit": 98.5
+  },
+  {
+   "character": "艾琳",
+   "model_dir": "艾琳/8t07__l2d_73.u",
+   "model3": "8t07__l2d_73.u.model3.json",
+   "moc": "8t07__l2d_73.u.moc3",
+   "moc_mb": 6.61,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 49.9,
+    "orange": 49.5,
+    "black": 0.6
+   },
+   "motions": 33,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【艾琳】事务官.model3.json"
+   ],
+   "warm_fit": 99.4
+  },
+  {
+   "character": "艾琳",
+   "model_dir": "艾琳/l2d00.u",
+   "model3": "l2d00.u.model3.json",
+   "moc": "l2d00.u.moc3",
+   "moc_mb": 4.52,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 60.3,
+    "orange": 38.7,
+    "black": 1.0
+   },
+   "motions": 2,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.0
+  },
+  {
+   "character": "艾琳",
+   "model_dir": "艾琳/l2d01.u",
+   "model3": "l2d01.u.model3.json",
+   "moc": "l2d01.u.moc3",
+   "moc_mb": 7.66,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 47.7,
+    "orange": 51.7,
+    "black": 0.6
+   },
+   "motions": 49,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.4
+  },
+  {
+   "character": "艾琳",
+   "model_dir": "艾琳/l2d02.u",
+   "model3": "l2d02.u.model3.json",
+   "moc": "l2d02.u.moc3",
+   "moc_mb": 1.34,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 51.3,
+    "orange": 48.0,
+    "black": 0.7
+   },
+   "motions": 22,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.3
+  },
+  {
+   "character": "艾琳",
+   "model_dir": "艾琳/l2d03.u",
+   "model3": "l2d03.u.model3.json",
+   "moc": "l2d03.u.moc3",
+   "moc_mb": 1.44,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 59.9,
+    "orange": 39.4,
+    "black": 0.7
+   },
+   "motions": 22,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.3
+  },
+  {
+   "character": "艾琳",
+   "model_dir": "艾琳/l2d04.u",
+   "model3": "l2d04.u.model3.json",
+   "moc": "l2d04.u.moc3",
+   "moc_mb": 4.76,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 68.3,
+    "orange": 29.2,
+    "black": 2.5
+   },
+   "motions": 50,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 97.5
+  },
+  {
+   "character": "艾琳",
+   "model_dir": "艾琳/l2d07.u",
+   "model3": "l2d07.u.model3.json",
+   "moc": "l2d07.u.moc3",
+   "moc_mb": 4.65,
+   "textures": 1,
+   "texture_max_px": [
+    1024,
+    1024
+   ],
+   "inks": {
+    "cream": 43.1,
+    "orange": 40.2,
+    "black": 16.6
+   },
+   "motions": 58,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【战术】艾琳.model3.json"
+   ],
+   "warm_fit": 83.3
+  },
+  {
+   "character": "艾琳",
+   "model_dir": "艾琳/l2d09.u",
+   "model3": "l2d09.u.model3.json",
+   "moc": "l2d09.u.moc3",
+   "moc_mb": 6.27,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 42.5,
+    "orange": 42.4,
+    "black": 15.1
+   },
+   "motions": 77,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【污染者】艾琳.model3.json"
+   ],
+   "warm_fit": 84.9
+  },
+  {
+   "character": "艾琳",
+   "model_dir": "艾琳/l2d10.u",
+   "model3": "l2d10.u.model3.json",
+   "moc": "l2d10.u.moc3",
+   "moc_mb": 18.73,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 34.2,
+    "orange": 65.2,
+    "black": 0.5
+   },
+   "motions": 64,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【浴衣】艾琳.model3.json"
+   ],
+   "warm_fit": 99.4
+  },
+  {
+   "character": "艾琳",
+   "model_dir": "艾琳/l2d17.u",
+   "model3": "l2d17.u.model3.json",
+   "moc": "l2d17.u.moc3",
+   "moc_mb": 5.0,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 88.2,
+    "orange": 11.2,
+    "black": 0.6
+   },
+   "motions": 77,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "xiaolifuailin.model3.json",
+    "【小礼服】艾琳.model3.json"
+   ],
+   "warm_fit": 99.4
+  },
+  {
+   "character": "艾琳",
+   "model_dir": "艾琳/l2d22.u",
+   "model3": "l2d22.u.model3.json",
+   "moc": "l2d22.u.moc3",
+   "moc_mb": 7.66,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 47.7,
+    "orange": 51.7,
+    "black": 0.6
+   },
+   "motions": 36,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【私服】艾琳.model3.json"
+   ],
+   "warm_fit": 99.4
+  },
+  {
+   "character": "艾琳",
+   "model_dir": "艾琳/l2d28.u",
+   "model3": "l2d28.u.model3.json",
+   "moc": "l2d28.u.moc3",
+   "moc_mb": 7.56,
+   "textures": 2,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 85.4,
+    "orange": 13.8,
+    "black": 0.8
+   },
+   "motions": 0,
+   "motion_groups": [],
+   "expressions": 0,
+   "extra_model3": [
+    "tianshiemoailin.model3.json",
+    "【恶魔】艾琳.model3.json"
+   ],
+   "warm_fit": 99.2
+  },
+  {
+   "character": "艾琳",
+   "model_dir": "艾琳/l2d28.u.ts",
+   "model3": "l2d28.u.model3.json",
+   "moc": "l2d28.u.moc3",
+   "moc_mb": 7.56,
+   "textures": 2,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 85.7,
+    "orange": 13.9,
+    "black": 0.3
+   },
+   "motions": 34,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.6
+  },
+  {
+   "character": "艾琳",
+   "model_dir": "艾琳/l2d3022.u",
+   "model3": "l2d3022.u.model3.json",
+   "moc": "l2d3022.u.moc3",
+   "moc_mb": 0.3,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 27.1,
+    "orange": 69.9,
+    "black": 2.9
+   },
+   "motions": 2,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【艾琳】生日（立绘）.model3.json"
+   ],
+   "warm_fit": 97.0
+  },
+  {
+   "character": "艾琳",
+   "model_dir": "艾琳/l2d5017.u",
+   "model3": "l2d5017.u.model3.json",
+   "moc": "l2d5017.u.moc3",
+   "moc_mb": 1.14,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    1024
+   ],
+   "inks": {
+    "cream": 56.6,
+    "orange": 43.3,
+    "black": 0.1
+   },
+   "motions": 26,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【艾琳】誓约（秋千）.model3.json"
+   ],
+   "warm_fit": 99.9
+  },
+  {
+   "character": "艾琳",
+   "model_dir": "艾琳/l2d8002.u",
+   "model3": "l2d8002.u.model3.json",
+   "moc": "l2d8002.u.moc3",
+   "moc_mb": 1.46,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 56.4,
+    "orange": 43.1,
+    "black": 0.5
+   },
+   "motions": 32,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【艾琳】韩服特供.model3.json"
+   ],
+   "warm_fit": 99.5
+  },
+  {
+   "character": "艾琳",
+   "model_dir": "艾琳/yh70__l2d_193.u",
+   "model3": "yh70__l2d_193.u.model3.json",
+   "moc": "yh70__l2d_193.u.moc3",
+   "moc_mb": 1.03,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 51.5,
+    "orange": 45.1,
+    "black": 3.4
+   },
+   "motions": 84,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【艾琳】假日.model3.json"
+   ],
+   "warm_fit": 96.6
+  },
+  {
+   "character": "苏小真",
+   "model_dir": "苏小真/7t05__l2d_46.u",
+   "model3": "7t05__l2d_46.u.model3.json",
+   "moc": "7t05__l2d_46.u.moc3",
+   "moc_mb": 9.27,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 59.5,
+    "orange": 39.0,
+    "black": 1.4
+   },
+   "motions": 59,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【苏小真】战术.model3.json"
+   ],
+   "warm_fit": 98.5
+  },
+  {
+   "character": "苏小真",
+   "model_dir": "苏小真/l2d00.u",
+   "model3": "l2d00.u.model3.json",
+   "moc": "l2d00.u.moc3",
+   "moc_mb": 8.38,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 64.4,
+    "orange": 33.7,
+    "black": 1.9
+   },
+   "motions": 2,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.1
+  },
+  {
+   "character": "苏小真",
+   "model_dir": "苏小真/l2d01.u",
+   "model3": "l2d01.u.model3.json",
+   "moc": "l2d01.u.moc3",
+   "moc_mb": 10.45,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 50.1,
+    "orange": 46.9,
+    "black": 3.0
+   },
+   "motions": 56,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 97.0
+  },
+  {
+   "character": "苏小真",
+   "model_dir": "苏小真/l2d02.u",
+   "model3": "l2d02.u.model3.json",
+   "moc": "l2d02.u.moc3",
+   "moc_mb": 15.08,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 50.8,
+    "orange": 48.1,
+    "black": 1.2
+   },
+   "motions": 11,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.9
+  },
+  {
+   "character": "苏小真",
+   "model_dir": "苏小真/l2d03.u",
+   "model3": "l2d03.u.model3.json",
+   "moc": "l2d03.u.moc3",
+   "moc_mb": 11.74,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 58.5,
+    "orange": 40.0,
+    "black": 1.5
+   },
+   "motions": 11,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.5
+  },
+  {
+   "character": "苏小真",
+   "model_dir": "苏小真/l2d04.u",
+   "model3": "l2d04.u.model3.json",
+   "moc": "l2d04.u.moc3",
+   "moc_mb": 9.73,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 62.6,
+    "orange": 36.1,
+    "black": 1.3
+   },
+   "motions": 56,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.7
+  },
+  {
+   "character": "苏小真",
+   "model_dir": "苏小真/l2d08.u",
+   "model3": "l2d08.u.model3.json",
+   "moc": "l2d08.u.moc3",
+   "moc_mb": 9.1,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 58.8,
+    "orange": 39.7,
+    "black": 1.5
+   },
+   "motions": 32,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.5
+  },
+  {
+   "character": "苏小真",
+   "model_dir": "苏小真/l2d101.u",
+   "model3": "l2d101.u.model3.json",
+   "moc": "l2d101.u.moc3",
+   "moc_mb": 1.05,
+   "textures": 2,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 66.3,
+    "orange": 32.2,
+    "black": 1.5
+   },
+   "motions": 1,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.5
+  },
+  {
+   "character": "苏小真",
+   "model_dir": "苏小真/l2d15.u",
+   "model3": "l2d15.u.model3.json",
+   "moc": "l2d15.u.moc3",
+   "moc_mb": 9.78,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 56.3,
+    "orange": 42.4,
+    "black": 1.3
+   },
+   "motions": 32,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.7
+  },
+  {
+   "character": "苏小真",
+   "model_dir": "苏小真/l2d22.u",
+   "model3": "l2d22.u.model3.json",
+   "moc": "l2d22.u.moc3",
+   "moc_mb": 10.45,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 50.1,
+    "orange": 46.9,
+    "black": 3.0
+   },
+   "motions": 35,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 97.0
+  },
+  {
+   "character": "苏小真",
+   "model_dir": "苏小真/l2d25.u",
+   "model3": "l2d25.u.model3.json",
+   "moc": "l2d25.u.moc3",
+   "moc_mb": 10.1,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 52.1,
+    "orange": 30.7,
+    "black": 17.2
+   },
+   "motions": 73,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【苏小真】万圣节.model3.json"
+   ],
+   "warm_fit": 82.8
+  },
+  {
+   "character": "苏小真",
+   "model_dir": "苏小真/l2d3022.u",
+   "model3": "l2d3022.u.model3.json",
+   "moc": "l2d3022.u.moc3",
+   "moc_mb": 0.22,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 48.1,
+    "orange": 51.2,
+    "black": 0.7
+   },
+   "motions": 2,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【苏小真】生日卡.model3.json"
+   ],
+   "warm_fit": 99.3
+  },
+  {
+   "character": "苏小真",
+   "model_dir": "苏小真/l2d8001.u",
+   "model3": "l2d8001.u.model3.json",
+   "moc": "l2d8001.u.moc3",
+   "moc_mb": 0.91,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 63.3,
+    "orange": 35.8,
+    "black": 0.9
+   },
+   "motions": 36,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【苏小真】冬日.model3.json"
+   ],
+   "warm_fit": 99.1
+  },
+  {
+   "character": "苏小真",
+   "model_dir": "苏小真/qy06__l2d_205.u",
+   "model3": "qy06__l2d_205.u.model3.json",
+   "moc": "qy06__l2d_205.u.moc3",
+   "moc_mb": 9.12,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 55.6,
+    "orange": 39.8,
+    "black": 4.6
+   },
+   "motions": 98,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【苏小真】音乐会.model3.json"
+   ],
+   "warm_fit": 95.4
+  },
+  {
+   "character": "菊理千姬",
+   "model_dir": "菊理千姬/9t10__l2d_106.u",
+   "model3": "9t10__l2d_106.u.model3.json",
+   "moc": "9t10__l2d_106.u.moc3",
+   "moc_mb": 1.16,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 60.8,
+    "orange": 38.9,
+    "black": 0.3
+   },
+   "motions": 74,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【千姬】泳装.model3.json"
+   ],
+   "warm_fit": 99.7
+  },
+  {
+   "character": "菊理千姬",
+   "model_dir": "菊理千姬/l2d00.u",
+   "model3": "l2d00.u.model3.json",
+   "moc": "l2d00.u.moc3",
+   "moc_mb": 1.05,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 86.6,
+    "orange": 13.1,
+    "black": 0.3
+   },
+   "motions": 2,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.7
+  },
+  {
+   "character": "菊理千姬",
+   "model_dir": "菊理千姬/l2d01.u",
+   "model3": "l2d01.u.model3.json",
+   "moc": "l2d01.u.moc3",
+   "moc_mb": 1.17,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 76.6,
+    "orange": 23.0,
+    "black": 0.4
+   },
+   "motions": 72,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.6
+  },
+  {
+   "character": "菊理千姬",
+   "model_dir": "菊理千姬/l2d02.u",
+   "model3": "l2d02.u.model3.json",
+   "moc": "l2d02.u.moc3",
+   "moc_mb": 0.97,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 63.0,
+    "orange": 36.7,
+    "black": 0.2
+   },
+   "motions": 10,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.7
+  },
+  {
+   "character": "菊理千姬",
+   "model_dir": "菊理千姬/l2d03.u",
+   "model3": "l2d03.u.model3.json",
+   "moc": "l2d03.u.moc3",
+   "moc_mb": 1.01,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 82.1,
+    "orange": 17.6,
+    "black": 0.2
+   },
+   "motions": 10,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.7
+  },
+  {
+   "character": "菊理千姬",
+   "model_dir": "菊理千姬/l2d04.u",
+   "model3": "l2d04.u.model3.json",
+   "moc": "l2d04.u.moc3",
+   "moc_mb": 1.13,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 61.5,
+    "orange": 37.8,
+    "black": 0.7
+   },
+   "motions": 76,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.3
+  },
+  {
+   "character": "菊理千姬",
+   "model_dir": "菊理千姬/l2d07.u",
+   "model3": "l2d07.u.model3.json",
+   "moc": "l2d07.u.moc3",
+   "moc_mb": 2.01,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 81.7,
+    "orange": 15.5,
+    "black": 2.8
+   },
+   "motions": 58,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 97.2
+  },
+  {
+   "character": "菊理千姬",
+   "model_dir": "菊理千姬/l2d15.u",
+   "model3": "l2d15.u.model3.json",
+   "moc": "l2d15.u.moc3",
+   "moc_mb": 1.11,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 61.8,
+    "orange": 37.8,
+    "black": 0.4
+   },
+   "motions": 38,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.6
+  },
+  {
+   "character": "菊理千姬",
+   "model_dir": "菊理千姬/l2d17.u",
+   "model3": "l2d17.u.model3.json",
+   "moc": "l2d17.u.moc3",
+   "moc_mb": 1.35,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 87.3,
+    "orange": 12.5,
+    "black": 0.2
+   },
+   "motions": 86,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.8
+  },
+  {
+   "character": "菊理千姬",
+   "model_dir": "菊理千姬/l2d18.u",
+   "model3": "l2d18.u.model3.json",
+   "moc": "l2d18.u.moc3",
+   "moc_mb": 7.8,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 78.6,
+    "orange": 21.0,
+    "black": 0.5
+   },
+   "motions": 39,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.6
+  },
+  {
+   "character": "菊理千姬",
+   "model_dir": "菊理千姬/l2d22.u",
+   "model3": "l2d22.u.model3.json",
+   "moc": "l2d22.u.moc3",
+   "moc_mb": 1.17,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 76.6,
+    "orange": 23.0,
+    "black": 0.4
+   },
+   "motions": 94,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.6
+  },
+  {
+   "character": "菊理千姬",
+   "model_dir": "菊理千姬/l2d25.u",
+   "model3": "l2d25.u.model3.json",
+   "moc": "l2d25.u.moc3",
+   "moc_mb": 8.63,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 42.8,
+    "orange": 51.0,
+    "black": 6.2
+   },
+   "motions": 38,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 93.8
+  },
+  {
+   "character": "菊理千姬",
+   "model_dir": "菊理千姬/l2d28.u",
+   "model3": "l2d28.u.model3.json",
+   "moc": "l2d28.u.moc3",
+   "moc_mb": 9.86,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 94.8,
+    "orange": 5.1,
+    "black": 0.1
+   },
+   "motions": 39,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "tianshiemoqianji.model3.json"
+   ],
+   "warm_fit": 99.9
+  },
+  {
+   "character": "菊理千姬",
+   "model_dir": "菊理千姬/l2d5017.u",
+   "model3": "l2d5017.u.model3.json",
+   "moc": "l2d5017.u.moc3",
+   "moc_mb": 0.62,
+   "textures": 1,
+   "texture_max_px": [
+    1024,
+    1024
+   ],
+   "inks": {
+    "cream": 64.9,
+    "orange": 32.0,
+    "black": 3.0
+   },
+   "motions": 22,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 96.9
+  },
+  {
+   "character": "阿尼娅",
+   "model_dir": "阿尼娅/newg02__l2d_190.u",
+   "model3": "newg02__l2d_190.u.model3.json",
+   "moc": "newg02__l2d_190.u.moc3",
+   "moc_mb": 6.44,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 46.7,
+    "orange": 52.8,
+    "black": 0.6
+   },
+   "motions": 38,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【阿尼娅】私服.model3.json"
+   ],
+   "warm_fit": 99.5
+  },
+  {
+   "character": "阿尼娅",
+   "model_dir": "阿尼娅/newg04__l2d_192.u",
+   "model3": "newg04__l2d_192.u.model3.json",
+   "moc": "newg04__l2d_192.u.moc3",
+   "moc_mb": 6.55,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 38.5,
+    "orange": 61.0,
+    "black": 0.5
+   },
+   "motions": 48,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【阿尼娅】机动.model3.json"
+   ],
+   "warm_fit": 99.5
+  },
+  {
+   "character": "阿尼娅",
+   "model_dir": "阿尼娅/qy08__l2d_207.u",
+   "model3": "qy08__l2d_207.u.model3.json",
+   "moc": "qy08__l2d_207.u.moc3",
+   "moc_mb": 6.17,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 65.7,
+    "orange": 31.9,
+    "black": 2.4
+   },
+   "motions": 47,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【阿尼娅】音乐节.model3.json"
+   ],
+   "warm_fit": 97.6
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/9t07__l2d_103.u",
+   "model3": "9t07__l2d_103.u.model3.json",
+   "moc": "9t07__l2d_103.u.moc3",
+   "moc_mb": 4.24,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 53.3,
+    "orange": 46.0,
+    "black": 0.7
+   },
+   "motions": 30,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【奈乐】泳装.model3.json"
+   ],
+   "warm_fit": 99.3
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d00.u",
+   "model3": "l2d00.u.model3.json",
+   "moc": "l2d00.u.moc3",
+   "moc_mb": 1.99,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 71.9,
+    "orange": 26.9,
+    "black": 1.2
+   },
+   "motions": 2,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.8
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d01.u",
+   "model3": "l2d01.u.model3.json",
+   "moc": "l2d01.u.moc3",
+   "moc_mb": 2.22,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 56.2,
+    "orange": 36.1,
+    "black": 7.7
+   },
+   "motions": 60,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【奈乐】私服.model3.json"
+   ],
+   "warm_fit": 92.3
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d02.u",
+   "model3": "l2d02.u.model3.json",
+   "moc": "l2d02.u.moc3",
+   "moc_mb": 1.14,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 50.9,
+    "orange": 48.2,
+    "black": 0.9
+   },
+   "motions": 18,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【奈乐】训练服.model3.json"
+   ],
+   "warm_fit": 99.1
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d03.u",
+   "model3": "l2d03.u.model3.json",
+   "moc": "l2d03.u.moc3",
+   "moc_mb": 1.23,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 63.4,
+    "orange": 35.7,
+    "black": 0.9
+   },
+   "motions": 18,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【奈乐】啦啦队.model3.json"
+   ],
+   "warm_fit": 99.1
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d04.u",
+   "model3": "l2d04.u.model3.json",
+   "moc": "l2d04.u.moc3",
+   "moc_mb": 2.12,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 79.7,
+    "orange": 19.2,
+    "black": 1.1
+   },
+   "motions": 52,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【奈乐】女仆.model3.json"
+   ],
+   "warm_fit": 98.9
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d06.u",
+   "model3": "l2d06.u.model3.json",
+   "moc": "l2d06.u.moc3",
+   "moc_mb": 3.41,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 46.3,
+    "orange": 53.0,
+    "black": 0.7
+   },
+   "motions": 60,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.3
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d07.u",
+   "model3": "l2d07.u.model3.json",
+   "moc": "l2d07.u.moc3",
+   "moc_mb": 2.7,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 62.6,
+    "orange": 36.2,
+    "black": 1.3
+   },
+   "motions": 53,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【奈乐】战术.model3.json"
+   ],
+   "warm_fit": 98.8
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d08.u",
+   "model3": "l2d08.u.model3.json",
+   "moc": "l2d08.u.moc3",
+   "moc_mb": 4.24,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 53.3,
+    "orange": 46.0,
+    "black": 0.7
+   },
+   "motions": 30,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 99.3
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d09.u",
+   "model3": "l2d09.u.model3.json",
+   "moc": "l2d09.u.moc3",
+   "moc_mb": 2.74,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 47.8,
+    "orange": 33.8,
+    "black": 18.4
+   },
+   "motions": 80,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【奈乐】污染者.model3.json"
+   ],
+   "warm_fit": 81.6
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d12.u",
+   "model3": "l2d12.u.model3.json",
+   "moc": "l2d12.u.moc3",
+   "moc_mb": 2.65,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 37.0,
+    "orange": 44.7,
+    "black": 18.2
+   },
+   "motions": 74,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 81.7
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d16.u",
+   "model3": "l2d16.u.model3.json",
+   "moc": "l2d16.u.moc3",
+   "moc_mb": 2.63,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 37.8,
+    "orange": 59.1,
+    "black": 3.1
+   },
+   "motions": 32,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【奈乐】西洋棋.model3.json"
+   ],
+   "warm_fit": 96.9
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d17.u",
+   "model3": "l2d17.u.model3.json",
+   "moc": "l2d17.u.moc3",
+   "moc_mb": 2.16,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 62.4,
+    "orange": 36.9,
+    "black": 0.7
+   },
+   "motions": 29,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【奈乐】誓约初.model3.json"
+   ],
+   "warm_fit": 99.3
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d19.u",
+   "model3": "l2d19.u.model3.json",
+   "moc": "l2d19.u.moc3",
+   "moc_mb": 2.47,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 35.9,
+    "orange": 63.3,
+    "black": 0.8
+   },
+   "motions": 48,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "警署奈乐.model3.json"
+   ],
+   "warm_fit": 99.2
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d20.u",
+   "model3": "l2d20.u.model3.json",
+   "moc": "l2d20.u.moc3",
+   "moc_mb": 2.37,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 55.7,
+    "orange": 42.9,
+    "black": 1.4
+   },
+   "motions": 59,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 98.6
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d22.u",
+   "model3": "l2d22.u.model3.json",
+   "moc": "l2d22.u.moc3",
+   "moc_mb": 2.22,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 56.2,
+    "orange": 36.1,
+    "black": 7.7
+   },
+   "motions": 54,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 92.3
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d27.u",
+   "model3": "l2d27.u.model3.json",
+   "moc": "l2d27.u.moc3",
+   "moc_mb": 2.71,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 70.7,
+    "orange": 22.5,
+    "black": 6.7
+   },
+   "motions": 70,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 93.2
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d33.u",
+   "model3": "l2d33.u.model3.json",
+   "moc": "l2d33.u.moc3",
+   "moc_mb": 2.47,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 57.9,
+    "orange": 41.4,
+    "black": 0.7
+   },
+   "motions": 34,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "yiliaonaile.model3.json"
+   ],
+   "warm_fit": 99.3
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d401.u",
+   "model3": "l2d401.u.model3.json",
+   "moc": "l2d401.u.moc3",
+   "moc_mb": 2.22,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 56.2,
+    "orange": 36.1,
+    "black": 7.7
+   },
+   "motions": 42,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [],
+   "warm_fit": 92.3
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d5017.u",
+   "model3": "l2d5017.u.model3.json",
+   "moc": "l2d5017.u.moc3",
+   "moc_mb": 0.44,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 48.4,
+    "orange": 51.6,
+    "black": 0.0
+   },
+   "motions": 26,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【奈乐】誓约终.model3.json"
+   ],
+   "warm_fit": 100.0
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d7017.u",
+   "model3": "l2d7017.u.model3.json",
+   "moc": "l2d7017.u.moc3",
+   "moc_mb": 2.47,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 57.9,
+    "orange": 41.4,
+    "black": 0.7
+   },
+   "motions": 34,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "yiliaonaile.model3.json"
+   ],
+   "warm_fit": 99.3
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d8001.u",
+   "model3": "l2d8001.u.model3.json",
+   "moc": "l2d8001.u.moc3",
+   "moc_mb": 2.49,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 49.5,
+    "orange": 41.8,
+    "black": 8.8
+   },
+   "motions": 62,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【奈乐】赏月.model3.json"
+   ],
+   "warm_fit": 91.3
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/l2d80011.u",
+   "model3": ".model3.json",
+   "moc": "l2d80011.u.moc3",
+   "moc_mb": 0.17,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 27.1,
+    "orange": 67.6,
+    "black": 5.3
+   },
+   "motions": 0,
+   "motion_groups": [],
+   "expressions": 0,
+   "extra_model3": [
+    "l2d80011.u.model3.json"
+   ],
+   "warm_fit": 94.7
+  },
+  {
+   "character": "高奈利亚",
+   "model_dir": "高奈利亚/qy05__l2d_204.u",
+   "model3": "qy05__l2d_204.u.model3.json",
+   "moc": "qy05__l2d_204.u.moc3",
+   "moc_mb": 2.37,
+   "textures": 1,
+   "texture_max_px": [
+    2048,
+    2048
+   ],
+   "inks": {
+    "cream": 55.7,
+    "orange": 42.9,
+    "black": 1.4
+   },
+   "motions": 59,
+   "motion_groups": [
+    ""
+   ],
+   "expressions": 0,
+   "extra_model3": [
+    "【高奈利亚】音乐节.model3.json"
+   ],
+   "warm_fit": 98.6
+  }
+ ],
+ "characters": {
+  "丽达": {
+   "models": 15,
+   "warm_fit": 1442.3,
+   "motions": 631,
+   "textures": 16,
+   "avg_warm_fit": 96.2
+  },
+  "伊珂丝": {
+   "models": 15,
+   "warm_fit": 1430.3,
+   "motions": 670,
+   "textures": 16,
+   "avg_warm_fit": 95.4
+  },
+  "唯": {
+   "models": 7,
+   "warm_fit": 681.5,
+   "motions": 193,
+   "textures": 8,
+   "avg_warm_fit": 97.4
+  },
+  "时无忧": {
+   "models": 18,
+   "warm_fit": 1734.5,
+   "motions": 589,
+   "textures": 18,
+   "avg_warm_fit": 96.4
+  },
+  "时无瑕": {
+   "models": 17,
+   "warm_fit": 1611.9,
+   "motions": 657,
+   "textures": 20,
+   "avg_warm_fit": 94.8
+  },
+  "朱诺": {
+   "models": 13,
+   "warm_fit": 1246.7,
+   "motions": 504,
+   "textures": 13,
+   "avg_warm_fit": 95.9
+  },
+  "格兰妮": {
+   "models": 14,
+   "warm_fit": 1356.3,
+   "motions": 636,
+   "textures": 15,
+   "avg_warm_fit": 96.9
+  },
+  "沐恩": {
+   "models": 15,
+   "warm_fit": 1421.3,
+   "motions": 503,
+   "textures": 16,
+   "avg_warm_fit": 94.8
+  },
+  "洛可可": {
+   "models": 13,
+   "warm_fit": 1277.9,
+   "motions": 468,
+   "textures": 13,
+   "avg_warm_fit": 98.3
+  },
+  "聂诗柔": {
+   "models": 4,
+   "warm_fit": 388.9,
+   "motions": 158,
+   "textures": 4,
+   "avg_warm_fit": 97.2
+  },
+  "艾琳": {
+   "models": 18,
+   "warm_fit": 1750.6,
+   "motions": 698,
+   "textures": 20,
+   "avg_warm_fit": 97.3
+  },
+  "苏小真": {
+   "models": 14,
+   "warm_fit": 1359.0,
+   "motions": 504,
+   "textures": 15,
+   "avg_warm_fit": 97.1
+  },
+  "菊理千姬": {
+   "models": 14,
+   "warm_fit": 1384.1,
+   "motions": 658,
+   "textures": 14,
+   "avg_warm_fit": 98.9
+  },
+  "阿尼娅": {
+   "models": 3,
+   "warm_fit": 296.6,
+   "motions": 133,
+   "textures": 3,
+   "avg_warm_fit": 98.9
+  },
+  "高奈利亚": {
+   "models": 24,
+   "warm_fit": 2303.2,
+   "motions": 1026,
+   "textures": 24,
+   "avg_warm_fit": 96.0
+  }
+ }
+}

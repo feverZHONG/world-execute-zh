@@ -32,13 +32,32 @@ const writePng = (dst, dataUrl) => {
   fs.writeFileSync(dst, Buffer.from(dataUrl.slice(dataUrl.indexOf(',') + 1), 'base64'));
 };
 
+// 素材库里的目录名不一定等于 model3 名（有「【奈乐】泳装.model3.json」这种），所以按目录找：
+//   1) 显式 --model3 优先；2) <目录名>.model3.json；3) 目录里第一个 *.model3.json。
+function resolveModel3(dir, explicit) {
+  const abs = path.join(ROOT, dir);
+  if (!fs.existsSync(abs)) throw new Error(`没有模型目录：${dir}`);
+  if (explicit) {
+    const f = path.join(abs, explicit);
+    if (!fs.existsSync(f)) throw new Error(`--model3 指的文件不存在：${explicit}`);
+    return path.relative(ROOT, f).replace(/\\/g, '/');
+  }
+  const cands = fs.readdirSync(abs).filter((f) => f.endsWith('.model3.json'));
+  if (!cands.length) throw new Error(`${dir} 里没有 .model3.json`);
+  const base = path.basename(dir) + '.model3.json';
+  const pick = cands.includes(base) ? base : cands[0];
+  if (!cands.includes(base)) console.log(`  (目录名与 model3 不同，用 ${pick})`);
+  return path.relative(ROOT, path.join(abs, pick)).replace(/\\/g, '/');
+}
+
 try {
   if (cmd === 'render') {
     const model = arg('model', '');
-    if (!model) throw new Error('--model 必填（assets/live2d 下的目录名，如 l2d16.u）');
+    if (!model) throw new Error('--model 必填（如 assets/live2d 下的 l2d16.u，或素材库里的 高奈利亚/l2d16.u）');
     const W = +arg('w', 4096), H = +arg('h', 4096);
-    const dir = `assets/live2d/${model}`;
-    const m3 = `${dir}/${model}.model3.json`;
+    const LIB = (arg('lib', 'assets/live2d_lib') || '').replace(/\\/g, '/');
+    const dir = `${LIB}/${model}`;
+    const m3 = resolveModel3(dir, arg('model3', ''));
     if (!fs.existsSync(path.join(ROOT, m3))) throw new Error(`没有 ${m3}`);
     const q = new URLSearchParams({
       model: toUrl(path.join(ROOT, m3)), w: String(W), h: String(H),
@@ -59,7 +78,7 @@ try {
     if (err) throw new Error(err.split('\n')[0]);
     for (const l of await page.evaluate('window.__LOG__')) console.log('  ' + l);
     const dataUrl = await page.evaluate("document.querySelector('canvas').toDataURL('image/png')");
-    const dst = outPath(arg('out', `out/live2d_${model}.png`));
+    const dst = outPath(arg('out', `out/live2d_${model.replace(/[\\/]/g, '_')}.png`));
     writePng(dst, dataUrl);
     const kb = (fs.statSync(dst).size / 1024).toFixed(0);
     console.log(`→ ${dst}  ${W}x${H}  ${kb} KiB`);
