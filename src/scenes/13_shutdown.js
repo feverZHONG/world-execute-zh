@@ -22,7 +22,7 @@ import { clamp, easeBack, easeIn, easeInOut, easeOut, lerp, prog, pulse } from '
 import { finalPlate } from './12_outro.js';
 import { PAL, SYL3, footOf, stutter } from './climax.js';
 import { cue } from './cues.js';
-import { cues, glassFigure, sysLine } from './kit.js';
+import { GLASS_FIG, cues, glassFigure, sysLine } from './kit.js';
 import { CHUNKS, monoWord } from './loop.js';
 import { FOOT, WORD_W } from './plates_love.js';
 
@@ -43,6 +43,20 @@ export function shutdownShots(env) {
     sysLine(ctx, str, t, at, x, y + i * size * 1.56, { size, alpha: a, color: i === lines.length - 1 || t < lines[i + 1][1] ? 'text' : 'sub' }));
   /** She, behind the glass, as at the boot (two greys). */
   const figure = (ctx, a, dx = 0) => glassFigure(ctx, art, a, { dx });
+  /**
+   * The metaphor, put back on her way out: once the plates stopped being blank silhouettes and became her own
+   * picture (Live2D, printed as it is), the film lost the line it opened on — SHE HAS NO FACE. So before she goes
+   * she is printed as the flat shape again: her own matte, one tone, which carries no eyes and no mouth.
+   * `alpha` here is her own presence (1 = as present as she is at this moment); k = 0..1 how far the plate has taken.
+   */
+  const flatFace = (ctx, k, alpha, dx = 0, color = 'mute') => {
+    if (!(k > 0.004) || !(alpha > 0.004)) return;
+    const R = { x: GLASS_FIG.x + dx, y: GLASS_FIG.y, w: GLASS_FIG.w, h: GLASS_FIG.h };
+    const head = { x: 120, y: 250, w: 860, h: 940 };                 // DESIGN px: her head, hair, hat and all (measured on f_bust)
+    const q = R.w / 1086;
+    const dst = { x: R.x + head.x * q, y: R.y + head.y * q, w: head.w * q, h: head.h * q };
+    art.silhouette(ctx, 'f_bust', dst, { crop: head, color, alpha: Math.min(1, Math.pow(alpha, 0.35) * k) });
+  };
 
   // ---- the bridge: where the last plate ends up, as her picture message in the thread
   const TH = L.thread, PIC = { x: TH.x + 54, y: TH.y + 22, w: 704, h: 396 }, CAP = { x: PIC.x, y: PIC.y + PIC.h + 80, size: 66 };
@@ -225,7 +239,10 @@ export function shutdownShots(env) {
         const g = ctx.g, s = beat(t, D0);
         const off = easeOut(prog(s, 0.7, 1.15)), undraw = easeInOut(prog(s, 1.1, 2.3)), close = easeInOut(prog(s, 2.5, 4.4));
         room(ctx, { light: [960, 540], dim: 0.5 + 0.35 * close, motif: 1 - close, t });
-        figure(ctx, 0.75 * (1 - easeIn(close)));                     // she goes as the window closes: the mirror of the boot, where she was there before it opened
+        const fade = 1 - easeIn(close);
+        const kFace = easeInOut(prog(s, 0.5, 1.7));
+        figure(ctx, 0.75 * fade);                                    // she goes as the window closes: the mirror of the boot, where she was there before it opened
+        flatFace(ctx, kFace, 0.95 * fade);                           // and she goes with her head printed flat: no face, one tone, nothing recorded
         const h = Math.max(2, W.h * (1 - close)), edge = prog(close, 0.55, 1);
         if (close < 1) {
           ctx.rrect(W.x, C.y - h / 2, W.w, h, W.r * (1 - close), { fill: 'bg', fillAlpha: 0.84 * (1 - close), stroke: 'line', width: 1.5, shadow: 1 - close });

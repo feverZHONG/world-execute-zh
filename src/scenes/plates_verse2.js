@@ -172,23 +172,28 @@ export function plateCat(ctx, env, P) {
   const text = dataText((env.script.cards_section6 ?? [])[2], 'purr:25-150Hz·', ''), kf = FIG.w / 1086;
   const flower = (name) => { const r = art.region(name, 'flower'); return r ? [r.x + r.w / 2, r.y + r.h / 2] : [760, 217]; };
   const fb = flower('f_bust'), fp = flower('cat_paws'), PAWS = { x: FIG.x + (fb[0] - fp[0]) * kf, y: FIG.y + (fb[1] - fp[1]) * kf, w: FIG.w, h: FIG.h };
-  const CAT = art.fit('cat_bust', FIG) ?? FIG, dev = prog(t, develop, develop + 0.14), k = 1 + 0.04 * pulse(t - at, 16) + 0.03 * pulse(t - develop, 14);
+  const CAT = PAWS, dev = prog(t, develop, develop + 0.14), k = 1 + 0.04 * pulse(t - at, 16) + 0.03 * pulse(t - develop, 14);
   purr(ctx, P);
   if (a > 0) ctx.clip({ x: 0, y: 0, w: 1920, h: FOOT }, () => ctx.at(650 * (1 - k), 540 * (1 - k), () => {
     const a0 = g.globalAlpha;
     g.globalAlpha = a0 * a;
     if (dev < 1) {                                                      // in characters (below the edge of the solid print, once that has started)
       g.save(); g.beginPath(); g.rect(-100, PAWS.y + PAWS.h * dev, 2200, 1400); g.clip();
-      if (t < ears) glyphFigure(ctx, env, 'f_bust', FIG, { text, key: 'v2cat', decode: t < at + 0.3 ? { k: prog(t, at, at + 0.3), t, seed: 43 } : null });
+      // one artwork for the whole gesture: the same plate the print develops into, so nothing jumps at either cue
+      const kc = CAT.w / 1086, raw = prog(t, ears, ears + 0.18);
+      const earRegs = [];
+      for (let i = 0; i < 4; i++) { const r = art.region('cat_paws', `ears.${i}`); if (!r || !r.w) break; earRegs.push(r); }
+      const boxes = earRegs.map((r) => ({ x: CAT.x + r.x * kc, y: CAT.y + r.y * kc, w: r.w * kc, h: r.h * kc }));
+      const cat = () => glyphFigure(ctx, env, 'cat_paws', CAT, { text, key: 'v2cat', decode: t < at + 0.3 ? { k: prog(t, at, at + 0.3), t, seed: 43 } : null });
+      const body = () => {                                              // her, minus the cat ears (they are the noun's to bring in)
+        if (!boxes.length) return cat();
+        g.save(); g.beginPath(); g.rect(-100, -100, 2200, 1400); for (const b of boxes) g.rect(b.x, b.y, b.w, b.h); g.clip('evenodd');
+        cat(); g.restore();
+      };
+      if (raw >= 1 || !boxes.length) cat();
       else {
-        const raw = prog(t, ears, ears + 0.18), kc = CAT.w / 1086, cat = () => glyphFigure(ctx, env, 'cat_bust', CAT, { text, key: 'v2cat' });
-        const boxes = raw < 1 ? [0, 1].map((i) => art.region('cat_bust', `ears.${i}`)).filter(Boolean).map((r) => ({ x: CAT.x + r.x * kc, y: CAT.y + r.y * kc, w: r.w * kc, h: r.h * kc })) : [];
-        if (!boxes.length) cat();
-        else {                                                          // the ears pop up: everything but them, then each ear rising from its root
-          g.save(); g.beginPath(); g.rect(-100, -100, 2200, 1400); for (const b of boxes) g.rect(b.x, b.y, b.w, b.h); g.clip('evenodd');
-          cat(); g.restore();
-          for (const b of boxes) ctx.at(b.x + b.w / 2, b.y + b.h, () => ctx.clip({ x: -b.w / 2, y: -b.h, w: b.w, h: b.h }, () => { g.translate(-(b.x + b.w / 2), -(b.y + b.h)); cat(); }), { sy: Math.max(0.03, easeBack(raw)) });
-        }
+        body();                                                         // before the noun: ears absent; on it: each ear rises from its root
+        if (raw > 0) for (const b of boxes) ctx.at(b.x + b.w / 2, b.y + b.h, () => ctx.clip({ x: -b.w / 2, y: -b.h, w: b.w, h: b.h }, () => { g.translate(-(b.x + b.w / 2), -(b.y + b.h)); cat(); }), { sy: Math.max(0.03, easeBack(raw)) });
       }
       g.restore(); ctx._font = '';
     }
