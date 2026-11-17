@@ -2,6 +2,10 @@
 
 **[中文](#中文)** | **[English](#english)**
 
+> **本專案現況與下一步（簡體）：** [推进计划.md](推进计划.md)　|　**Current state & next steps:** [推进计划.md](推进计划.md)
+>
+> 下面全部是上游 v4 文件，原樣保存作為歷史；第四版之後的重製（Live2D 原生畫面、藍色主調、角色層文案）另記在 `二次创作\`。
+
 > **提示詞 · The prompts:** [v4/PROMPT_v4.md](v4/PROMPT_v4.md) · [v4/PROMPT_v4_fix.md](v4/PROMPT_v4_fix.md)
 >
 > 兩份都是簡體中文。 · Both are written in Simplified Chinese.
