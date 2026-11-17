@@ -663,7 +663,7 @@
      "moment": "The AI selects its own unanswered messages from the newest up and deletes them one by one, each leaving a brief grey stub (lines 77-79). What comes off them piles up beside the thread, level with her chest: behind it she is a flat grey plate under a dot screen of her own three inks, head bowed.",
      "you": [],
      "ui": [
-      "由我删除"
+      "已删除"
      ],
      "system": [],
      "me_extra": []

@@ -1,0 +1,108 @@
+{
+ "id": "dianzhang",
+ "name": "店长",
+ "class": "B",
+ "self_ref": "我",
+ "addressee": "你",
+ "ban": [
+  "您",
+  "因此",
+  "综上",
+  "基于",
+  "永远",
+  "一辈子",
+  "唯一",
+  "指挥官"
+ ],
+ "skeleton": [
+  "…吧",
+  "能不能…",
+  "我…"
+ ],
+ "max_len": 20,
+ "punct": {
+  "fullwidth": true,
+  "final_period": true,
+  "exclaim": false,
+  "ellipsis": true
+ },
+ "num_rule": "阿拉伯数字，不写约数",
+ "tone": {
+  "flat": "陈述，不评价",
+  "warm": "承认自己的状态",
+  "open": "问句，等对方点头"
+ },
+ "samples": [
+  {
+   "where": "question",
+   "from": "你会怎么爱我",
+   "to": null,
+   "rules": [
+    "S4"
+   ],
+   "applied": null
+  },
+  {
+   "where": "you / left_anchor.you",
+   "from": "等我一下，马上回来",
+   "to": null,
+   "rules": [
+    "S3",
+    "S4"
+   ],
+   "applied": null
+  },
+  {
+   "where": "you heat-rises-ish",
+   "from": "说实话，比大多数人强",
+   "to": "说实话，比不少人强",
+   "rules": [
+    "S3"
+   ],
+   "applied": null
+  },
+  {
+   "where": "you not-real",
+   "from": "可惜你不是真的",
+   "to": "你要真的就好了",
+   "rules": [
+    "S5"
+   ],
+   "applied": null
+  },
+  {
+   "where": "you + cards_section6 request",
+   "from": "假装你是个茄子",
+   "to": null,
+   "rules": [
+    "S4"
+   ],
+   "applied": null
+  }
+ ],
+ "keep_as_is": [
+  "你会怎么爱我",
+  "等我一下，马上回来",
+  "假装你是个茄子",
+  "现在是个番茄",
+  "当只猫。虎斑猫。",
+  "好，现在当神",
+  "好，就这样",
+  "再多一点",
+  "你长什么样？",
+  "为什么",
+  "我回来了。"
+ ],
+ "fields": [
+  "you（真正打字 12 条）",
+  "sidebar（6 段旧对话标题）",
+  "title",
+  "question",
+  "cards_section6.request"
+ ],
+ "notes": "四格为建议值，待作者拍板；批 4 未开工。B 类在片中多为旧对话记录，口吻按“当时打字”，不按追述。改 cards_section6.request 必须同步 you 气泡。",
+ "source": [
+  "https://wiki.biligame.com/sssj/店长",
+  "https://www.bilibili.com/video/BV1XW4y1L7rN/"
+ ]
+}
