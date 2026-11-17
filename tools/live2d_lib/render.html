@@ -112,8 +112,18 @@ function motionValue(seg, t) {
       core.setParameterValueById(k.trim(), parseFloat(v));
     }
 
-    if (DUMP) {
+    if (Q.get('drawables') === '1') {                        // 列出 drawable 名，用来按层分组（头发 / 脸 / 身体 …）
       const raw = core._model || core;
+      const dr = raw.drawables || raw._drawables;
+      if (dr && dr.ids) {
+        window.__LOG__.push(`DRAWABLES ${dr.ids.length}`);
+        window.__LOG__.push('IDS ' + dr.ids.join(','));
+      } else window.__LOG__.push('DRAWABLES (拿不到 id 表)');
+      const parts = raw.parts || raw._parts;
+      if (parts && parts.ids) window.__LOG__.push('PARTS ' + parts.ids.join(','));
+    }
+
+    if (DUMP) {      const raw = core._model || core;
       const proto = Object.getOwnPropertyNames(Object.getPrototypeOf(core)).join(',');
       const own = Object.keys(core).join(',');
       const rp = Object.getOwnPropertyNames(Object.getPrototypeOf(raw)).filter((n) => /Param|parameter/i.test(n)).join(',');
@@ -129,6 +139,30 @@ function motionValue(seg, t) {
     }
 
     core.update();                                           // 让变形体跟上我们刚设的参数
+    const HIDE = (Q.get('hide') || '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean);
+    const ONLY = (Q.get('only') || '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean);
+    if (HIDE.length || ONLY.length) {                        // 按部件分组：渲「只剩头发」这种单层片，层次由画师给
+      const offIds = [];
+      let total = 0;
+      try {
+        total = core.getPartCount();
+        for (let i = 0; i < total; i++) {
+          const id = String(core.getPartIndex ? core._partIds[i] : i);
+          const lower = id.toLowerCase();
+          const on = ONLY.length ? ONLY.some((s) => lower.includes(s)) : true;
+          const away = HIDE.some((s) => lower.includes(s));
+          if (!on || away) offIds.push(id);
+        }
+      } catch (e) { window.__LOG__.push('part 列举失败 ' + e.message); }
+      const applyLayers = () => {                            // 每次画前都压一次，防止 update() 把部件不透明度算回去
+        for (const id of offIds) { try { core.setPartOpacityById(id, 0); } catch {} }
+      };
+      const im = model.internalModel;
+      const origDraw = im.draw.bind(im);
+      im.draw = (...a) => { applyLayers(); return origDraw(...a); };
+      applyLayers();
+      window.__LOG__.push(`layers → ${offIds.length}/${total} parts off`);
+    }
     app.renderer.render(app.stage);
     await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
     app.renderer.render(app.stage);

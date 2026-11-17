@@ -68,6 +68,9 @@ try {
     if (arg('t', '')) q.set('t', arg('t'));
     if (arg('params', '')) q.set('params', arg('params'));
     if (has('dump')) q.set('dump', '1');
+    if (has('drawables')) q.set('drawables', '1');            // 列出 drawable 名，供按层分组
+    if (arg('hide', '')) q.set('hide', arg('hide'));           // 按部件名（不区分大小写、子串）关掉若干层
+    if (arg('only', '')) q.set('only', arg('only'));           // 只留匹配的部件层（逗号分隔）
 
     const page = await browser.newPage({ viewport: { width: W, height: H } });
     page.on('console', (m) => { if (m.type() === 'error') console.log('[page]', m.text()); });
@@ -97,15 +100,19 @@ try {
     const ERASE = arg('erase', '');                             // 手工抹除：输出像素 "x,y,w,h"（多块用 ; 分隔），填成皮肤墨
     const BLUE = +arg('blue', 0.12);                            // 蓝色（头发）判成橙墨所需的最低饱和度；调小可吃掉发面高光留下的白洞
     const ISLAND = +arg('island', 0);                           // 小于这个像素数的墨块并回周围主墨（治碎斑，0 关闭）
+    const MED = +arg('median', 0);                              // 墨标号的中值滤波半径（大形化，0 关闭）
     const SIL = has('silhouette');                              // 真剪影：只认外轮廓，填一整块墨，沿外缘描黑边
     const FILL = arg('fill', 'orange');                         // 剪影的墨：orange（默认）/ cream / black
     const STROKE = +arg('stroke', 6);                           // 剪影黑边宽度（输出 px），0 不描
+    const CORE = arg('core', 'off');                            // 剪影内芯的墨：orange / cream / black / off（不做层次）
+    const INSET = +arg('inset', 40);                            // 内芯相对外形的内缩距离（输出 px）
+    const HOLES = arg('holes', '1') === '1';                    // 被外形包住的空隙填黑（默认开）
     const dst = outPath(arg('out', dry ? 'out/_ink_dry.png' : 'out/ink.png'));
 
     const page = await browser.newPage({ viewport: { width: 600, height: 400 } });
     page.on('console', (m) => { if (m.type() === 'error') console.log('[page]', m.text()); });
     await page.goto(`${url}/tools/probe.html`);
-    const res = await page.evaluate(async ({ src, W, H, crop, CLEAN, KEY, BLOCK, SKIN, FACELESS, FACEH, ERASE, BLUE, ISLAND, SIL, FILLINK, STROKE }) => {
+    const res = await page.evaluate(async ({ src, W, H, crop, CLEAN, KEY, BLOCK, SKIN, FACELESS, FACEH, ERASE, BLUE, ISLAND, MED, SIL, FILLINK, STROKE, COREINK, INSET, HOLES }) => {
       const bmp = await createImageBitmap(await (await fetch(src)).blob());
       const sw = bmp.width, sh = bmp.height;
       const rect = crop ? crop.split(',').map(Number) : [0, 0, sw, sh];
@@ -123,6 +130,37 @@ try {
         const p2 = g2.getImageData(0, 0, W2, H2).data;
         const lab = new Uint8Array(W2 * H2);
         for (let i = 0, n = W2 * H2; i < n; i++) lab[i] = p2[i * 4 + 3] >= 128 ? FILLINK : 0;
+        // 层次（可选）：外形一种墨、内芯另一种墨、被外形包住的空隙填黑。
+        // 层次只来自三个可控制的东西（内缩距离、两种墨、空隙），不来自像素分类，所以不会长碎斑。
+        if (HOLES) {                                             // 被外形包住、不与画布边界连通的透明区 → 黑
+          const ext = new Uint8Array(W2 * H2), st = [];
+          const push = (i) => { if (lab[i] === 0 && !ext[i]) { ext[i] = 1; st.push(i); } };
+          for (let x = 0; x < W2; x++) { push(x); push((H2 - 1) * W2 + x); }
+          for (let y = 0; y < H2; y++) { push(y * W2); push(y * W2 + W2 - 1); }
+          while (st.length) {
+            const i = st.pop(), x = i % W2;
+            if (x > 0) push(i - 1);
+            if (x < W2 - 1) push(i + 1);
+            if (i >= W2) push(i - W2);
+            if (i + W2 < W2 * H2) push(i + W2);
+          }
+          for (let i = 0; i < W2 * H2; i++) if (lab[i] === 0 && !ext[i]) lab[i] = 3;
+        }
+        if (INSET > 0 && COREINK > 0) {                          // 外形内缩 INSET px 的部分 → 第二墨
+          let m = new Uint8Array(W2 * H2);
+          for (let i = 0; i < W2 * H2; i++) m[i] = lab[i] === FILLINK ? 1 : 0;
+          const steps = Math.round(INSET * SS2);
+          for (let r = 0; r < steps; r++) {
+            const to = Uint8Array.from(m);
+            for (let y = 1; y < H2 - 1; y++) for (let x = 1; x < W2 - 1; x++) {
+              const i = y * W2 + x;
+              if (!m[i]) continue;
+              if (!m[i - 1] || !m[i + 1] || !m[i - W2] || !m[i + W2]) to[i] = 0;
+            }
+            m = to;
+          }
+          for (let i = 0; i < W2 * H2; i++) if (m[i]) lab[i] = COREINK;
+        }
         const ST = Math.max(0, Math.round(STROKE * SS2));
         if (ST > 0) {
           let edge = new Uint8Array(W2 * H2);
@@ -289,6 +327,24 @@ try {
           }
         }
       }
+      // 大形化（--median r）：对墨标号做中值滤波，把边界推成连续的大块面。
+      // 碎斑不是"噪点"而是"小色块"，island 是按面积砍，median 是按邻域投票，两者互补。
+      if (MED > 0) {
+        const src = Uint8Array.from(lab2), out = Uint8Array.from(lab2);
+        const cnt = [0, 0, 0, 0];
+        for (let y = MED; y < H - MED; y++) for (let x = MED; x < W - MED; x++) {
+          cnt[0] = cnt[1] = cnt[2] = cnt[3] = 0;
+          for (let dy = -MED; dy <= MED; dy++) {
+            const row = (y + dy) * W + x;
+            for (let dx = -MED; dx <= MED; dx++) cnt[src[row + dx]]++;
+          }
+          const i = y * W + x, own = src[i];
+          let bi = 0, bc = -1;
+          for (let k = 0; k < 4; k++) if (cnt[k] > bc) { bc = cnt[k]; bi = k; }
+          if (bi !== 0) out[i] = bi; else out[i] = own;            // 透明占多数时保留原值，不扩洞
+        }
+        for (let i = 0; i < W * H; i++) lab2[i] = out[i];
+      }
       // 去碎斑（--island）：把小于阈值的整块墨并回它周围占多数的墨。
       // 和 --block 是两件事：block 是"看不清就不画"，island 是"看得清但太小就不留"。
       // 用它是为了在全分辨率分类（边缘平滑）之下，把蕾丝、花纹、发高光这些细碎块吃掉。
@@ -352,7 +408,7 @@ try {
       g.putImageData(new ImageData(px, W, H), 0, 0);
       const bbox = solid ? { x: bx0, y: by0, w: bx1 - bx0 + 1, h: by1 - by0 + 1 } : null;
       return { dataUrl: c.toDataURL('image/png'), src: { w: sw, h: sh }, solid, hits, bbox };
-    }, { src: toUrl(path.resolve(inp)), W, H, crop, CLEAN, KEY, BLOCK, SKIN, FACELESS, FACEH, ERASE, BLUE, ISLAND, SIL, FILLINK: (FILL === 'cream' ? 1 : FILL === 'black' ? 3 : 2), STROKE });
+    }, { src: toUrl(path.resolve(inp)), W, H, crop, CLEAN, KEY, BLOCK, SKIN, FACELESS, FACEH, ERASE, BLUE, ISLAND, MED, SIL, FILLINK: (FILL === 'cream' ? 1 : FILL === 'black' ? 3 : 2), STROKE, COREINK: (CORE === 'cream' ? 1 : CORE === 'orange' ? 2 : CORE === 'black' ? 3 : 0), INSET, HOLES });
 
     if (res.bbox) {
       const m = { top: res.bbox.y, left: res.bbox.x, right: W - (res.bbox.x + res.bbox.w), bottom: H - (res.bbox.y + res.bbox.h) };
