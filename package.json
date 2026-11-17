@@ -9,6 +9,7 @@
     "lyrics": "node tools/fill_lyrics.mjs",
     "lyrics:retime": ".venv\\Scripts\\python tools/parse_lrc.py && node tools/fill_lyrics.mjs --table",
     "check:lyrics": "node tools/check_no_lyrics.mjs",
+    "check:plates": "python tools/plate_check.py",
     "analyze": ".venv\\Scripts\\python tools/analyze_audio.py",
     "preview": "node export/server.mjs --open",
     "export:sample": "node export/export.mjs --start 0 --end 41 --width 960 --height 540 --fps 30 --out out/sample_0-41_540p30.mp4",
