@@ -17,7 +17,7 @@ import { clamp, easeBack, easeInOut, easeOut, lerp, prog, pulse } from '../engin
 import { cues } from './kit.js';
 import { shake } from './shot.js';
 
-const DELETE = '删除';
+const DELETE = 'Delete';
 /** Hand-set irregularities of the breaks (fixed numbers, so every frame agrees on them). */
 const JIT = [0.3, -0.42, 0.14, -0.22, 0.44, -0.34, 0.2, -0.1, 0.36, -0.28];
 

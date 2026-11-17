@@ -14,10 +14,7 @@
 // All mono (system / code), all pure functions of their arguments.
 import { clamp, easeOut, prog } from '../engine/util.js';
 
-// (v5: the listing and the terminal are written in Chinese, so a word is any run of letters in any script; the
-// colouring keys are Chinese too, and the English ones are kept for the lab strings that still use them)
-const WORD = /^[\p{L}_][\p{L}\p{N}_]*/u, YOURS = new Set(['you', 'presence', 'reply', 'yours', '你', '在线', '回复', '你的']);
-const ME_WORD = new Set(['me', '我']), LOVE_WORD = new Set(['love', '爱']), KEYWORD = new Set(['while', 'for', 'of', '当', '遍历']);
+const WORD = /^[A-Za-z_][A-Za-z0-9_]*/, YOURS = new Set(['you', 'presence', 'reply', 'yours']);
 
 /**
  * The ground of a code picture (call it first): the dark surface of the state the shot is in, never flat black:
@@ -45,12 +42,12 @@ export function tokens(str) {
     if (rest[0] === '"') { const j = rest.indexOf('"', 1), s = rest.slice(0, j < 0 ? rest.length : j + 1); push(s, 'text', 700); i += s.length; continue; }
     const w = WORD.exec(rest)?.[0];
     if (w) {
-      if (ME_WORD.has(w)) push(w, 'me', 800);
-      else if (LOVE_WORD.has(w)) push(w, 'meHot', 800);
-      else if (YOURS.has(w) && (w === 'you' || w === 'yours' || w === '你' || w === '你的' || afterYou)) push(w, 'text', 700);
-      else if (KEYWORD.has(w)) push(w, 'sub', 700);
+      if (w === 'me') push(w, 'me', 800);
+      else if (w === 'love') push(w, 'meHot', 800);
+      else if (YOURS.has(w) && (w === 'you' || w === 'yours' || afterYou)) push(w, 'text', 700);
+      else if (w === 'while' || w === 'for' || w === 'of') push(w, 'sub', 700);
       else push(w, 'sub', 400);
-      afterYou = w === 'you' || w === '你';
+      afterYou = w === 'you';
       i += w.length; continue;
     }
     if (rest[0] !== '.') afterYou = false;
@@ -61,13 +58,13 @@ export function tokens(str) {
 
 /** One line of code at (x, baseline y). alpha / dim scale every token; force = one role for all (shadow plates, struck lines). */
 export function codeLine(ctx, str, x, y, { size = 34, alpha = 1, force = null, weight = null } = {}) {
-  const o = { size, font: 'mono' };
+  const cw = ctx.cw(size);
   let col = 0;
   for (const tk of tokens(str)) {
-    if (tk.s.trim()) ctx.text(tk.s, x + col, y, { size, font: 'mono', weight: weight ?? tk.weight, color: force ?? tk.role, alpha });
-    col += ctx.measure(tk.s, o);                                        // (by width: a Chinese character is a column and a half)
+    if (tk.s.trim()) ctx.text(tk.s, x + col * cw, y, { size, font: 'mono', weight: weight ?? tk.weight, color: force ?? tk.role, alpha });
+    col += tk.s.length;
   }
-  return col;
+  return col * cw;
 }
 
 /**
@@ -80,10 +77,9 @@ export function codeLine(ctx, str, x, y, { size = 34, alpha = 1, force = null, w
  *   first     number of the first line (default 1); numbers = false leaves the gutter out
  */
 export function listing(ctx, x, y, lines, { size = 34, lh = 1.5, current = null, hot = 0, dimmed = null, tags = null, tagGap = 2, tagSize = 0.8, first = 1, numbers = true, alpha = 1, bar = 'raised', rule = 'me', barW = null } = {}) {
-  const cw = ctx.cw(size), mo = { size, font: 'mono' }, LH = size * lh, gut = numbers ? 4 * cw : 0,
-    wide = (s) => ctx.measure(s, mo), lineY = (i) => y + i * LH, endX = (i) => x + gut + wide(lines[i]);
+  const cw = ctx.cw(size), LH = size * lh, gut = numbers ? 4 * cw : 0, lineY = (i) => y + i * LH, endX = (i) => x + gut + lines[i].length * cw;
   if (current != null) {                                              // the bar under the line being executed
-    const w = barW ?? gut + Math.max(...lines.map(wide)) + 2 * cw, by = lineY(current) - size * 1.02;
+    const w = barW ?? gut + Math.max(...lines.map((l) => l.length)) * cw + 2 * cw, by = lineY(current) - size * 1.02;
     ctx.rrect(x - cw, by, w + cw, LH * 0.94, 8, { fill: bar, alpha: alpha * (0.75 + 0.25 * hot) });
     ctx.rect(x - cw, by, 6, LH * 0.94, { fill: true, color: rule, alpha });
   }

@@ -33,11 +33,11 @@ const COUNT_SHIFT = 0;
  * written in code). side: +1 = word left / name right. ws = word size, wb = baseline of its glyphs below the centre line, in em.
  */
 const LANGS = [
-  { code: 'de', word: 'eins', name: '德语', wf: 'serif', nf: 'tcSans', side: 1, ws: 176, wb: 0.3 },
-  { code: 'es', word: 'dos', name: '西班牙语', wf: 'serif', nf: 'tcSans', side: -1, ws: 176, wb: 0.3 },
-  { code: 'fr', word: 'trois', name: '法语', wf: 'serif', nf: 'tcSans', side: 1, ws: 156, wb: 0.3 },
-  { code: 'ko', word: '넷', name: '韩语', wf: 'krSerif', nf: 'tcSans', side: -1, ws: 216, wb: 0.36 },
-  { code: 'sv', word: 'fem', name: '瑞典语', wf: 'serif', nf: 'tcSans', side: 1, ws: 176, wb: 0.3 },
+  { code: 'de', word: 'eins', name: 'Deutsch', wf: 'serif', nf: 'sans', side: 1, ws: 176, wb: 0.3 },
+  { code: 'es', word: 'dos', name: 'Español', wf: 'serif', nf: 'sans', side: -1, ws: 176, wb: 0.3 },
+  { code: 'fr', word: 'trois', name: 'Français', wf: 'serif', nf: 'sans', side: 1, ws: 156, wb: 0.3 },
+  { code: 'ko', word: '넷', name: '한국어', wf: 'krSerif', nf: 'krSans', side: -1, ws: 216, wb: 0.36 },
+  { code: 'sv', word: 'fem', name: 'Svenska', wf: 'serif', nf: 'sans', side: 1, ws: 176, wb: 0.3 },
   { code: 'zh', word: '六', name: '中文', wf: 'tcSerif', nf: 'tcSans', side: -1, ws: 216, wb: 0.36 },
 ];
 
@@ -68,7 +68,7 @@ export function countShots(env) {
     ctx.text(c.word, CX - s * 575 + drift, CY + ws * c.wb, { ...wo, size: ws, align: 'center', color: 'text' });
     // the call: say(love, "<the language's own name>")
     const NS = 68, nx = CX + s * 575, no = { font: c.nf, weight: 500, size: NS }, nw = ctx.measure(c.name, no), q = ctx.cw(NS), x0 = nx - (nw + 3 * q) / 2;
-    codeLine(ctx, '说(爱,', x0, CY - 56, { size: 38 });
+    codeLine(ctx, 'say(love,', x0, CY - 56, { size: 38 });
     ctx.text('"', x0, CY + 30, { size: NS, font: 'mono', weight: 700, color: 'text' });
     ctx.text(c.name, x0 + q, CY + 30, { ...no, color: 'text' });
     ctx.text('"', x0 + q + nw, CY + 30, { size: NS, font: 'mono', weight: 700, color: 'text' });
@@ -79,25 +79,23 @@ export function countShots(env) {
   function chrome(ctx, i, t) {
     const X = 96, size = 38, cw = ctx.cw(size), y1 = 104, y2 = 166;
     ctx.text('^C', X, y1, { size, font: 'mono', weight: 700, color: 'sub' });
-    const head = '> 遍历 (语言 属于 [', hw = ctx.measure(head, { size, font: 'mono' });
+    const head = '> for (lang of [';
     codeLine(ctx, head, X, y2, { size });
-    let col = hw;
+    let col = head.length;
     LANGS.forEach((l, j) => {
-      const x = X + col, now = j === i, said = j < i, lw = ctx.measure(l.code, { size, font: 'mono' });
-      if (now) ctx.rect(x - 4, y2 - size * 0.86, lw + 8, size * 1.14, { fill: true, color: 'raised' });
+      const x = X + col * cw, now = j === i, said = j < i;
+      if (now) ctx.rect(x - 4, y2 - size * 0.86, 2 * cw + 8, size * 1.14, { fill: true, color: 'raised' });
       ctx.text(l.code, x, y2, { size, font: 'mono', weight: now ? 800 : 400, color: now ? 'meHot' : said ? 'mute' : 'sub' });
-      if (said) ctx.line(x - 3, y2 - size * 0.3, x + lw + 3, y2 - size * 0.3, { color: 'sub', width: 2.5 });
-      col += lw;
-      if (j < LANGS.length - 1) { ctx.text(', ', X + col, y2, { size, font: 'mono', color: 'mute' }); col += 2 * cw; }
+      if (said) ctx.line(x - 3, y2 - size * 0.3, x + 2 * cw + 3, y2 - size * 0.3, { color: 'sub', width: 2.5 });
+      col += 2;
+      if (j < LANGS.length - 1) { ctx.text(',', X + col * cw, y2, { size, font: 'mono', color: 'mute' }); col += 2; }
     });
-    codeLine(ctx, ']) 说(爱, 语言);', X + col, y2, { size });
+    codeLine(ctx, ']) say(love, lang);', X + col * cw, y2, { size });
     // replies 0 / n
-    const rs = 46, partTotal = `/ ${i + 1}`, wn = ctx.measure(partTotal, { size: rs, font: 'mono' }),
-      w0 = ctx.measure('0', { size: rs, font: 'mono' }), wlab = ctx.measure('回复', { size: rs, font: 'mono' }),
-      x0 = CX - (wlab + 2 * ctx.cw(rs) + w0 + wn) / 2, yb = 1014;
-    ctx.text('回复', x0, yb, { size: rs, font: 'mono', color: 'sub' });
-    ctx.text('0', x0 + wlab + ctx.cw(rs), yb, { size: rs, font: 'mono', weight: 800, color: 'err' });
-    ctx.text(partTotal, x0 + wlab + ctx.cw(rs) + w0 + ctx.cw(rs), yb, { size: rs, font: 'mono', color: 'sub' });
+    const rs = 46, rc = ctx.cw(rs), str = `replies 0 / ${i + 1}`, x0 = CX - (str.length * rc) / 2, yb = 1014;
+    ctx.text('replies', x0, yb, { size: rs, font: 'mono', color: 'sub' });
+    ctx.text('0', x0 + 8 * rc, yb, { size: rs, font: 'mono', weight: 800, color: 'err' });
+    ctx.text(`/ ${i + 1}`, x0 + 10 * rc, yb, { size: rs, font: 'mono', color: 'sub' });
   }
 
   // ---- the six moves: the incoming card is drawn through a moving clip, or slid, over the outgoing one

@@ -102,7 +102,7 @@ function heartInPalm(ctx, b) {
  * (Nothing is stored: every character is placed from its own number and the time alone.)
  */
 function reachStream(ctx, t, from) {
-  const SAY = '说(爱);', RATE = 64, HOLD = 1.15, BREAK = 0.45, WALL = 1868, SIZE = 44, ROWS = 20, o = { size: SIZE, font: 'mono', weight: 800 };
+  const SAY = 'say(love);', RATE = 64, HOLD = 1.15, BREAK = 0.45, WALL = 1868, SIZE = 44, ROWS = 20, o = { size: SIZE, font: 'mono', weight: 800 };
   const last = Math.floor((t - from) * RATE);
   for (let i = Math.max(0, last - Math.ceil(RATE * 3.4)); i <= last; i++) {
     const age = t - (from + i / RATE), row = Math.floor(rand(81, i) * ROWS), y1 = 330 + row * 36, x1 = WALL - (i % 6) * 28, fly = (x1 - PALM[0]) / (1250 + 500 * rand(82, i));

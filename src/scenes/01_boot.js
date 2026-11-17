@@ -75,11 +75,11 @@ export function bootShots(env) {
         figure(ctx, 0.6, 60 * k);
         const g = ctx.g, sc = lerp(1, 0.6, k);
         const pieces = [                                                             // [rect, lift, label]
-          [{ x: W.x, y: W.y, w: W.w, h: W.h }, 0, '窗口'],
-          [{ x: L.side.x + 12, y: L.side.y + 12, w: L.side.w - 24, h: L.side.h - 24 }, 90, '侧栏'],
-          [{ x: L.head.x + 14, y: L.head.y + 12, w: L.head.w - 28, h: L.head.h - 8 }, 180, '标题栏'],
-          [{ x: L.thread.x - 30, y: L.thread.y + 8, w: L.thread.w + 60, h: L.thread.h - 8 }, 270, '对话区'],
-          [{ x: L.composer.x, y: L.composer.y, w: L.composer.w, h: L.composer.h }, 360, '输入框'],
+          [{ x: W.x, y: W.y, w: W.w, h: W.h }, 0, 'window'],
+          [{ x: L.side.x + 12, y: L.side.y + 12, w: L.side.w - 24, h: L.side.h - 24 }, 90, 'sidebar'],
+          [{ x: L.head.x + 14, y: L.head.y + 12, w: L.head.w - 28, h: L.head.h - 8 }, 180, 'header'],
+          [{ x: L.thread.x - 30, y: L.thread.y + 8, w: L.thread.w + 60, h: L.thread.h - 8 }, 270, 'thread'],
+          [{ x: L.composer.x, y: L.composer.y, w: L.composer.w, h: L.composer.h }, 360, 'composer'],
         ];
         const bars = (r, rows, a) => { for (let j = 0; j < rows; j++) ctx.rrect(r.x + 26, r.y + 30 + j * 44, Math.min(r.w - 52, 140 + ((j * 67) % 150)), 16, 8, { fill: 'line', alpha: a }); };
         pieces.forEach(([r, lift, label], i) => {

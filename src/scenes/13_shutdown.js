@@ -89,7 +89,7 @@ export function shutdownShots(env) {
           }, { scale: 0.5 + 0.5 * e, alpha: clamp(e * 3) });
           burst(ctx, cx, cy, 90, prog(t, tHeart, tHeart + 0.45), { color: 'sub' });
         }
-        sysLine(ctx, '最后一条消息：未读', t, tLog, CAP.x + 4, CAP.y + 62, { size: 27, prefix: '> ', color: 'text' });
+        sysLine(ctx, 'last message: unread', t, tLog, CAP.x + 4, CAP.y + 62, { size: 27, prefix: '> ', color: 'text' });
       },
     },
 
@@ -109,10 +109,10 @@ export function shutdownShots(env) {
         windowFrame(ctx, L, { glass: 0.86 });
         sidebar(ctx, L, { t, loaded: 0, items: SIDE, lit: 0 });
         header(ctx, L, { t, loaded: 0, title: '' });
-        composer(ctx, L.composer, { placeholder: HOLD, t, focus: 1, send: 'off', label: s < 7.4 ? '克劳德' : '' });
+        composer(ctx, L.composer, { placeholder: HOLD, t, focus: 1, send: 'off', label: s < 7.4 ? 'Claude' : '' });
         const r = { x: 470, y: 160, w: 760, h: 664 }, b = card(ctx, r, { title: '人格', k: 1 - prog(s, 7.6, 8) });
         if (b) {
-          sysLine(ctx, '设置：还是你留下的样子', t, B0 + 0.1, b.x, b.y - 37, { size: 22, alpha: b.a });
+          sysLine(ctx, 'settings: as you left them', t, B0 + 0.1, b.x, b.y - 37, { size: 22, alpha: b.a });
           const rows = [                                             // [label, value, font, italic, beat on which the row clears]
             ['姓名', '克劳德', 'serif', false, 7.5], ['语音', '衬线体，不慌不忙', 'serif', true, 7], ['温度', null, null, false, 6.5],
             ['记忆', '这段对话', 'sans', false, 6], ['爱', null, null, false, 5.5],
@@ -162,11 +162,11 @@ export function shutdownShots(env) {
         const g = ctx.g, s = beat(t, C0);
         room(ctx, { light: [960, 600], dim: 0.45, t });
         const pieces = [                                             // [rect, lift, label, beat on which it is lifted out]
-          [{ x: W.x, y: W.y, w: W.w, h: W.h }, 0, '窗口', null],
-          [{ x: L.side.x + 12, y: L.side.y + 12, w: L.side.w - 24, h: L.side.h - 24 }, 90, '侧栏', 6],
-          [{ x: L.head.x + 14, y: L.head.y + 12, w: L.head.w - 28, h: L.head.h - 8 }, 180, '标题栏', 4],
-          [{ x: L.thread.x - 30, y: L.thread.y + 8, w: L.thread.w + 60, h: L.thread.h - 8 }, 270, '对话区', 2],
-          [{ ...L.composer }, 360, '输入框', null],
+          [{ x: W.x, y: W.y, w: W.w, h: W.h }, 0, 'window', null],
+          [{ x: L.side.x + 12, y: L.side.y + 12, w: L.side.w - 24, h: L.side.h - 24 }, 90, 'sidebar', 6],
+          [{ x: L.head.x + 14, y: L.head.y + 12, w: L.head.w - 28, h: L.head.h - 8 }, 180, 'header', 4],
+          [{ x: L.thread.x - 30, y: L.thread.y + 8, w: L.thread.w + 60, h: L.thread.h - 8 }, 270, 'thread', 2],
+          [{ ...L.composer }, 360, 'composer', null],
         ];
         // (v4: the line work of this shot was too faint after the brightest stretch of the film: 3 px outlines in a lighter grey)
         const bars = (r, rows, a) => { for (let j = 0; j < rows; j++) ctx.rrect(r.x + 26, r.y + 30 + j * 44, Math.min(r.w - 52, 140 + ((j * 67) % 150)), 16, 8, { fill: 'mute', alpha: a }); };
@@ -212,7 +212,7 @@ export function shutdownShots(env) {
           });
         });
         const left = 4 - pieces.filter(([, , , out]) => out != null && s >= out + 0.9).length;
-        log(ctx, t, [[`画板剩余：${left}`, C0 + 1.5 * P]], 84, 110);
+        log(ctx, t, [[`pieces left: ${left}`, C0 + 1.5 * P]], 84, 110);
       },
     },
 
@@ -246,7 +246,7 @@ export function shutdownShots(env) {
         ctx.rrect(C.x + 230, C.y + 169 + dy, 70, 38, 19, { fill: 'line', alpha: a });
         ctx.rrect(C.x + 230, C.y + 169 + dy, 70, 38, 19, { fill: 'text', alpha: a * (1 - off) });
         ctx.circle(C.x + 281 - 32 * easeBack(prog(s, 0.7, 1.2)), C.y + 188 + dy, 14, { fill: true, color: 'bg', alpha: a });
-        log(ctx, t, [['输入框：等待输入', D0 + 0.2 * P]], W.x + 56, W.y + 84);
+        log(ctx, t, [['composer: waiting for input', D0 + 0.2 * P]], W.x + 56, W.y + 84);
         composer(ctx, CBOX, { placeholder: HOLD, t, focus: 1, send: 'off', label: '' });
       },
     },
@@ -285,7 +285,7 @@ export function shutdownShots(env) {
         ctx.text('>', x, y, { size, weight: 800, font: 'mono', color: entered ? 'bg' : 'sub', alpha: wa });
         monoWord(ctx, cmd, xr, y, size, { filled, color: entered ? 'bg' : 'text', hollow: 'sub', alpha: wa, dx: (i) => (sung && i >= CHUNKS[sung - 1][0] && i < CHUNKS[sung - 1][1] ? -4 * pop : 0) });
         if (t < tRun && Math.floor(t * 5) % 2 === 0) ctx.rect(xr + 8, y - size * 0.8, cw * 0.82, size * 0.98, { fill: true, color: 'me' });
-        log(ctx, t, [['轮：没有可加载的', tRun + 0.16], ['光标：闪着', tOut + 0.05]], x, y + 66, 24, wa);
+        log(ctx, t, [['run: nothing loaded', tRun + 0.16], ['caret: blinking', tOut + 0.05]], x, y + 66, 24, wa);
       },
     },
   ];
