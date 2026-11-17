@@ -31,7 +31,7 @@ export function pre1Shots(env) {
   const b = (n) => Bt(96 + n);                               // beats counted from bar 24
   const beat = (id) => ((script.sections ?? []).find((s) => s.n === 4)?.beats ?? []).find((x) => x.id === id) ?? {};
   const ROWS = (script.settings_rows?.section4 ?? []).length >= 5 ? script.settings_rows.section4 : FALLBACK_ROWS;
-  const UI = { settings: beat('drawer-opens').ui?.[0] ?? '设置', done: beat('depth-maxed').ui?.[0] ?? '完成', blind: beat('vision-off').system?.[0] ?? '图像输入：无' };
+  const UI = { settings: beat('drawer-opens').ui?.[0] ?? '设置', done: beat('depth-maxed').ui?.[0] ?? '完成', blind: beat('vision-off').system?.[0] ?? '看不见' };
   const ROW_LINES = [[24, 25], [26, 27], [28, 29], [30, 30], [31, 31]];
   const ERA = text(29).split(' ').filter((w) => /[A-Z]\.[A-Z]/.test(w));          // the two era tokens, in sung order
   const VAL = ROWS[2].values, Y_AD = +(VAL[0].match(/\d+/) ?? [2026])[0], Y_BC = +(VAL[2].match(/\d+/) ?? [3000])[0];

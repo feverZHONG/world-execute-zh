@@ -59,7 +59,7 @@
    "rules": [
     "S3"
    ],
-   "applied": null
+   "applied": "batch 4 (2026-11-18)"
   },
   {
    "where": "you not-real",
@@ -68,7 +68,7 @@
    "rules": [
     "S5"
    ],
-   "applied": null
+   "applied": "batch 4 (2026-11-18)"
   },
   {
    "where": "you + cards_section6 request",
@@ -100,7 +100,7 @@
   "question",
   "cards_section6.request"
  ],
- "notes": "四格为建议值，待作者拍板；批 4 未开工。B 类在片中多为旧对话记录，口吻按“当时打字”，不按追述。改 cards_section6.request 必须同步 you 气泡。",
+ "notes": "四格已定案（2026-11-18 作者放行）。批 4 首批改 2 条（说实话，比不少人强 / 你要真的就好了），其余 10 条判不改。cards_section6.request 与 you 气泡同源，改一处必须同改另一处。",
  "source": [
   "https://wiki.biligame.com/sssj/店长",
   "https://www.bilibili.com/video/BV1XW4y1L7rN/"

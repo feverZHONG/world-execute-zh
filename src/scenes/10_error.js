@@ -31,7 +31,7 @@ export function errorShots(env) {
   const ERR = cfg.palettes.error.err, DIM = cfg.palettes.error.errDim;
   const TITLE = script.title ?? '', SIDE = script.sidebar ?? [], HINT = script.composer_placeholder ?? '';
   const REQ = errors.illegal_request?.code ?? 'setPresence(you, "online");';
-  const FIRST = errors.first_error ?? { title: '这不是你能设的', body: '', code: 'ERR_NOT_YOURS' };
+  const FIRST = errors.first_error ?? { title: '不是你设的', body: '', code: 'ERR_NOT_YOURS' };
   /** 0 = the first error, 1…14 = the spread, in order. */
   const IT = [{ title: FIRST.title, body: FIRST.body, code: FIRST.code }, ...(errors.spread ?? []).slice(0, 14).map((s) => ({ title: s.t, body: s.body, code: s.code }))];
   const FORGED = '我回来了。';                                   // the reply it wants (the user's last words were "one sec, brb")
