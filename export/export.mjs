@@ -44,6 +44,8 @@ const OUT = path.resolve(ROOT, SHEET || arg('out', `out/export_${W}x${H}_${FPS}.
 // 1080p, and the socket tops out near 90 MB/s (8.8 fps, transport-bound); a packed image is ~20x smaller.
 const FRAME = arg('frame', 'raw');
 const FRAME_Q = arg('q', '0.95');
+const BPP = arg('bpp', null);                           // h264 only: bits-per-pixel-second knob; raise it to verify how much the film loses
+const bppQuery = BPP ? `&bpp=${encodeURIComponent(BPP)}` : '';
 const firstFrame = Math.round(START * FPS), lastFrame = Math.round(END * FPS);   // [first, last)
 if (W % 2 || H % 2) throw new Error('width/height must be even for yuv420p');
 
@@ -124,11 +126,18 @@ const ffDone = new Promise((res, rej) => ff.on('exit', (c) => (c === 0 ? res() :
 ff.stdin.on('error', (e) => { console.error('[ffmpeg stdin]', e.message); });
 
 // ---- frame sink: page -> WebSocket -> ffmpeg stdin (frames never touch the disk) ---
+// --frames <dir> is the exception, used only for quality checks: it writes each frame as delivered (png/jpeg bytes)
 let received = 0, failed = null;
+const DUMP = arg('frames', null), dumpDir = DUMP ? path.resolve(ROOT, DUMP) : null;
+let dumpN = 0;
+if (dumpDir) fs.mkdirSync(dumpDir, { recursive: true });
 const onUpgrade = frameSocketHandler({
   frameBytes: FRAME === 'raw' ? W * H * 4 : 0,          // 0 = packed frames: variable message size
   // resolve only once ffmpeg has taken the frame; the page waits for that before sending the next
-  onFrame: (frame) => new Promise((res, rej) => ff.stdin.write(frame, (e) => (e ? rej(e) : (received++, res())))),
+  onFrame: (frame) => new Promise((res, rej) => {
+    if (dumpDir) fs.writeFileSync(path.join(dumpDir, `f${String(dumpN++).padStart(3, '0')}.${FRAME === 'png' ? 'png' : 'jpg'}`), frame);
+    ff.stdin.write(frame, (e) => (e ? rej(e) : (received++, res())));
+  }),
   onError: (e) => { failed = e; },
 });
 
@@ -148,7 +157,7 @@ try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   page.on('pageerror', (e) => { failed = e; console.error('[page error]', e.message); });
   page.on('console', (m) => { if (m.type() === 'error') console.error('[page]', m.text()); });
-  await page.goto(`${url}/?mode=export&w=${W}&h=${H}&frame=${FRAME}&q=${FRAME_Q}${LAB ? `&lab=${encodeURIComponent(LAB)}` : ''}${ARTSVG ? `&artsvg=${encodeURIComponent(ARTSVG)}` : ''}${ARTDIR ? `&art=${encodeURIComponent(ARTDIR)}` : ''}${PAL ? `&pal=${encodeURIComponent(PAL)}` : ''}`);
+  await page.goto(`${url}/?mode=export&w=${W}&h=${H}&frame=${FRAME}&q=${FRAME_Q}${LAB ? `&lab=${encodeURIComponent(LAB)}` : ''}${ARTSVG ? `&artsvg=${encodeURIComponent(ARTSVG)}` : ''}${ARTDIR ? `&art=${encodeURIComponent(ARTDIR)}` : ''}${PAL ? `&pal=${encodeURIComponent(PAL)}` : ''}${bppQuery}`);
   await page.waitForFunction(() => window.__mv && window.__mv.ready, null, { timeout: 60000 });
   const renderer = await page.evaluate(() => window.__mv.renderer);
   if (/swiftshader|llvmpipe|basic render/i.test(renderer)) console.warn('[export] WARNING: software WebGL - GPU not in use');

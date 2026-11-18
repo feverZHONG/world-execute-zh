@@ -108,7 +108,7 @@ function setupExport() {
     });
     enc.configure({
       codec: 'avc1.4d0028', width, height,
-      bitrate: Math.round(Math.max(8e6, width * height * fps * 0.2)),   // ~0.2 bit per pixel-second, hardware VBR settles lower on flat art
+      bitrate: Math.round(Math.max(8e6, width * height * fps * (Number(qs.get('bpp')) || 0.2))),   // ~0.2 bit per pixel-second, hardware VBR settles lower on flat art; ?bpp= raises it for quality checks
       framerate: fps, hardwareAcceleration: 'prefer-hardware', latencyMode: 'quality',
       avc: { format: 'annexb' },                          // ffmpeg's raw h264 demuxer wants Annex B, not AVCC
     });
