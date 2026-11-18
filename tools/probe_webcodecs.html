@@ -1,0 +1,128 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>webcodecs probe</title>
+<script>
+// 只做一件事：量这台机器能不能用硬件 H.264 编码、单帧代价多少。不碰渲染器。
+window.__probe = { done: false, res: null };
+(async () => {
+  const out = {};
+  const log = (...a) => console.log('[probe]', a.join(' '));
+  try {
+    out.hasVideoEncoder = typeof VideoEncoder !== 'undefined';
+    // GPU 型号
+    {
+      const c = document.createElement('canvas');
+      const gl = c.getContext('webgl');
+      const ext = gl && gl.getExtension('WEBGL_debug_renderer_info');
+      out.gpu = ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : '(n/a)';
+    }
+    const W = 1920, H = 1080, FPS = 60;
+    const cv = new OffscreenCanvas(W, H);
+    const ctx = cv.getContext('2d');
+    const draw = (i) => {
+      ctx.fillStyle = '#0b1a33'; ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = '#2f6fd0'; ctx.fillRect(80 + i * 6, 300, 900, 420);
+      ctx.fillStyle = '#e8ecf4'; ctx.font = '72px sans-serif';
+      ctx.fillText('world.execute(me); ' + i, 140, 220);
+      ctx.fillStyle = '#f5506f'; ctx.fillRect(0, 900, W, 12);
+    };
+    draw(0);
+
+    const cfgs = [
+      { codec: 'avc1.42001f', hw: 'prefer-hardware' },
+      { codec: 'avc1.4d0028', hw: 'prefer-hardware' },
+      { codec: 'avc1.640033', hw: 'prefer-hardware' },
+      { codec: 'avc1.640033', hw: 'no-preference' },
+    ];
+    out.support = [];
+    for (const c of cfgs) {
+      const cfg = { codec: c.codec, width: W, height: H, bitrate: 40e6, framerate: FPS, hardwareAcceleration: c.hw, latencyMode: 'quality' };
+      let r = null;
+      try { r = await VideoEncoder.isConfigSupported(cfg); } catch (e) { r = { error: e.message }; }
+      out.support.push({ codec: c.codec, hw: c.hw, supported: !!r.supported, note: r.error || (r.config && r.config.hardwareAcceleration) || '' });
+      log('support', c.codec, c.hw, !!r.supported);
+    }
+
+    const pick = out.support.find((s) => s.supported && s.hw === 'prefer-hardware') || out.support.find((s) => s.supported);
+    if (!pick) { out.verdict = 'NO H264 ENCODER'; window.__probe = { done: true, res: out }; return; }
+
+    // 真编 60 帧，分开量「造帧」与「编码」
+    let bytes = 0, chunks = 0, keys = 0;
+    const enc = new VideoEncoder({ output: (ch, meta) => { bytes += ch.byteLength; chunks += 1; if (meta && meta.type === 'key') keys += 1; }, error: (e) => { out.encError = e.message; } });
+    enc.configure({ codec: pick.codec, width: W, height: H, bitrate: 40e6, framerate: FPS, hardwareAcceleration: pick.hw, latencyMode: 'quality', avc: { format: 'avc' } });
+
+    const N = 60;
+    const tf = [], te = [];
+    const t0 = performance.now();
+    for (let i = 0; i < N; i++) {
+      draw(i);
+      let a = performance.now();
+      const f = new VideoFrame(cv, { timestamp: Math.round(i * 1e6 / FPS), duration: Math.round(1e6 / FPS) });
+      let b = performance.now(); tf.push(b - a);
+      enc.encode(f, { keyFrame: i % 120 === 0 });
+      f.close();
+      te.push(performance.now() - b);
+    }
+    await enc.flush();
+    const total = performance.now() - t0;
+    enc.close();
+
+    const avg = (xs) => xs.reduce((p, c) => p + c, 0) / xs.length;
+    out.encode = {
+      frames: N, totalMs: Math.round(total), fps: +(N / (total / 1000)).toFixed(1),
+      frameMs: +avg(tf).toFixed(2), callMs: +avg(te).toFixed(2),
+      chunks, keyFrames: keys, bytesPerFrame: Math.round(bytes / Math.max(1, chunks)), mbps: +((bytes * 8 / 1e6) / (N / FPS)).toFixed(1),
+      firstChunkType: chunks ? 'avc' : 'none',
+    };
+    log('encode', JSON.stringify(out.encode));
+
+    // 只看 canvas 颜色格式会不会被强制转换：I420 是否要求偶数尺寸等，这里顺带记一下 pixelFormat
+    out.verdict = pick.hw === 'prefer-hardware' ? 'HARDWARE OK' : 'SOFTWARE ONLY';
+
+    // ---- annexb：ffmpeg 的裸流 demuxer 只认 Annex B，先看编码器能不能直接吐这个格式 ----
+    {
+      const annexbCfg = { codec: pick.codec, width: W, height: H, bitrate: 40e6, framerate: FPS, hardwareAcceleration: pick.hw, latencyMode: 'quality', avc: { format: 'annexb' } };
+      let sup = null;
+      try { sup = await VideoEncoder.isConfigSupported(annexbCfg); } catch (e) { sup = { error: e.message }; }
+      out.annexbSupported = !!sup.supported;
+      if (out.annexbSupported) {
+        let first = null, types = [], nBytes = 0, n = 0;
+        const enc2 = new VideoEncoder({
+          output: (ch, meta) => {
+            n += 1; nBytes += ch.byteLength; types.push(meta && meta.type);
+            if (!first) {
+              const b = new Uint8Array(ch.byteLength);
+              ch.copyTo(b);
+              // 找首个 start code 与 NAL 类型（0x67 = SPS、0x65 = IDR、0x41/0x01 = 非 IDR）
+              let off = -1, nal = -1;
+              for (let i = 0; i + 3 < b.length; i++) {
+                if (b[i] === 0 && b[i + 1] === 0 && b[i + 2] === 1) { off = i + 3; nal = b[off] & 0x1f; break; }
+                if (b[i] === 0 && b[i + 1] === 0 && b[i + 2] === 0 && b[i + 3] === 1) { off = i + 4; nal = b[off] & 0x1f; break; }
+              }
+              first = { bytes: ch.byteLength, startCodeAt: off, firstNal: nal };
+            }
+          },
+          error: (e) => { out.annexbError = e.message; },
+        });
+        enc2.configure(annexbCfg);
+        const t1 = performance.now();
+        for (let i = 0; i < N; i++) {
+          draw(600 + i);                                  // 换成有运动的画面，码率才有参考价值
+          const f = new VideoFrame(cv, { timestamp: Math.round(i * 1e6 / FPS), duration: Math.round(1e6 / FPS) });
+          enc2.encode(f, { keyFrame: i % 60 === 0 });
+          f.close();
+        }
+        await enc2.flush();
+        enc2.close();
+        out.annexb = { frames: n, ms: Math.round(performance.now() - t1), fps: +(n / ((performance.now() - t1) / 1000)).toFixed(1),
+          bytesPerFrame: Math.round(nBytes / Math.max(1, n)), mbps: +((nBytes * 8 / 1e6) / (n / FPS)).toFixed(1),
+          firstChunk: first, types: types.slice(0, 4) };
+        log('annexb', JSON.stringify(out.annexb));
+      }
+    }
+    window.__probe = { done: true, res: out };
+  } catch (e) {
+    window.__probe = { done: true, res: { fatal: e.message, stack: String(e.stack) } };
+  }
+})();
+</script>

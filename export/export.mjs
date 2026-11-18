@@ -3,7 +3,9 @@
 //
 //   video:  node export/export.mjs [--start s] [--end s] [--width w] [--height h] [--fps n]
 //                                  [--out file.mp4] [--codec auto|h264_nvenc|libx264] [--cq n] [--headed]
-//                                  [--frame raw|png|jpeg] [--q 0.95] [--ffmpeg path\to\ffmpeg.exe]
+//                                  [--frame raw|png|jpeg|h264] [--q 0.95] [--ffmpeg path\to\ffmpeg.exe]
+//           --frame says how a frame travels: raw RGBA (lossless, 8.3 MB), a packed png/jpeg image, or an H.264
+//           bitstream encoded in the page by the GPU (avc1.4d0028, Annex B) which ffmpeg only remuxes.
 //           Times are SONG time (audio start = 0). The film itself starts at -safety.preroll (config.json) with a
 //           silent warning page, and that is where an export starts unless --start says otherwise; the audio is
 //           then delayed by the same amount. The file records the song time of its first frame (mv_start=... in the
@@ -88,13 +90,20 @@ if (SHEET) {
   const cols = +arg('cols', 4), rows = Math.ceil(total / cols);
   ffArgs = [...rawIn, '-framerate', '1', '-i', 'pipe:0', '-vf', `tile=${cols}x${rows}:padding=6:color=0x303030`, '-frames:v', '1', OUT];
 } else {
-  CODEC = pickCodec();
-  // input: raw RGBA frames, or a stream of packed images (ffmpeg decodes them before our filters)
+  CODEC = FRAME === 'h264' ? 'copy' : pickCodec();
+  // input: raw RGBA frames, a stream of packed images (ffmpeg decodes them before our filters), or an Annex B
+  // H.264 bitstream encoded in the page (nothing to decode - it is copied straight into the container)
   const frameIn = FRAME === 'raw'
     ? [...rawIn, '-framerate', String(FPS)]
-    : ['-y', '-hide_banner', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', FRAME === 'png' ? 'png' : 'mjpeg'];
+    : FRAME === 'h264'
+      ? ['-y', '-hide_banner', '-loglevel', 'error', '-f', 'h264', '-framerate', String(FPS)]
+      : ['-y', '-hide_banner', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', FRAME === 'png' ? 'png' : 'mjpeg'];
   // audio: the song from max(0, start); if the export starts before the song, it is delayed by that lead (in samples: exact)
   const lead = Math.max(0, -firstFrame / FPS), aStart = Math.max(0, firstFrame / FPS);
+  const VIDEO_OUT = CODEC === 'copy'
+    ? ['-c:v', 'copy']                                   // already encoded (and already yuv420p) in the page
+    : ['-vf', 'scale=out_color_matrix=bt709:out_range=limited,format=yuv420p',
+       '-c:v', CODEC, ...(CODEC === 'h264_nvenc' ? quality(cfg.export.nvenc, '-cq') : quality(cfg.export.x264, '-crf'))];
   ffArgs = [
     ...frameIn, '-thread_queue_size', '64', '-i', 'pipe:0',
     '-ss', String(aStart), '-t', String(total / FPS - lead), '-i', path.join(ROOT, cfg.paths.audio),
@@ -102,10 +111,12 @@ if (SHEET) {
     // adelay takes one value per channel; the `all` option does not exist in older ffmpeg builds (this machine's 4.2)
     ...(lead > 0 ? ['-af', `adelay=${Array(Math.max(2, features.meta.channels ?? 2)).fill(Math.round(lead * features.meta.sampleRate) + 'S').join('|')}`] : []),
     '-metadata', `comment=mv_start=${(firstFrame / FPS).toFixed(6)}`,
-    '-vf', 'scale=out_color_matrix=bt709:out_range=limited,format=yuv420p',
-    '-c:v', CODEC, ...(CODEC === 'h264_nvenc' ? quality(cfg.export.nvenc, '-cq') : quality(cfg.export.x264, '-crf')),
+    ...VIDEO_OUT,
     '-colorspace', 'bt709', '-color_primaries', 'bt709', '-color_trc', 'bt709', '-color_range', 'tv',
-    ...cfg.export.audio, '-shortest', '-movflags', '+faststart', OUT,
+    // `-shortest` would trim the last frames when the AAC track is a hair shorter than the video (copy mode), so
+    // only the re-encode paths use it; the audio is already bounded by its own -t
+    ...(CODEC === 'copy' ? [] : ['-shortest']),
+    ...cfg.export.audio, '-movflags', '+faststart', OUT,
   ];
 }
 const ff = spawn(FFMPEG, ffArgs, { stdio: ['pipe', 'inherit', 'inherit'] });
@@ -158,6 +169,11 @@ try {
         `(ms/frame: render ${ms.render} read ${ms.read} send ${ms.send})   `);
     }
     process.stdout.write('\n');
+    if (FRAME === 'h264') {
+      const fin = await page.evaluate(() => window.__mv.finishExport());
+      if (fin.chunks !== total) throw new Error(`h264: the page emitted ${fin.chunks} chunks for ${total} frames - frames were dropped`);
+      console.log(`[export] h264: ${fin.chunks} chunks, one per frame`);
+    }
   }
 } finally {
   ff.stdin.end();

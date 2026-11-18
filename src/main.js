@@ -58,7 +58,10 @@ try {
   width = +qs.get('w') || cfg.video.previewWidth;
   height = +qs.get('h') || cfg.video.previewHeight;
   // ?lab=<set> renders the check cards of src/scenes/lab.js instead of the film (node export/export.mjs --lab <set> --sheet ...)
-  engine = await createEngine({ canvas: $('view'), width, height, cfg, featuresData, lyricsData, flipY: isExport, lab: qs.get('lab'), onStep: isExport ? null : boot.step });
+  engine = await createEngine({ canvas: $('view'), width, height, cfg, featuresData, lyricsData,
+    // h264 mode encodes H.264 straight off the canvas, so the drawing buffer must keep its natural top-down
+    // orientation; every other export mode reads pixels back and wants the flipped buffer instead
+    flipY: isExport && (qs.get('frame') || 'raw') !== 'h264', lab: qs.get('lab'), onStep: isExport ? null : boot.step });
 } catch (e) { boot.fail(e); throw e; }
 
 if (isExport) setupExport(); else setupPreview();
@@ -75,19 +78,53 @@ function setupExport() {
     ws.onclose = () => rej(new Error('frame socket closed'));
     ws.send(data);
   });
-  // Frame packing: raw RGBA is 8.3 MB at 1080p and the socket tops out near 90 MB/s, so the film was transport-bound
-  // (8.8 fps, `send` 90-125 ms/frame). Packed frames cost one canvas encode per frame and shrink the payload ~20x.
-  const pack = qs.get('frame') || 'raw';                 // raw | png | jpeg
+  // Frame transport. Raw RGBA is 8.3 MB per frame at 1080p and the socket tops out near 90 MB/s, so the film was
+  // transport-bound (8.8 fps). Two ways out: pack the frame as an image (`png`/`jpeg`, ~20x smaller), or encode
+  // H.264 in the page on the GPU and send the bitstream (~500x smaller) - ffmpeg then only remuxes (`-c copy`).
+  const pack = qs.get('frame') || 'raw';                 // raw | png | jpeg | h264
   const Q = +(qs.get('q') || 0.95);                       // jpeg quality only
-  const c2 = pack === 'raw' ? null : new OffscreenCanvas(width, height).getContext('2d', { willReadFrequently: true });
-  const img = pack === 'raw' ? null : c2.createImageData(width, height);
+  const c2 = (pack === 'png' || pack === 'jpeg') ? new OffscreenCanvas(width, height).getContext('2d', { willReadFrequently: true }) : null;
+  const img = c2 ? c2.createImageData(width, height) : null;
   const packFrame = async () => {
     if (pack === 'raw') return buf;
     img.data.set(buf);                                   // readPixels gave top-down rows (flipY = export)
     c2.putImageData(img, 0, 0);
     const blob = await c2.canvas.convertToBlob({ type: pack === 'png' ? 'image/png' : 'image/jpeg', quality: Q });
     return new Uint8Array(await blob.arrayBuffer());
-    };
+  };
+
+  // ---- h264: the encoder runs in the page, only the bitstream leaves the browser -------------------------
+  // The exporter calls exportRange once per 60-frame chunk, so the encoder lives across all of them: rebuilding
+  // it per chunk would restart the stream (and a fresh encoder left the drain loop dead between chunks).
+  const GOP = 60;                                        // one keyframe per second: seekable, and segments stay concatenable
+  let enc = null, encQueue = [], encDone = false, encFail = null, encWaiters = [], encCount = 0, encT = 0, drainP = null;
+  const wake = () => { const w = encWaiters.splice(0); for (const f of w) f(); };
+  const waitQueue = () => new Promise((r) => encWaiters.push(r));
+  function startEncoder(fps) {
+    encCount = 0; encT = 0; encQueue.length = 0; encDone = false; encFail = null;
+    enc = new VideoEncoder({
+      output: (ch) => { encCount += 1; const b = new Uint8Array(ch.byteLength); ch.copyTo(b); encQueue.push(b); wake(); },
+      error: (e) => { encFail = e; wake(); },
+    });
+    enc.configure({
+      codec: 'avc1.4d0028', width, height,
+      bitrate: Math.round(Math.max(8e6, width * height * fps * 0.2)),   // ~0.2 bit per pixel-second, hardware VBR settles lower on flat art
+      framerate: fps, hardwareAcceleration: 'prefer-hardware', latencyMode: 'quality',
+      avc: { format: 'annexb' },                          // ffmpeg's raw h264 demuxer wants Annex B, not AVCC
+    });
+    drainP = drainEncoder();
+  }
+  async function drainEncoder() {
+    while (!encDone || encQueue.length) {
+      if (encFail) throw encFail;
+      if (!encQueue.length) { await waitQueue(); continue; }
+      const b = encQueue.shift(); wake();
+      await send(b);
+    }
+  }
+  // WebCodecs drops input frames once its own queue grows, so the producer must wait on encodeQueueSize too,
+  // not only on the output queue. The timeout keeps a stalled encoder from hanging the export.
+  const breathe = () => Promise.race([waitQueue(), new Promise((r) => setTimeout(r, 20))]);
   window.__mv = {
     ready: true,
     duration: engine.duration,
@@ -98,9 +135,10 @@ function setupExport() {
       for (const t of times) { engine.renderFrame(t); engine.readPixels(buf); await send(buf); }
       return times.length;
     },
-    /** Render frames [from, to) at `fps` and send each one (raw RGBA, or a packed image) to the Node side, in order. */
+    /** Render frames [from, to) at `fps` and send each one (raw RGBA, a packed image, or an H.264 bitstream) in order. */
     async exportRange(from, to, fps) {
       await opened;
+      if (pack === 'h264') return exportRangeH264(from, to, fps);
       const ms = { render: 0, read: 0, send: 0 };       // profiling only; never affects the frames
       for (let i = from; i < to; i++) {
         const a = performance.now();
@@ -114,7 +152,42 @@ function setupExport() {
       for (const k in ms) ms[k] = +(ms[k] / (to - from)).toFixed(1);
       return ms;
     },
+    /** h264 only: flush the page encoder after the last chunk (no-op otherwise). */
+    finishExport: () => (pack === 'h264' ? finishExportH264() : Promise.resolve({ chunks: 0 })),
   };
+
+  /** h264: encode off the canvas (no readPixels, no image packing), stream the bitstream, keep a small queue in flight. */
+  async function exportRangeH264(from, to, fps) {
+    if (typeof VideoEncoder === 'undefined') throw new Error('VideoEncoder is not available in this browser');
+    if (!enc) startEncoder(fps);
+    if (encFail) throw encFail;
+    const ms = { render: 0, read: 0, send: 0, chunks: 0 };
+    const dur = Math.round(1e6 / fps);
+    for (let i = from; i < to; i++) {
+      const a = performance.now();
+      engine.renderFrame(i / fps);
+      const b = performance.now();
+      const frame = new VideoFrame($('view'), { timestamp: Math.round(encT++ * 1e6 / fps), duration: dur });
+      const c = performance.now();
+      enc.encode(frame, { keyFrame: (i - from) % GOP === 0 });
+      frame.close();
+      while (enc.encodeQueueSize > 4 || encQueue.length > 3) await breathe();
+      ms.render += b - a; ms.read += c - b; ms.send += performance.now() - c;
+    }
+    ms.chunks = encCount;                                // cumulative chunks emitted so far
+    for (const k of ['render', 'read', 'send']) ms[k] = +(ms[k] / (to - from)).toFixed(1);
+    return ms;
+  }
+  /** Flush the page-side encoder once the last chunk has been rendered. Chunks must equal frames, or frames were dropped. */
+  async function finishExportH264() {
+    if (!enc) return { chunks: 0 };
+    await enc.flush();
+    encDone = true; wake();
+    await drainP;
+    if (encFail) throw encFail;
+    enc.close();
+    return { chunks: encCount };
+  }
 }
 
 // ---------------------------------------------------------------------------------
