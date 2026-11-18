@@ -77,7 +77,9 @@ export function overlayScene({ cfg, features }) {
     // literal greys: by now the palette is `dead`, and this note must stay readable
     ['非官方同人作品。与 Anthropic 及 Mili 无隶属关系，亦未获其认可。', '#b8b6ae'],
     ['Claude 是 Anthropic 的商标。音乐：《world.execute(me);》，Mili。', '#7d7b73'],
-    ['角色剪影由本片作者提供。界面由代码绘制。', '#7d7b73'],
+    // the plates are Live2D renders out of the game's model library, not drawings of ours: say where they come from
+    ['角色图像取自《双生视界》Live2D 素材，版权归原权利人。', '#7d7b73'],
+    ['界面与编排由本片作者用代码完成。', '#7d7b73'],
   ];
   return {
     id: 'overlay', overlay: true, z: 100, start: -1e9, end: 1e9,

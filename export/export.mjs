@@ -3,6 +3,7 @@
 //
 //   video:  node export/export.mjs [--start s] [--end s] [--width w] [--height h] [--fps n]
 //                                  [--out file.mp4] [--codec auto|h264_nvenc|libx264] [--cq n] [--headed]
+//                                  [--frame raw|png|jpeg] [--q 0.95] [--ffmpeg path\to\ffmpeg.exe]
 //           Times are SONG time (audio start = 0). The film itself starts at -safety.preroll (config.json) with a
 //           silent warning page, and that is where an export starts unless --start says otherwise; the audio is
 //           then delayed by the same amount. The file records the song time of its first frame (mv_start=... in the
@@ -37,6 +38,10 @@ const W = +arg('width', SHEET ? 960 : cfg.video.width), H = +arg('height', SHEET
 const PRE = cfg.safety?.preroll ?? 0;                 // seconds of film before the song
 const START = Math.max(-PRE, +arg('start', LAB ? 0 : -PRE)), END = Math.min(+arg('end', features.meta.duration), features.meta.duration);
 const OUT = path.resolve(ROOT, SHEET || arg('out', `out/export_${W}x${H}_${FPS}.mp4`));
+// --frame raw|png|jpeg: how one frame travels from the page to ffmpeg. Raw RGBA is lossless but 8.3 MB per frame at
+// 1080p, and the socket tops out near 90 MB/s (8.8 fps, transport-bound); a packed image is ~20x smaller.
+const FRAME = arg('frame', 'raw');
+const FRAME_Q = arg('q', '0.95');
 const firstFrame = Math.round(START * FPS), lastFrame = Math.round(END * FPS);   // [first, last)
 if (W % 2 || H % 2) throw new Error('width/height must be even for yuv420p');
 
@@ -49,6 +54,8 @@ const total = SHEET ? times.length : lastFrame - firstFrame;
 
 // ---- ffmpeg ----------------------------------------------------------------------
 function findFfmpeg() {
+  const want = arg('ffmpeg', process.env.FFMPEG || cfg.export.ffmpeg || '');
+  if (want && fs.existsSync(want)) return want;                                 // explicit build wins (nvenc needs a recent one)
   if (spawnSync('ffmpeg', ['-version']).status === 0) return 'ffmpeg';          // system ffmpeg wins
   const p = createRequire(import.meta.url)('ffmpeg-static');
   if (p && fs.existsSync(p)) return p;
@@ -82,10 +89,14 @@ if (SHEET) {
   ffArgs = [...rawIn, '-framerate', '1', '-i', 'pipe:0', '-vf', `tile=${cols}x${rows}:padding=6:color=0x303030`, '-frames:v', '1', OUT];
 } else {
   CODEC = pickCodec();
+  // input: raw RGBA frames, or a stream of packed images (ffmpeg decodes them before our filters)
+  const frameIn = FRAME === 'raw'
+    ? [...rawIn, '-framerate', String(FPS)]
+    : ['-y', '-hide_banner', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', FRAME === 'png' ? 'png' : 'mjpeg'];
   // audio: the song from max(0, start); if the export starts before the song, it is delayed by that lead (in samples: exact)
   const lead = Math.max(0, -firstFrame / FPS), aStart = Math.max(0, firstFrame / FPS);
   ffArgs = [
-    ...rawIn, '-framerate', String(FPS), '-thread_queue_size', '64', '-i', 'pipe:0',
+    ...frameIn, '-thread_queue_size', '64', '-i', 'pipe:0',
     '-ss', String(aStart), '-t', String(total / FPS - lead), '-i', path.join(ROOT, cfg.paths.audio),
     '-map', '0:v', '-map', '1:a',
     // adelay takes one value per channel; the `all` option does not exist in older ffmpeg builds (this machine's 4.2)
@@ -104,7 +115,7 @@ ff.stdin.on('error', (e) => { console.error('[ffmpeg stdin]', e.message); });
 // ---- frame sink: page -> WebSocket -> ffmpeg stdin (frames never touch the disk) ---
 let received = 0, failed = null;
 const onUpgrade = frameSocketHandler({
-  frameBytes: W * H * 4,
+  frameBytes: FRAME === 'raw' ? W * H * 4 : 0,          // 0 = packed frames: variable message size
   // resolve only once ffmpeg has taken the frame; the page waits for that before sending the next
   onFrame: (frame) => new Promise((res, rej) => ff.stdin.write(frame, (e) => (e ? rej(e) : (received++, res())))),
   onError: (e) => { failed = e; },
@@ -126,7 +137,7 @@ try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   page.on('pageerror', (e) => { failed = e; console.error('[page error]', e.message); });
   page.on('console', (m) => { if (m.type() === 'error') console.error('[page]', m.text()); });
-  await page.goto(`${url}/?mode=export&w=${W}&h=${H}${LAB ? `&lab=${encodeURIComponent(LAB)}` : ''}${ARTSVG ? `&artsvg=${encodeURIComponent(ARTSVG)}` : ''}${ARTDIR ? `&art=${encodeURIComponent(ARTDIR)}` : ''}${PAL ? `&pal=${encodeURIComponent(PAL)}` : ''}`);
+  await page.goto(`${url}/?mode=export&w=${W}&h=${H}&frame=${FRAME}&q=${FRAME_Q}${LAB ? `&lab=${encodeURIComponent(LAB)}` : ''}${ARTSVG ? `&artsvg=${encodeURIComponent(ARTSVG)}` : ''}${ARTDIR ? `&art=${encodeURIComponent(ARTDIR)}` : ''}${PAL ? `&pal=${encodeURIComponent(PAL)}` : ''}`);
   await page.waitForFunction(() => window.__mv && window.__mv.ready, null, { timeout: 60000 });
   const renderer = await page.evaluate(() => window.__mv.renderer);
   if (/swiftshader|llvmpipe|basic render/i.test(renderer)) console.warn('[export] WARNING: software WebGL - GPU not in use');

@@ -75,6 +75,19 @@ function setupExport() {
     ws.onclose = () => rej(new Error('frame socket closed'));
     ws.send(data);
   });
+  // Frame packing: raw RGBA is 8.3 MB at 1080p and the socket tops out near 90 MB/s, so the film was transport-bound
+  // (8.8 fps, `send` 90-125 ms/frame). Packed frames cost one canvas encode per frame and shrink the payload ~20x.
+  const pack = qs.get('frame') || 'raw';                 // raw | png | jpeg
+  const Q = +(qs.get('q') || 0.95);                       // jpeg quality only
+  const c2 = pack === 'raw' ? null : new OffscreenCanvas(width, height).getContext('2d', { willReadFrequently: true });
+  const img = pack === 'raw' ? null : c2.createImageData(width, height);
+  const packFrame = async () => {
+    if (pack === 'raw') return buf;
+    img.data.set(buf);                                   // readPixels gave top-down rows (flipY = export)
+    c2.putImageData(img, 0, 0);
+    const blob = await c2.canvas.convertToBlob({ type: pack === 'png' ? 'image/png' : 'image/jpeg', quality: Q });
+    return new Uint8Array(await blob.arrayBuffer());
+    };
   window.__mv = {
     ready: true,
     duration: engine.duration,
@@ -85,7 +98,7 @@ function setupExport() {
       for (const t of times) { engine.renderFrame(t); engine.readPixels(buf); await send(buf); }
       return times.length;
     },
-    /** Render frames [from, to) at `fps` and send each one (raw RGBA) to the Node side, in order. */
+    /** Render frames [from, to) at `fps` and send each one (raw RGBA, or a packed image) to the Node side, in order. */
     async exportRange(from, to, fps) {
       await opened;
       const ms = { render: 0, read: 0, send: 0 };       // profiling only; never affects the frames
@@ -95,7 +108,7 @@ function setupExport() {
         const b = performance.now();
         engine.readPixels(buf);
         const c = performance.now();
-        await send(buf);
+        await send(await packFrame());
         ms.render += b - a; ms.read += c - b; ms.send += performance.now() - c;
       }
       for (const k in ms) ms[k] = +(ms[k] / (to - from)).toFixed(1);

@@ -19,7 +19,8 @@ function unmask(dst, from, to, mask, phase) {
 }
 
 /**
- * @param frameBytes  exact size of every message (width * height * 4)
+ * @param frameBytes  exact size of every message (width * height * 4), or 0 = variable size (packed frames:
+ *                    png/jpeg), where every message is a whole image and the size changes from frame to frame
  * @param onFrame     async (Uint8Array) => void; the buffer is reused after the promise resolves
  */
 export function frameSocketHandler({ frameBytes, onFrame, onError }) {
@@ -28,7 +29,10 @@ export function frameSocketHandler({ frameBytes, onFrame, onError }) {
     socket.write(`HTTP/1.1 101 Switching Protocols\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Accept: ${accept}\r\n\r\n`);
     socket.setNoDelay(true);
 
-    const frame = new Uint8Array(new ArrayBuffer(frameBytes));   // 4-byte aligned message buffer
+    const raw = frameBytes > 0;
+    const frame = raw ? new Uint8Array(new ArrayBuffer(frameBytes)) : null;   // 4-byte aligned message buffer
+    const parts = [];                  // packed mode only: the pieces of the message being received
+    const MAX = 64 << 20;              // packed mode guard: no image may be larger than this
     let msgOff = 0;                    // bytes of the current message received so far
     let head = Buffer.alloc(0);        // partial WS frame header
     let frag = null;                   // current WS frame: { left, mask, start, fin, opcode }
@@ -48,19 +52,33 @@ export function frameSocketHandler({ frameBytes, onFrame, onError }) {
           d = head.subarray(6 + ext); head = Buffer.alloc(0);
           if (frag.opcode === 8) { socket.end(); return; }                    // close
           if (frag.opcode > 2) return fail(new Error('unexpected ws opcode ' + frag.opcode));
-          if (msgOff + len > frameBytes) return fail(new Error('frame larger than expected'));
+          if (raw ? msgOff + len > frameBytes : msgOff + len > MAX) return fail(new Error('frame larger than expected'));
         }
         const take = Math.min(frag.left, d.length);
-        frame.set(d.subarray(0, take), msgOff);
+        if (raw) frame.set(d.subarray(0, take), msgOff);
+        else {
+          // Every WS frame carries its own mask key, so a message split into several frames must be unmasked per
+          // frame: copy this piece out at once, then unmask it with the mask of the frame it came from.
+          const piece = Buffer.from(d.subarray(0, take));
+          unmask(piece, 0, take, frag.mask, msgOff - frag.start);
+          parts.push(piece);
+        }
         msgOff += take; frag.left -= take; d = d.subarray(take);
         if (frag.left > 0) return;
-        unmask(frame, frag.start, msgOff, frag.mask, 0);
-        const fin = frag.fin; frag = null;
+        const fin = frag.fin, mask = frag.mask, start = frag.start; frag = null;
         if (!fin) continue;                                                   // more fragments follow
-        if (msgOff !== frameBytes) return fail(new Error(`bad frame size ${msgOff}, expected ${frameBytes}`));
+        let msg;
+        if (raw) {
+          unmask(frame, start, msgOff, mask, 0);
+          if (msgOff !== frameBytes) return fail(new Error(`bad frame size ${msgOff}, expected ${frameBytes}`));
+          msg = frame;
+        } else {
+          msg = Buffer.concat(parts);
+          parts.length = 0;
+        }
         msgOff = 0;
         socket.pause();
-        try { await onFrame(frame); } catch (e) { return fail(e); }
+        try { await onFrame(msg); } catch (e) { return fail(e); }
         socket.resume();
         socket.write(ACK);
       }
