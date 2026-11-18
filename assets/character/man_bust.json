@@ -1,0 +1,19 @@
+{
+  "kind": "plate",
+  "plate": "assets/character/man_bust.png",
+  "size": [
+    1890,
+    2520
+  ],
+  "crop": {
+    "zoom": 0.736,
+    "top": -0.018,
+    "cx": 0.5,
+    "ar": 1.3333
+  },
+  "nativePx": null,
+  "render": "out/_lib/wr/big_04_训练服.png",
+  "renderSidecar": "out/_lib/wr/big_04_训练服.json",
+  "refitScore": 22.91,
+  "recovered": "2026-11-18 补录：参数取自 plate_hi.py 当次拟合输出"
+}

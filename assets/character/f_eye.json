@@ -1,0 +1,19 @@
+{
+  "kind": "plate",
+  "plate": "assets/character/f_eye.png",
+  "size": [
+    1766,
+    1766
+  ],
+  "crop": {
+    "zoom": 0.66,
+    "top": 0.026,
+    "cx": 0.48,
+    "ar": 1.0
+  },
+  "nativePx": null,
+  "render": "out/_lib/wr/big_12_西洋棋.png",
+  "renderSidecar": "out/_lib/wr/big_12_西洋棋.json",
+  "refitScore": 23.14,
+  "recovered": "2026-11-18 补录：参数取自 plate_hi.py 当次拟合输出"
+}

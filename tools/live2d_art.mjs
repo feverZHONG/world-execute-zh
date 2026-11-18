@@ -81,10 +81,52 @@ try {
     if (err) throw new Error(err.split('\n')[0]);
     for (const l of await page.evaluate('window.__LOG__')) console.log('  ' + l);
     const dataUrl = await page.evaluate("document.querySelector('canvas').toDataURL('image/png')");
+    // 包围盒与画布尺寸一起回读：画板取框用的是「相对包围盒」的坐标，所以这两个数必须和渲图一起留档，
+    // 否则下次想按同一构图重出就只能靠反解拟合（2026-11-18 的教训）。
+    const meta = await page.evaluate(() => {
+      const c = document.querySelector('canvas');
+      const t = document.createElement('canvas');
+      t.width = c.width; t.height = c.height;
+      const g = t.getContext('2d');
+      g.drawImage(c, 0, 0);
+      const d = g.getImageData(0, 0, t.width, t.height).data;
+      const u = new Uint32Array(d.buffer);            // 小端：高字节是 alpha
+      let x0 = t.width, y0 = t.height, x1 = 0, y1 = 0, n = 0;
+      for (let y = 0; y < t.height; y++) {
+        const row = y * t.width;
+        for (let x = 0; x < t.width; x++) {
+          if ((u[row + x] >>> 24) > 8) {
+            if (x < x0) x0 = x; if (x > x1) x1 = x;
+            if (y < y0) y0 = y; if (y > y1) y1 = y;
+            n++;
+          }
+        }
+      }
+      return n ? { bbox: [x0, y0, x1 + 1, y1 + 1], w: c.width, h: c.height, px: n }
+        : { bbox: null, w: c.width, h: c.height, px: 0 };
+    });
     const dst = outPath(arg('out', `out/live2d_${model.replace(/[\\/]/g, '_')}.png`));
     writePng(dst, dataUrl);
     const kb = (fs.statSync(dst).size / 1024).toFixed(0);
+    const side = {
+      kind: 'live2d-render',
+      model: dir, model3: m3,
+      canvas: [meta.w, meta.h],
+      pad: +arg('pad', '0.94'), zoom: +arg('zoom', '1'), ox: +arg('ox', '0'), oy: +arg('oy', '0'),
+      box: arg('box', '') || null, motion: arg('motion', '') || null, t: arg('t', '') || null,
+      params: arg('params', '') || null, hide: arg('hide', '') || null, only: arg('only', '') || null,
+      bbox: meta.bbox,
+      bboxW: meta.bbox ? meta.bbox[2] - meta.bbox[0] : null,
+      bboxRatio: meta.bbox ? +((meta.bbox[2] - meta.bbox[0]) / meta.w).toFixed(4) : null,
+      topRatio: meta.bbox ? +(meta.bbox[1] / meta.h).toFixed(4) : null,
+      at: new Date().toISOString(),
+    };
+    fs.writeFileSync(dst.replace(/\.png$/i, '') + '.json', JSON.stringify(side, null, 2) + '\n');
     console.log(`→ ${dst}  ${W}x${H}  ${kb} KiB`);
+    if (meta.bbox) {
+      console.log(`  bbox ${meta.bbox.join(',')}  宽 ${side.bboxW} (占画布 ${(side.bboxRatio * 100).toFixed(1)}%)  ` +
+        `顶端 ${(side.topRatio * 100).toFixed(1)}%  → 取框参数已写入同名 .json`);
+    }
   } else if (cmd === 'ink') {
     const inp = arg('in', '');
     if (!inp) throw new Error('--in 必填');

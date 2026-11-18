@@ -1,0 +1,19 @@
+{
+  "kind": "plate",
+  "plate": "assets/character/cat_bust.png",
+  "size": [
+    2172,
+    2896
+  ],
+  "crop": {
+    "zoom": 0.748,
+    "top": 0.006,
+    "cx": 0.5,
+    "ar": 1.3333
+  },
+  "nativePx": null,
+  "render": "out/_lib/wr/big_07_猫耳连帽衫.png",
+  "renderSidecar": "out/_lib/wr/big_07_猫耳连帽衫.json",
+  "refitScore": 21.07,
+  "recovered": "2026-11-18 补录：参数取自 plate_hi.py 当次拟合输出"
+}

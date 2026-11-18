@@ -1,0 +1,19 @@
+{
+  "kind": "plate",
+  "plate": "assets/character/boy_bust.png",
+  "size": [
+    1794,
+    2391
+  ],
+  "crop": {
+    "zoom": 0.736,
+    "top": 0.006,
+    "cx": 0.5,
+    "ar": 1.3328
+  },
+  "nativePx": null,
+  "render": "out/_lib/wr/big_15_红夹克.png",
+  "renderSidecar": "out/_lib/wr/big_15_红夹克.json",
+  "refitScore": 16.96,
+  "recovered": "2026-11-18 补录：参数取自 plate_hi.py 当次拟合输出"
+}
