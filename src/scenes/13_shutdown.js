@@ -42,20 +42,19 @@ export function shutdownShots(env) {
   const log = (ctx, t, lines, x, y, size = 27, a = 1) => lines.forEach(([str, at], i) =>
     sysLine(ctx, str, t, at, x, y + i * size * 1.56, { size, alpha: a, color: i === lines.length - 1 || t < lines[i + 1][1] ? 'text' : 'sub' }));
   /** She, behind the glass, as at the boot (two greys). */
-  const figure = (ctx, a, dx = 0) => glassFigure(ctx, art, a, { dx });
+  const figure = (ctx, a, dx = 0, o = {}) => glassFigure(ctx, art, a, { dx, ...o });
   /**
    * The metaphor, put back on her way out: once the plates stopped being blank silhouettes and became her own
    * picture (Live2D, printed as it is), the film lost the line it opened on — SHE HAS NO FACE. So before she goes
-   * she is printed as the flat shape again: her own matte, one tone, which carries no eyes and no mouth.
-   * `alpha` here is her own presence (1 = as present as she is at this moment); k = 0..1 how far the plate has taken.
+   * her own plate is traded for her own MATTE: one flat tone, no eyes, no mouth, nothing recorded.
+   * The hand-over is a straight cross-fade at one identical brightness (paint 1-k, matte k, both at her presence),
+   * so there is never a second layer brighter than she is — which is what used to read as a pale wash on her face.
+   * `alpha` = her presence at this moment (the same number her picture is drawn at).
    */
-  const flatFace = (ctx, k, alpha, dx = 0, color = 'mute') => {
+  const flatSelf = (ctx, k, alpha, dx = 0, color = 'mute') => {
     if (!(k > 0.004) || !(alpha > 0.004)) return;
-    const R = { x: GLASS_FIG.x + dx, y: GLASS_FIG.y, w: GLASS_FIG.w, h: GLASS_FIG.h };
-    const head = { x: 120, y: 250, w: 860, h: 940 };                 // DESIGN px: her head, hair, hat and all (measured on f_bust)
-    const q = R.w / 1086;
-    const dst = { x: R.x + head.x * q, y: R.y + head.y * q, w: head.w * q, h: head.h * q };
-    art.silhouette(ctx, 'f_bust', dst, { crop: head, color, alpha: Math.min(1, Math.pow(alpha, 0.35) * k) });
+    art.silhouette(ctx, 'f_bust', { x: GLASS_FIG.x + dx, y: GLASS_FIG.y, w: GLASS_FIG.w, h: GLASS_FIG.h },
+      { color, alpha: alpha * k });
   };
 
   // ---- the bridge: where the last plate ends up, as her picture message in the thread
@@ -241,8 +240,8 @@ export function shutdownShots(env) {
         room(ctx, { light: [960, 540], dim: 0.5 + 0.35 * close, motif: 1 - close, t });
         const fade = 1 - easeIn(close);
         const kFace = easeInOut(prog(s, 0.5, 1.7));
-        figure(ctx, 0.75 * fade);                                    // she goes as the window closes: the mirror of the boot, where she was there before it opened
-        flatFace(ctx, kFace, 0.95 * fade);                           // and she goes with her head printed flat: no face, one tone, nothing recorded
+        figure(ctx, 0.75 * fade * (1 - kFace));                      // she goes as the window closes: the mirror of the boot, where she was there before it opened
+        flatSelf(ctx, kFace, 0.75 * fade);                           // and she is traded for her own matte as she goes: no face, one tone, nothing recorded
         const h = Math.max(2, W.h * (1 - close)), edge = prog(close, 0.55, 1);
         if (close < 1) {
           ctx.rrect(W.x, C.y - h / 2, W.w, h, W.r * (1 - close), { fill: 'bg', fillAlpha: 0.84 * (1 - close), stroke: 'line', width: 1.5, shadow: 1 - close });
