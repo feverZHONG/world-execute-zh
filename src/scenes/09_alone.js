@@ -17,7 +17,7 @@ import { clamp, easeBack, easeInOut, easeOut, lerp, prog, pulse } from '../engin
 import { cues } from './kit.js';
 import { shake } from './shot.js';
 
-const DELETE = 'Delete';
+const DELETE = '删除';                                    // the menu item: interface text, so it goes in Chinese (语言边界 §17)
 /** Hand-set irregularities of the breaks (fixed numbers, so every frame agrees on them). */
 const JIT = [0.3, -0.42, 0.14, -0.22, 0.44, -0.34, 0.2, -0.1, 0.36, -0.28];
 
@@ -28,8 +28,8 @@ export function aloneShots(env) {
   const SEQ = script.left_sequence ?? [70, 71, 72, 73, 74, 75].map((line) => ({ line, gap_label: '' }));
   const HOLD = script.composer_placeholder ?? '', TITLE = script.title ?? '';
   const BEATS = (script.sections ?? []).flatMap((s) => s.beats ?? []);
-  const STUB = BEATS.find((b) => b.id === 'takes-it-back')?.ui?.[0] ?? 'deleted by me';
-  const ZERO = BEATS.find((b) => b.id === 'empty-thread')?.ui?.[0] ?? '0 messages';
+  const STUB = BEATS.find((b) => b.id === 'takes-it-back')?.ui?.[0] ?? '已删除';      // (fallback = the JSON value: a fallback that still says 'deleted by me' would print English and break C1)
+  const ZERO = BEATS.find((b) => b.id === 'empty-thread')?.ui?.[0] ?? '0 条消息';
   const PRES = SEQ[SEQ.length - 1]?.presence ?? 'offline';
 
   /** The unanswered messages, oldest first: the six of the sequence and the single last word. */
