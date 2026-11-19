@@ -257,24 +257,26 @@ export function plateRole(ctx, env, P) {
 const TR = { x: 660, y: 150, w: 600, h: 800 };
 
 /**
- * One plate of each of her three looks, laid over one another: the cream plate of f_bust, the orange plate of
- * boy_bust, the black plate of man_bust (a faint ghost, as black ink is). They drift slowly apart and turn about one
- * another; P.steps = the two times the word is sung: a step further each time; over P.settle = [from, to] they come
- * into register, and what is in register is boy_bust: the look the settings were left at. P.log = the client's one line.
+ * The loop re-prints her: one plate of one of her three looks at a time — the cream plate of f_bust, then the black
+ * plate of man_bust, then the orange plate of boy_bust, which is the look the settings were left at. P.steps = the two
+ * times the word is sung: each one is the instant the next look is printed (never two plates over one another);
+ * over P.settle = [from, to] the last one is held. P.log = the client's one line.
  */
 export function plateTrance(ctx, env, P) {
   const { t, at } = P, { art } = env, a = flashIn(t, at);
   sheet(ctx, [960, 520, 600, 'raised', 0.8]);
-  const d = (8 + 16 * (t - at) + P.steps.reduce((s, at2) => s + 56 * easeOut(prog(t, at2, at2 + 0.14)), 0)) * (1 - easeInOut(prog(t, P.settle[0], P.settle[1])));
-  const turn = 0.4 * (t - at), off = (k, ph) => [d * k * Math.cos(turn + ph), d * k * Math.sin(turn + ph)];
+  const LOOKS = [['f_bust', 'cream', 'text'], ['man_bust', 'black', 'line'], ['boy_bust', 'orange', 'me']];
+  const k = t < P.steps[0] ? 0 : t < P.steps[1] ? 1 : 2;      // one look at a time; the last one is where the loop rests
+  const swing = k === 0 ? at : P.steps[k - 1];                // the instant this look was printed
+  const pop = 1 + 0.03 * (1 - easeOut(prog(t, swing, swing + 0.09)));
   if (a > 0) {
-    // her busts are cropped plates: their four edges melt into the paper instead of printing as a rectangle in the circle
+    // one plate at a time, never two over one another: a re-print of the same bust in another ink, on the sung step
     const EDGE = { l: 0.09, r: 0.09, b: 0.11 };
+    const [name, ink, role] = LOOKS[k];
     ctx.circle(960, 500, 330, { fill: true, color: 'line', alpha: 0.45 * a });
-    if (t >= P.settle[1]) art.inks(ctx, 'boy_bust', art.fit('boy_bust', TR) ?? TR, { alpha: a, edge: EDGE });
-    else for (const [name, ink, role, k, ph, al] of [['f_bust', 'cream', 'text', 1, 2.6, 1], ['boy_bust', 'orange', 'me', 0.8, 0.5, 1], ['man_bust', 'black', 'line', 0.9, -1.6, 0.8]]) {
-      art.inks(ctx, name, art.fit(name, TR) ?? TR, { alpha: a, edge: EDGE, plates: [{ ink, role, exact: true, offset: off(k, ph), alpha: al }] });
-    }
+    ctx.at(960 * (1 - pop), 520 * (1 - pop),
+      () => art.inks(ctx, name, art.fit(name, TR) ?? TR, { alpha: a, edge: EDGE, plates: [{ ink, role, exact: true }] }),
+      { scale: pop });
   }
   caption(ctx, env, t, P.lines);
   if (P.log) ctx.text(`› ${P.log}`, 120, 1004, { size: 26, font: 'mono', color: 'sub', alpha: clamp((t - at) * 6) });

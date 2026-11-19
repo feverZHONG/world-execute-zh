@@ -315,15 +315,21 @@ export function plateProof(ctx, env, P = {}) {
     art.inks(ctx, 'f_reach', SHE, { plates: [{ ink: 'all', role: 'bg', offset: [13, 13] }] });
     figure(ctx, art, 'f_reach', SHE, m, { proof, ink: shown });
   }, () => {
-    const mg = ctx.g, X = SHE.x + SHE.w, W = 92 / z;
+    const mg = ctx.g, X = SHE.x + SHE.w, W = 92 / z, Y = SHE.y, V = 170 / z;
     mg.save();
     mg.fillStyle = '#fff';
     mg.fillRect(-4000, -4000, 8000, 8000);
-    const gr = mg.createLinearGradient(X - W, 0, X, 0);
+    // the right edge: the plate was cropped at the shoulder
+    let gr = mg.createLinearGradient(X - W, 0, X, 0);
     gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(0.5, 'rgba(0,0,0,0.55)'); gr.addColorStop(1, 'rgba(0,0,0,1)');
     mg.globalCompositeOperation = 'destination-out';
     mg.fillStyle = gr;
     mg.fillRect(X - W - 1, -4000, W + 1, 8000);
+    // and the top: it was cropped through her hat, so it melts into the paper above instead of printing as a line
+    gr = mg.createLinearGradient(0, Y, 0, Y + V);
+    gr.addColorStop(0, 'rgba(0,0,0,1)'); gr.addColorStop(0.5, 'rgba(0,0,0,0.55)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
+    mg.fillStyle = gr;
+    mg.fillRect(-4000, Y - 1, 8000, V + 1);
     mg.restore();
   });
   // ---- the foot: the band, the word, and her open hand on the word

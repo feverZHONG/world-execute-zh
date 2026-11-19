@@ -210,8 +210,8 @@ export function pre2Shots(env) {
       at: cTrance, until: cBack, lines: [63, 63],
       shot: {
         id: 'pre2-trance', lines: [62, 63], palette: 'warm', hud: 0, enter: { type: 'cut' },
-        layout: 'PLATE: one plate of each of three busts over one another in the middle of the sheet, out of register and turning; at the end one bust, in register',
-        moment: 'The drums have stopped. Loop is on: her three looks, one plate of each (the cream of hers, the orange of the boy\'s, the black of the man\'s, a faint ghost), drift apart and turn about one another, a step further each time the word comes round; then they fall into register, and it is the boy: what the settings were left at.',
+        layout: 'PLATE: in the middle of the sheet, one bust at a time — hers in cream, the man\'s in black, the boy\'s in orange — each printed on the word; the last one is the look the loop was left at',
+        moment: 'The drums have stopped. Loop is on: her three looks are re-printed one after another, never two plates over one another, each on a repeat of the word; the last one is the boy: what the settings were left at.',
         render: (ctx, t) => plateTrance(ctx, env, { t, at: cTrance, steps: [cue('tranceA'), cue('tranceB')], settle: [cBack - 0.3, cBack - 0.1], lines: [62, L63], log: UI.log }),
       },
     }]),
