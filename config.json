@@ -91,7 +91,8 @@
     "aberration": 0.0005,
     "flicker": 0.0,
     "zoomOnLow": 0.005,
-    "flashStrength": 0.5
+    "flashStrength": 0.5,
+    "key": 0.6
   },
 
   "safety": {

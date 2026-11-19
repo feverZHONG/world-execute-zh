@@ -81,7 +81,7 @@ in vec2 vUv; out vec4 o;
 uniform sampler2D uBase, uB1, uB2, uB3, uB4, uB5;
 uniform vec3 uTint, uFlashCol, uMoshCol;
 uniform float uGlow, uFlash, uZoom, uAberr, uScan, uScanCount, uVig, uGrain, uBright, uGlitch, uFlipY, uFrame;
-uniform float uRot, uSplit, uMosh, uInvert, uDesat, uAspect, uRays, uStreak, uZoomBlur;
+uniform float uRot, uSplit, uMosh, uInvert, uDesat, uAspect, uRays, uStreak, uZoomBlur, uKey;
 uniform vec2 uShake, uMosaic, uRaysAt, uZoomAt;
 uniform vec4 uMosaicRect;
 ${HASH}
@@ -163,6 +163,20 @@ void main() {
   }
   c = mix(c, vec3(dot(c, vec3(0.2126, 0.7152, 0.0722))), uDesat);
   c = mix(c, 1.0 - c, uInvert);
+
+  // ---- the KEY of the film: BLUE. Warm colour (red / orange) keeps its place but loses its light — it is pulled
+  // towards violet and washed, and the darks carry a blue cast — so every frame's light reads blue and the reds stay
+  // ink (errors, the refusal, the printed plates). One pass for the whole film; uKey 0 = off, 1 = full strength.
+  if (uKey > 0.0) {
+    float mx = max(c.r, max(c.g, c.b)), mn = min(c.r, min(c.g, c.b));
+    float sat = (mx - mn) / max(mx, 1e-4);
+    float warm = smoothstep(0.10, 0.42, sat) * smoothstep(0.02, 0.30, (c.r - max(c.g, c.b)) / max(mx, 1e-4));
+    vec3 cool = vec3(c.r * 0.82 + c.b * 0.16, c.g * 0.88, c.b * 0.96 + c.r * 0.16);
+    c = mix(c, cool, warm * uKey);
+    float lum = dot(c, vec3(0.2126, 0.7152, 0.0722));
+    float dark = clamp(1.0 - lum * 2.2, 0.0, 1.0);
+    c += vec3(-0.045, -0.010, 0.095) * dark * uKey;
+  }
 
   c *= 1.0 - uScan * (0.5 + 0.5 * cos(screen.y * uScanCount * 6.2831853));
   float v = length((screen - 0.5) * vec2(1.0, 0.82));
@@ -366,6 +380,7 @@ export class Post {
       gl.uniform2f(u.uZoomAt, za[0] / 1920, 1 - za[1] / 1080);
       gl.uniform1f(u.uInvert, fx.invert);
       gl.uniform1f(u.uDesat, fx.desat);
+      gl.uniform1f(u.uKey, Math.max(0, Math.min(1, c.post.key ?? 0)));
       gl.uniform1f(u.uScan, c.post.scanlines * fx.scan);
       gl.uniform1f(u.uScanCount, c.post.scanlineCount);
       gl.uniform1f(u.uVig, c.post.vignette * fx.vignette);
