@@ -1,0 +1,45 @@
+{
+  "kind": "plate",
+  "plate": "assets/character/f_profile.png",
+  "size": [
+    2547,
+    3397
+  ],
+  "crop": {
+    "zoom": 0.555,
+    "top": 0.0,
+    "cx": 0.5,
+    "ar": 1.3333
+  },
+  "nativePx": 2547,
+  "render": "out/_lib/wr/prof5760.png",
+  "renderSidecar": {
+    "kind": "live2d-render",
+    "model": "assets/live2d_lib/高奈利亚/l2d5017.u",
+    "model3": "assets/live2d_lib/高奈利亚/l2d5017.u/l2d5017.u.model3.json",
+    "canvas": [
+      5760,
+      5760
+    ],
+    "pad": 0.9,
+    "zoom": 1.3,
+    "ox": 0,
+    "oy": 0,
+    "box": null,
+    "motion": "motions/Mgirl02_celian.motion3.json",
+    "t": "0.3",
+    "params": null,
+    "hide": null,
+    "only": null,
+    "bbox": [
+      1082,
+      0,
+      5665,
+      5760
+    ],
+    "bboxW": 4583,
+    "bboxRatio": 0.7957,
+    "topRatio": 0,
+    "at": "2026-11-19T13:10:37.968Z"
+  }
+}

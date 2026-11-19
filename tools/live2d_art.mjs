@@ -127,6 +127,44 @@ try {
       console.log(`  bbox ${meta.bbox.join(',')}  宽 ${side.bboxW} (占画布 ${(side.bboxRatio * 100).toFixed(1)}%)  ` +
         `顶端 ${(side.topRatio * 100).toFixed(1)}%  → 取框参数已写入同名 .json`);
     }
+  } else if (cmd === 'sweep') {
+    // 一条 motion 一张小图，一次浏览器跑完一批 —— 用来「找回旧画板用的是哪条动作、哪一刻」。
+    // 前九张画板只有成品图没有参数，重出时必须先认出姿势，靠一张张手渲认不完。
+    const model = arg('model', '');
+    if (!model) throw new Error('--model 必填');
+    const W = +arg('w', 720), H = +arg('h', 720);
+    const LIB = (arg('lib', 'assets/live2d_lib') || '').replace(/\\/g, '/');
+    const dir = `${LIB}/${model}`;
+    const m3 = resolveModel3(dir, arg('model3', ''));
+    const outDir = outPath(arg('out', 'out/_lib/sweep'));
+    fs.mkdirSync(outDir, { recursive: true });
+    const want = arg('motions', 'all');
+    const moDir = path.join(ROOT, dir, 'motions');
+    const list = want === 'none' ? ['']
+      : want && want !== 'all'
+        ? want.split(',').map((s) => 'motions/' + s.trim())
+        : fs.readdirSync(moDir).filter((f) => f.endsWith('.motion3.json')).map((f) => 'motions/' + f);
+    const ts = (arg('t', '0.9')).split(',').map(Number);
+    const page = await browser.newPage({ viewport: { width: W, height: H } });
+    page.on('pageerror', (e) => console.log('[page]', e.message));
+    const q0 = new URLSearchParams({
+      model: toUrl(path.join(ROOT, m3)), w: String(W), h: String(H), pad: arg('pad', '0.94'), zoom: arg('zoom', '1'),
+    });
+    const rows = [];
+    for (const mo of list) for (const t of ts) {
+      const q = new URLSearchParams(q0);
+      if (mo) { q.set('motion', mo); q.set('t', String(t)); }
+      await page.goto(`${url}/tools/live2d_lib/render.html?${q}`);
+      await page.waitForFunction('window.__READY__ === true || window.__ERR__', null, { timeout: 90000 });
+      const err = await page.evaluate('window.__ERR__ || null');
+      const tag = mo ? mo.replace('motions/', '').replace(/\.motion3\.json$/, '') + (ts.length > 1 ? '_' + t : '') : 'default';
+      if (err) { console.log(`  x ${tag}: ${err.split('\n')[0]}`); continue; }
+      const dataUrl = await page.evaluate("document.querySelector('canvas').toDataURL('image/png')");
+      writePng(path.join(outDir, tag + '.png'), dataUrl);
+      rows.push(tag);
+      console.log(`  ok ${tag}`);
+    }
+    console.log(`${outDir}  ${rows.length} 张`);
   } else if (cmd === 'ink') {
     const inp = arg('in', '');
     if (!inp) throw new Error('--in 必填');

@@ -195,7 +195,7 @@ def cmd_who(a):
     plate = Image.open(a.plate if os.path.isabs(a.plate) or os.path.sep in a.plate
                        else os.path.join(BAK_DIR, a.plate + '.png')).convert('RGBA')
     res = []
-    for p in sorted(glob.glob(os.path.join(ROOT, a.dir, '[0-9][0-9]_*.png'))):
+    for p in sorted(glob.glob(os.path.join(ROOT, a.dir, '*.png'))):
         s, z, top, cx = fit(plate, Image.open(p).convert('RGBA'), a.ar, coarse=80, fine=120)
         res.append((s, os.path.basename(p), z, top, cx))
     res.sort()
