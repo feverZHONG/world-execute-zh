@@ -39,7 +39,7 @@ export const WORD_W = { lesson: 1520, formula: 1700, proof: 1868 };
  * Her in the proof (f_reach). Her head stands under the notch of the curve; the art is cut by its lower edge, and that
  * edge lies below the frame, behind the band of the word. Only her open hand comes forward over the band.
  */
-export const SHE = (() => { const s = 0.8, w = 1086 * s, h = 1448 * s; return { x: CURVE.O.x - 566 * s, y: 140, w, h, s }; })();
+export const SHE = (() => { const s = 0.8, w = 1086 * s, h = 1448 * s; return { x: CURVE.O.x - 566 * s, y: 80, w, h, s }; })();
 const TAN = heartTangent(8), TAN_P = [CURVE.O.x + TAN.p[0] * CURVE.R, CURVE.O.y - TAN.p[1] * CURVE.R];
 /** Where the pen stands when k (0..1) of the curve has been traced (the rays of the formula plate come from it). */
 export const penAt = (k) => PTS[Math.min(HEART_N - 1, Math.floor(clamp(k) * HEART_N))];

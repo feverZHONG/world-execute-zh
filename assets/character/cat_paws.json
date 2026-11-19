@@ -2,17 +2,17 @@
   "kind": "plate",
   "plate": "assets/character/cat_paws.png",
   "size": [
-    2500,
-    3333
+    2172,
+    2896
   ],
   "crop": {
-    "zoom": 0.925,
+    "zoom": 0.62,
     "top": 0.0,
-    "cx": 0.515,
+    "cx": 0.42,
     "ar": 1.3333
   },
-  "nativePx": 3975,
-  "render": "out/_lib/wr/paws5760.png",
+  "nativePx": 2546,
+  "render": "out/_lib/wr/pawsStand.png",
   "renderSidecar": {
     "kind": "live2d-render",
     "model": "assets/live2d_lib/高奈利亚/l2d07.u",
@@ -26,20 +26,20 @@
     "ox": 0,
     "oy": 0,
     "box": null,
-    "motion": "motions/Mgirl02_dazhaohu.motion3.json",
-    "t": "0.9",
+    "motion": "motions/Mgirl02_stand.motion3.json",
+    "t": "1.0",
     "params": null,
     "hide": null,
     "only": null,
     "bbox": [
-      1463,
+      1462,
       363,
-      5760,
+      5566,
       5760
     ],
-    "bboxW": 4297,
-    "bboxRatio": 0.746,
+    "bboxW": 4104,
+    "bboxRatio": 0.7125,
     "topRatio": 0.063,
-    "at": "2026-11-19T13:12:55.442Z"
+    "at": "2026-11-19T15:36:17.041Z"
   }
 }
