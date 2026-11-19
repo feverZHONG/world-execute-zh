@@ -122,7 +122,7 @@ export function shutdownShots(env) {
         windowFrame(ctx, L, { glass: 0.86 });
         sidebar(ctx, L, { t, loaded: 0, items: SIDE, lit: 0 });
         header(ctx, L, { t, loaded: 0, title: '' });
-        composer(ctx, L.composer, { placeholder: HOLD, t, focus: 1, send: 'off', label: s < 7.4 ? 'Claude' : '' });
+        composer(ctx, L.composer, { placeholder: HOLD, t, focus: 1, send: 'off', label: s < 7.4 ? '克劳德' : '' });
         const r = { x: 470, y: 160, w: 760, h: 664 }, b = card(ctx, r, { title: '人格', k: 1 - prog(s, 7.6, 8) });
         if (b) {
           sysLine(ctx, 'settings: as you left them', t, B0 + 0.1, b.x, b.y - 37, { size: 22, alpha: b.a });

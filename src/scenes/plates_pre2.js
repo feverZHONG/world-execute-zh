@@ -268,10 +268,12 @@ export function plateTrance(ctx, env, P) {
   const d = (8 + 16 * (t - at) + P.steps.reduce((s, at2) => s + 56 * easeOut(prog(t, at2, at2 + 0.14)), 0)) * (1 - easeInOut(prog(t, P.settle[0], P.settle[1])));
   const turn = 0.4 * (t - at), off = (k, ph) => [d * k * Math.cos(turn + ph), d * k * Math.sin(turn + ph)];
   if (a > 0) {
+    // her busts are cropped plates: their four edges melt into the paper instead of printing as a rectangle in the circle
+    const EDGE = { l: 0.09, r: 0.09, b: 0.11 };
     ctx.circle(960, 500, 330, { fill: true, color: 'line', alpha: 0.45 * a });
-    if (t >= P.settle[1]) art.inks(ctx, 'boy_bust', art.fit('boy_bust', TR) ?? TR, { alpha: a });
+    if (t >= P.settle[1]) art.inks(ctx, 'boy_bust', art.fit('boy_bust', TR) ?? TR, { alpha: a, edge: EDGE });
     else for (const [name, ink, role, k, ph, al] of [['f_bust', 'cream', 'text', 1, 2.6, 1], ['boy_bust', 'orange', 'me', 0.8, 0.5, 1], ['man_bust', 'black', 'line', 0.9, -1.6, 0.8]]) {
-      art.inks(ctx, name, art.fit(name, TR) ?? TR, { alpha: a, plates: [{ ink, role, exact: true, offset: off(k, ph), alpha: al }] });
+      art.inks(ctx, name, art.fit(name, TR) ?? TR, { alpha: a, edge: EDGE, plates: [{ ink, role, exact: true, offset: off(k, ph), alpha: al }] });
     }
   }
   caption(ctx, env, t, P.lines);

@@ -115,7 +115,7 @@ export function verse2Shots(env) {
       id: 'v2-proof', at: DARK, lines: [53, 55], palette: 'warm', hud: 0, enter: { type: 'cut' },
       layout: 'PLATE: a proof sheet: her bust at the left printed in orange and black only, a sun of flat rays behind her; the user\'s request as cream paper at the upper right, the cream plate sliding in from under it; the keyword on the foot, in orange',
       moment: 'No object this time: a proof of herself with the cream plate missing, her face a void in her hair. On the noun a sun stands behind that void. The missing plate comes over from the user\'s message and registers on the keyword: cape, flower, the line of her chin. Cream is the user: they are the plate that makes her whole. Then the pointer leaves for the settings.',
-      render: (ctx, t) => plateProof(ctx, env, { t, at: DARK, sun: cue('nounGod'), slide: Bt(188), hit: T(55), word: text(55), lines: [53, 54, 56], bubble: B4, rest: onScreen(3, REST), restScale: 1.5 * CAM[3].zoom, to: PRE2_POINTER, leave: Bt(191), until: END }),
+      render: (ctx, t) => plateProof(ctx, env, { t, at: DARK, sun: cue('nounGod'), slide: Bt(188), hit: T(55), word: text(55), lines: [53, 54, 56], bubble: B4, rest: onScreen(3, REST), restScale: 1.5 * CAM[3].zoom, to: PRE2_POINTER, leave: Bt(191), until: END, fit: 0.76 }),
     },
   ];
 }

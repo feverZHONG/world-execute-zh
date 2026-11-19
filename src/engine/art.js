@@ -573,8 +573,8 @@ export class Art {
    * separation, no tint, no misregistration. The engine still separates it, because some scenes clip or sample it
    * through the ink plates (close-ups, the glyph plate); only the figure itself shows the picture.
    */
-  printRaw(ctx, name, dst, { reveal = null, crop = null, flip = false, alpha = 1 } = {}) {
-    const img = this.img[name], g = ctx.g;
+  printRaw(ctx, name, dst, { reveal = null, crop = null, flip = false, alpha = 1, edge = null } = {}) {
+    const img = edge ? this._edgeImg(name, edge) : this.img[name], g = ctx.g;
     if (!img || !(alpha > 0.003)) return;
     const K = this.ink[name];
     const c = K ? this._src(K, crop ?? this._full(name)) : { x: 0, y: 0, w: img.naturalWidth, h: img.naturalHeight };
@@ -593,8 +593,35 @@ export class Art {
     g.restore();
     g.globalAlpha = a0; ctx._font = '';
   }
-  inks(ctx, name, dst, { roles = {}, offset = {}, reveal = null, exact = false, plates = null, keyline = null, crop = null, flip = false, alpha = 1, vector = null } = {}) {
-    if (this.raw.includes(name)) { this.printRaw(ctx, name, dst, { reveal, crop, flip, alpha }); return; }
+
+  /**
+   * A plate with its outer edge faded out, so a crop that runs through her body does not print as a razor line when
+   * the plate sits inside the sheet. `edge` = { l, r, t, b } as fractions of the plate's width / height; the fade is
+   * 1 at the border (nothing) to 0 at the inner end of the band (untouched art). Baked once per name + band and kept.
+   */
+  _edgeImg(name, edge) {
+    const img = this.img[name];
+    this._ec = this._ec || new Map();
+    const key = `${name}|${edge.l ?? 0}|${edge.r ?? 0}|${edge.t ?? 0}|${edge.b ?? 0}`;
+    const hit = this._ec.get(key);
+    if (hit) return hit;
+    const cv = document.createElement('canvas');
+    cv.width = img.naturalWidth; cv.height = img.naturalHeight;
+    const c = cv.getContext('2d');
+    c.drawImage(img, 0, 0);
+    const W = cv.width, H = cv.height;
+    const band = (x, y, w, h, g) => { c.globalCompositeOperation = 'destination-out'; c.fillStyle = g; c.fillRect(x, y, w, h); };
+    const ramp = (x0, y0, x1, y1) => { const g = c.createLinearGradient(x0, y0, x1, y1); g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(1, 'rgba(0,0,0,0)'); return g; };
+    if (edge.t > 0) { const h = H * edge.t; band(0, 0, W, h, ramp(0, 0, 0, h)); }
+    if (edge.b > 0) { const h = H * edge.b; band(0, H - h, W, h, ramp(0, H, 0, H - h)); }
+    if (edge.l > 0) { const w = W * edge.l; band(0, 0, w, H, ramp(0, 0, w, 0)); }
+    if (edge.r > 0) { const w = W * edge.r; band(W - w, 0, w, H, ramp(W, 0, W - w, 0)); }
+    c.globalCompositeOperation = 'source-over';
+    this._ec.set(key, cv);
+    return cv;
+  }
+  inks(ctx, name, dst, { roles = {}, offset = {}, reveal = null, exact = false, plates = null, keyline = null, crop = null, flip = false, alpha = 1, vector = null, edge = null } = {}) {
+    if (this.raw.includes(name)) { this.printRaw(ctx, name, dst, { reveal, crop, flip, alpha, edge }); return; }
     const K = this._ink(name), g = ctx.g;
     if (!K || !(alpha > 0.003)) return;
     const c = this._src(K, crop ?? this._full(name));               // source px from here on

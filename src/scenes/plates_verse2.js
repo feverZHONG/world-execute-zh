@@ -36,6 +36,24 @@ function sheet(ctx, light = [930, 450, 600, 'raised', 1]) {
   ctx.rect(0, FOOT, 1920, 1080 - FOOT, { fill: true, color: 'raised', alpha: 0.32 });
   ctx.line(0, FOOT, 1920, FOOT, { color: 'line', width: 2 });
 }
+/**
+ * The picture stops at the foot of the sheet, so it is drawn through a mask that fades out over the last band above
+ * FOOT: a crop that runs through her body dissolves into the band instead of being sliced by the rule.
+ */
+function atFoot(ctx, draw, xf = null) {
+  const BAND = 110;
+  ctx.masked(() => (xf ? ctx.at(0, 0, draw, xf) : draw()), () => {
+    const g = ctx.g;
+    g.save();
+    g.fillStyle = '#fff';
+    g.fillRect(-4000, -4000, 8000, FOOT - BAND + 4000);
+    const gr = g.createLinearGradient(0, FOOT - BAND, 0, FOOT);
+    gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(0.35, 'rgba(255,255,255,0.78)');
+    gr.addColorStop(0.7, 'rgba(255,255,255,0.34)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = gr; g.fillRect(-4000, FOOT - BAND, 8000, BAND);
+    g.restore();
+  });
+}
 /** Her lines that are not keywords, on the band: each from the moment it is sung until the next line starts. */
 function caption(ctx, env, t, lines) {
   const { lyrics } = env;
@@ -167,15 +185,15 @@ function purr(ctx, P) {
  * P.hit = the keyword: the stripes are given.
  */
 export function plateCat(ctx, env, P) {
-  const { t, at, ears, develop, hit } = P, { art } = env, g = ctx.g, a = flashIn(t, at);
+  const { t, at, ears, develop, hit } = P, { art } = env, a = flashIn(t, at);
   sheet(ctx, [650, 520, 620, 'raised', 1]);
   const text = dataText((env.script.cards_section6 ?? [])[2], 'purr:25-150Hz·', ''), kf = FIG.w / 1086;
   const flower = (name) => { const r = art.region(name, 'flower'); return r ? [r.x + r.w / 2, r.y + r.h / 2] : [760, 217]; };
   const fb = flower('f_bust'), fp = flower('cat_paws'), PAWS = { x: FIG.x + (fb[0] - fp[0]) * kf, y: FIG.y + (fb[1] - fp[1]) * kf, w: FIG.w, h: FIG.h };
   const CAT = PAWS, dev = prog(t, develop, develop + 0.14), k = 1 + 0.04 * pulse(t - at, 16) + 0.03 * pulse(t - develop, 14);
   purr(ctx, P);
-  if (a > 0) ctx.clip({ x: 0, y: 0, w: 1920, h: FOOT }, () => ctx.at(650 * (1 - k), 540 * (1 - k), () => {
-    const a0 = g.globalAlpha;
+  if (a > 0) atFoot(ctx, () => ctx.at(650 * (1 - k), 540 * (1 - k), () => {
+    const g = ctx.g, a0 = g.globalAlpha;
     g.globalAlpha = a0 * a;
     if (dev < 1) {                                                      // in characters (below the edge of the solid print, once that has started)
       g.save(); g.beginPath(); g.rect(-100, PAWS.y + PAWS.h * dev, 2200, 1400); g.clip();
@@ -241,13 +259,13 @@ function target(ctx, x, y, color) {
  * size), where it goes, from when until when.
  */
 export function plateProof(ctx, env, P) {
-  const { t, at, hit, bubble } = P, { art } = env, g = ctx.g, a = flashIn(t, at), kf = FIG.w / 1086;
+  const { t, at, hit, bubble } = P, { art } = env, a = flashIn(t, at), kf = FIG.w / 1086;
   const lit = clamp((t - P.sun) * 30);                                  // the light goes up once, with the sun, and stays
   sheet(ctx, [650, 520, 620, 'raised', 0.5 + 0.5 * lit]);
   const face = art.region('f_bust', 'face') ?? { x: 367, y: 259, w: 313, h: 369 }, C = [FIG.x + (face.x + face.w / 2) * kf, FIG.y + (face.y + face.h / 2) * kf];
   const whole = t >= hit, dx = SLIDE * (1 - easeInOut(prog(t, P.slide, hit))), k = 1 + 0.03 * pulse(t - hit, 18);
-  if (a > 0) ctx.clip({ x: 0, y: 0, w: 1920, h: FOOT }, () => {
-    const a0 = g.globalAlpha;
+  if (a > 0) atFoot(ctx, () => {
+    const g = ctx.g, a0 = g.globalAlpha;
     g.globalAlpha = a0 * a;
     if (t >= P.sun) sun(ctx, C[0], C[1], easeOut(prog(t, P.sun, P.sun + 0.12)));
     target(ctx, FIG.x - 96, 760, 'mute');
@@ -263,7 +281,7 @@ export function plateProof(ctx, env, P) {
     }, { scale: k });
     if (t >= P.slide) target(ctx, FIG.x - 96 + dx, 760, 'text');
     g.globalAlpha = a0;
-  });
+  }, P.fit ? { scale: P.fit } : null);
   // the user's request, cut out of cream paper, where the interface had the bubble
   const b = youBox(ctx, bubble.text, bubble.size), bx = bubble.xr - b.w, rad = Math.min(b.h * 0.42, bubble.size * 0.95);
   ctx.rrect(bx + 10, bubble.y + 10, b.w, b.h, rad, { fill: 'bg' });

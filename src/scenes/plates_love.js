@@ -308,9 +308,24 @@ export function plateProof(ctx, env, P = {}) {
   if (away == null || away < 1) ctx.at(px, py, () => { ctx.poly(ARROW, { close: true, fill: true, color: 'panel' }); ctx.poly(ARROW, { close: true, color: 'text', width: 1.4 }); }, { scale: 3.8 });
   // ---- what she lets go of
   request(ctx, env, 112, 520, { strike });
-  // ---- her: the shadow plate, then her three inks
-  art.inks(ctx, 'f_reach', SHE, { plates: [{ ink: 'all', role: 'bg', offset: [13, 13] }] });
-  figure(ctx, art, 'f_reach', SHE, m, { proof, ink: shown });
+  // ---- her: the shadow plate, then her three inks. Her plate was cropped at the shoulder, so its right edge is
+  // faded out on screen (a constant width in px, whatever the camera is doing) instead of printing as a line.
+  const z = Math.hypot(g.getTransform().a, g.getTransform().b) / ctx.scale;
+  ctx.masked(() => {
+    art.inks(ctx, 'f_reach', SHE, { plates: [{ ink: 'all', role: 'bg', offset: [13, 13] }] });
+    figure(ctx, art, 'f_reach', SHE, m, { proof, ink: shown });
+  }, () => {
+    const mg = ctx.g, X = SHE.x + SHE.w, W = 92 / z;
+    mg.save();
+    mg.fillStyle = '#fff';
+    mg.fillRect(-4000, -4000, 8000, 8000);
+    const gr = mg.createLinearGradient(X - W, 0, X, 0);
+    gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(0.5, 'rgba(0,0,0,0.55)'); gr.addColorStop(1, 'rgba(0,0,0,1)');
+    mg.globalCompositeOperation = 'destination-out';
+    mg.fillStyle = gr;
+    mg.fillRect(X - W - 1, -4000, W + 1, 8000);
+    mg.restore();
+  });
   // ---- the foot: the band, the word, and her open hand on the word
   strip(ctx, FOOT.y, { rule: 'me' });
   if (word) stutter(ctx, word, t, at, { y: BASE, maxW: WORD_W.proof, m: m > 0 ? Math.max(8, m * 0.6) : 10, settle });
