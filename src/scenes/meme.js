@@ -15,23 +15,13 @@ import { ground } from '../components/plate.js';
 const H = 812, FIG = { x: 960 - (H * 1086) / 1448 / 2 + 6, y: -12, w: (H * 1086) / 1448, h: H }, K = H / 1448;
 /** A point of the art (source px) on the sheet. */
 const at = ([x, y]) => [FIG.x + x * K, FIG.y + y * K];
-/** Her line, as the user wrote it, in two rows (the line break stands for its comma, and it has no full stop: a sticker). The second row carries one Latin word. */
-const ROW1 = '不要嘲笑我做的视频', ROW2 = ['这都是我用', 'token', '一点一点画出来的'];
+/** Her line, in her own register (see 说明\角色\高奈利亚.md: 动词先行 / 状态与读数 / 无主句 / 不用感叹号): the
+ *  sticker reports the film as finished and then, without meaning to, the one reading that gives her away. Two rows,
+ *  no first person. */
+const ROW1 = '视频：画完了。', ROW2 = '面部温度：偏高。';
 
-/** A tear: cream with a dark edge and a small light, hanging at (x, y); r = its width / 2. */
-function tear(ctx, x, y, r, rot = 0) {
-  const g = ctx.g;
-  g.save(); g.translate(x, y); g.rotate(rot);
-  g.beginPath(); g.moveTo(0, -r * 1.75);
-  g.bezierCurveTo(r * 0.95, -r * 0.45, r * 1.02, r * 0.4, 0, r);
-  g.bezierCurveTo(-r * 1.02, r * 0.4, -r * 0.95, -r * 0.45, 0, -r * 1.75);
-  g.closePath();
-  g.fillStyle = ctx.col('text', 1); g.fill();
-  g.lineWidth = Math.max(3, r * 0.26); g.lineJoin = 'round'; g.strokeStyle = ctx.col('panel', 1); g.stroke();
-  g.beginPath(); g.ellipse(-r * 0.3, r * 0.1, r * 0.2, r * 0.36, 0.3, 0, Math.PI * 2); g.fillStyle = ctx.col('meHot', 0.85); g.fill();
-  g.restore();
-}
-/** The blush under an eye: three short strokes in the rose of the error. */
+/** The blush under an eye: three short strokes in the rose of the error. On this sticker it is the only thing her
+ *  face says - the tears were taken out, so the reading in the second row is what tells on her. */
 function blush(ctx, x, y, s) {
   for (let i = -1; i <= 1; i++) ctx.line(x + i * 13 * s - 5 * s, y + 9 * s, x + i * 13 * s + 5 * s, y - 9 * s, { color: 'err', width: 5 * s, alpha: 0.9 });
 }
@@ -62,18 +52,16 @@ export function labCards(env) {
         // her, with a shadow plate under her (the print of the film)
         art.inks(ctx, 'cat_paws', { ...FIG, x: FIG.x + 16, y: FIG.y + 16 }, { plates: [{ ink: 'all', role: 'bg' }] });
         art.inks(ctx, 'cat_paws', FIG);
-        // the tears: one swelling under each closed eye, one already on its way down
+        // her face: no tears (a sticker of her crying is a different sticker), only the blush under both eyes -
+        //   and the second row naming that reading as a number
         const eyes = (art.region('cat_paws', 'eyes.0') && art.region('cat_paws', 'eyes.1')) ? ['eyes.0', 'eyes.1'].map((k) => { const r = art.region('cat_paws', k); return [r.x, r.y]; }) : [[690, 430], [520, 515]];
         const [eR, eL] = eyes.map(at);                                    // (on the sheet: eR is the eye at the right)
-        // (placed by eye on a 4K render: the tears hang from the outer corners of her lowered lids, clear of her paws and her ribbon)
-        blush(ctx, eR[0] - 26, eR[1] + 46, 1); blush(ctx, eL[0] + 15, eL[1] + 30, 1);
-        tear(ctx, eR[0] + 5, eR[1] + 30, 17, -0.1); tear(ctx, eR[0] + 13, eR[1] + 72, 10, -0.08);
-        tear(ctx, eL[0] - 21, eL[1] + 30, 18, 0.16);
+        blush(ctx, eR[0] - 26, eR[1] + 46, 1.15); blush(ctx, eL[0] + 15, eL[1] + 30, 1.15);
         // she is shaking: beside her shoulders
         shake(ctx, FIG.x + FIG.w + 4, 470, 1); shake(ctx, FIG.x - 4, 520, -1);
         // what she says
         row(ctx, [[ROW1, 'memeSans', 900, 'text']], 960, 902, 92);
-        row(ctx, [[ROW2[0], 'memeSans', 900, 'text'], [ROW2[1], 'mono', 800, 'me'], [ROW2[2], 'memeSans', 900, 'text']], 960, 992, 60);
+        row(ctx, [[ROW2, 'memeSans', 900, 'text']], 960, 992, 60);
         // (no ledger line under it: the `// token × …` counter that stood here was a number nobody computed. A
         //  sticker says her line and stops; anything under it has to be a real figure, or it is not there.)
         ctx.fx.glow = 0.3; ctx.fx.scan = 0; ctx.fx.vignette = 0.5; ctx.fx.zoom = 1; ctx.fx.bright = 1.04;
