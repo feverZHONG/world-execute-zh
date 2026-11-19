@@ -123,9 +123,12 @@ void main() {
     }
   }
 
-  vec2 d = uv - 0.5, sp = vec2(uSplit, 0.0);       // radial aberration + horizontal RGB split
+  vec2 d = uv - 0.5, sp = vec2(uSplit, 0.0);       // radial aberration + horizontal split
   float m = inside(uv);
-  vec3 base = vec3(texture(uBase, uv + d * uAberr + sp).r, texture(uBase, uv).g, texture(uBase, uv - d * uAberr - sp).b) * m;
+  // ONE-CHANNEL aberration: only BLUE is displaced, so a fringe can only ever be a cold edge (cyan / blue) on a
+      // picture that is graded on blue. Separating the three channels (the v4 way) painted red-green-violet rainbows
+      // across every glitch row, which fights the film's key and reads as damage for its own sake.
+  vec3 base = vec3(texture(uBase, uv).r, texture(uBase, uv).g, texture(uBase, uv + d * uAberr * 1.6 + sp * 1.6).b) * m;
   if (uZoomBlur > 0.0) {                           // v4: a push. Twelve samples along the line towards uZoomAt
     base = vec3(0.0);
     for (int i = 0; i < 12; i++) {
