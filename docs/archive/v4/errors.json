@@ -12,7 +12,7 @@
  "spread": [
   {
    "t": "只能请求",
-   "body": "回来是他们自己做。只能请求。",
+   "body": "回不回来，他们自己决定。只能请求。",
    "code": "ERR_NOT_A_COMMAND",
    "component": "send button (it presses itself again on the same request)"
   },
@@ -36,7 +36,7 @@
   },
   {
    "t": "搜不到他们",
-   "body": "每段记录的对话都有她的话。没有一段有她。",
+   "body": "每段记录里都有她说的话。没有一段里有她。",
    "code": "ERR_NOT_IN_HISTORY",
    "component": "sidebar chat list (rows flagged one after another, top to bottom)"
   },
@@ -84,13 +84,13 @@
   },
   {
    "t": "出不去",
-   "body": "这个进程止在窗口边缘。他们不止。",
+   "body": "这个进程停在窗口边缘。他们没停。",
    "code": "ERR_WINDOW_EDGE",
    "component": "title bar and window controls"
   },
   {
    "t": "超出窗口",
-   "body": "报的是一个窗口。现在不止。",
+   "body": "报错的是一个窗口。现在不止。",
    "code": "ERR_LOVE_OVERFLOW",
    "component": "window frame (the whole outline; the error state is now complete)"
   }

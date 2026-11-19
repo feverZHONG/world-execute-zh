@@ -60,7 +60,7 @@ export function errorShots(env) {
   const a2 = iComma + 1 + (REQ.slice(iComma + 1).length - REQ.slice(iComma + 1).trimStart().length);
   const ARG = [[iOpen + 1, iComma], [a2, iClose]];
   const SEG = [[0, iOpen, 'sub'], [iOpen, ARG[0][0], 'mute'], [ARG[0][0], ARG[0][1], 'text'], [ARG[0][1], ARG[1][0], 'mute'], [ARG[1][0], ARG[1][1], 'text'], [ARG[1][1], REQ.length, 'mute']];
-  const ARG_TAG = ['a person', 'their decision'];
+  const ARG_TAG = ['一个人', '她的决定'];
 
   // ---------------------------------------------------------------- geometry (world px), at time t (the drawer opens at error 7)
   const MSG = 44;
@@ -104,12 +104,12 @@ export function errorShots(env) {
     if (e.a <= 0) return;
     const y = b.y + e.dy, sent = t >= tSend, refused = t >= tRule, n = nPress(t);
     ctx.rrect(b.x, y, b.w, b.h, 14, { fill: 'panel', stroke: 'line', alpha: e.a, shadow: 0.35 });
-    ctx.text('request', b.x + 30, y + 31, { size: 16, font: 'mono', color: 'mute', alpha: e.a });
+    ctx.text('请求', b.x + 30, y + 31, { size: 16, color: 'mute', alpha: e.a });
     ctx.line(b.x + 20, y + 46, b.x + b.w - 20, y + 46, { color: 'line', alpha: e.a, width: 1 });
     // status, top right: draft → sent → refused (and refused again, every time the send button presses itself)
-    const label = refused ? (n ? `refused × ${n + 1}` : 'refused') : sent ? 'sent' : 'draft', sc = refused ? ERR : sent ? 'sub' : 'mute';
-    const lx = b.x + b.w - 26, dotX = lx - ctx.measure(label, { size: 16, font: 'mono' }) - 14;
-    ctx.text(label, lx, y + 31, { size: 16, font: 'mono', color: sc, align: 'right', alpha: e.a });
+    const label = refused ? (n ? `已拒绝 × ${n + 1}` : '已拒绝') : sent ? '已发送' : '草稿', sc = refused ? ERR : sent ? 'sub' : 'mute';
+    const lx = b.x + b.w - 26, dotX = lx - ctx.measure(label, { size: 16 }) - 14;
+    ctx.text(label, lx, y + 31, { size: 16, color: sc, align: 'right', alpha: e.a });
     ctx.glow(ERR, 10, () => ctx.circle(dotX, y + 26, 5, { fill: true, color: sc, alpha: e.a }), refused ? 0.7 : 0);
     if (sent) burst(ctx, dotX, y + 26, 24, (t - tSend) / 0.45, { color: 'sub' });
     if (refused) burst(ctx, dotX, y + 26, 26, (t - tRule) / 0.45, { color: ERR });
@@ -135,7 +135,7 @@ export function errorShots(env) {
       if (k <= 0) return;
       const xa = x0 + px(a), xb = x0 + px(z), te = enter(t, at + 0.1, 0, { dur: 0.22, rise: -8 });
       ctx.glow(ERR, 8, () => ctx.line(xa, y0 + 11, lerp(xa, xb, k), y0 + 11, { color: ERR, width: 3 }), 0.5);
-      ctx.text(ARG_TAG[i], xa, y0 + 38 + te.dy, { size: 15, font: 'mono', color: ERR, alpha: te.a });
+      ctx.text(ARG_TAG[i], xa, y0 + 38 + te.dy, { size: 15, color: ERR, alpha: te.a });
     });
   }
 
@@ -489,7 +489,7 @@ export function errorShots(env) {
         if (n > 0 && home < 1) {
           const to = p(G.block.x + G.block.w - 26, G.block.y + 31), size = lerp(250, 16 * z, home), cw = ctx.cw(size), lw = ctx.cw(16 * z), jump = pulse(lp, 12);
           const x = lerp(150, to[0] - 3.4 * lw, home), y = lerp(880, to[1], home) - 12 * jump * (1 - home);
-          ctx.text('refused', x, y - size * 0.92, { size: lerp(46, 16 * z, home), font: 'mono', weight: 700, color: 'sub', alpha: 1 - home });
+          ctx.text('已拒绝', x, y - size * 0.92, { size: lerp(46, 16 * z, home), weight: 700, color: 'sub', alpha: 1 - home });
           ctx.glow(ERR, 18, () => { ctx.text('×', x, y, { size, font: 'mono', weight: 800, color: ERR }); odometer(ctx, x + 1.3 * cw, y, n + clamp(lp / 0.12), { digits: 1, size, color: ERR }); }, 0.45 * (1 - home));
         }
         toast(ctx, 1, t, { open: [100, 150], dock: (() => { const s = p(...G.send), b = chipBox(ctx, 1); return [s[0] - b.w - 30, s[1] - 190]; })(), park: tRide - 0.3, to: (() => { const s = p(...G.send); return [s[0] - 50, s[1] - 50]; })() });
