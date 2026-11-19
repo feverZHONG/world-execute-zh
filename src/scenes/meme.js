@@ -15,10 +15,11 @@ import { ground } from '../components/plate.js';
 const H = 812, FIG = { x: 960 - (H * 1086) / 1448 / 2 + 6, y: -12, w: (H * 1086) / 1448, h: H }, K = H / 1448;
 /** A point of the art (source px) on the sheet. */
 const at = ([x, y]) => [FIG.x + x * K, FIG.y + y * K];
-/** Her line, in her own register (see 说明\角色\高奈利亚.md: 动词先行 / 句落动作或状态 / 无主句 / 情绪只出现在手上 /
- *  不用感叹号): the sticker reports the film as finished, and then names the one thing on her that is still moving.
- *  Two rows, no first person. */
-const ROW1 = '画完了。', ROW2 = '手还在抖。';
+/** Her line, in her own register: she reports, she does not perform. The second row is her one fixed sentence in the
+ *  game (官方档案 口头禅 记得储备饮用水) - a sticker that finishes with an order to drink water is exactly her: the
+ *  concern never comes out as a feeling, it comes out as logistics. No punctuation (a sticker, not a line of script).
+ *  Source for the catchphrase: 双生视界WIKI 高奈利亚. */
+const ROW1 = '画完了', ROW2 = '记得储备饮用水';
 
 /** The blush under an eye: three short strokes in the rose of the error. On this sticker it is the only thing her
  *  face says - the tears were taken out, so the second row is what tells on her. */
@@ -60,8 +61,9 @@ export function labCards(env) {
         // she is shaking: beside her shoulders
         shake(ctx, FIG.x + FIG.w + 4, 470, 1); shake(ctx, FIG.x - 4, 520, -1);
         // what she says (short lines now: the top one carries the weight, the bottom one is her tell)
-        row(ctx, [[ROW1, 'memeSans', 900, 'text']], 960, 896, 118);
-        row(ctx, [[ROW2, 'memeSans', 900, 'text']], 960, 1000, 62);
+        // what she says (short lines, no punctuation: the top one is the report, the bottom one is her catchphrase)
+        row(ctx, [[ROW1, 'memeSans', 900, 'text']], 960, 898, 128);
+        row(ctx, [[ROW2, 'memeSans', 900, 'text']], 960, 1002, 58);
         // (no ledger line under it: the `// token × …` counter that stood here was a number nobody computed. A
         //  sticker says her line and stops; anything under it has to be a real figure, or it is not there.)
         ctx.fx.glow = 0.3; ctx.fx.scan = 0; ctx.fx.vignette = 0.5; ctx.fx.zoom = 1; ctx.fx.bright = 1.04;
