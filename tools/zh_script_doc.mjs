@@ -1,6 +1,6 @@
 // zh_script_doc — compile 二次创作/文稿/台词中文稿.md from the two script files.
 //
-// The worksheet is no longer filled by hand: docs/v4/chat_script.json and docs/v4/errors.json ARE the text, and the
+// The worksheet is no longer filled by hand: docs/archive/v4/chat_script.json and docs/archive/v4/errors.json ARE the text, and the
 // document only has to show it without drifting. Run after any edit to either file.
 import fs from 'node:fs';
 import path from 'node:path';
@@ -8,14 +8,14 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => JSON.parse(fs.readFileSync(path.join(ROOT, p), 'utf8'));
-const script = read('docs/v4/chat_script.json'), errors = read('docs/v4/errors.json');
+const script = read('docs/archive/v4/chat_script.json'), errors = read('docs/archive/v4/errors.json');
 
 const cell = (v) => String(Array.isArray(v) ? v.join(' / ') : v ?? '').replace(/\|/g, '\\|');
 const table = (head, rows) => [`| ${head.join(' | ')} |`, `|${head.map(() => '--|').join('')}`, ...rows.map((r) => `| ${r.map(cell).join(' | ')} |`)].join('\n');
 
 const out = [];
 out.push('# 台词中文稿', '');
-out.push('> 由 `tools/zh_script_doc.mjs` 从 `docs/v4/chat_script.json` 与 `docs/v4/errors.json` 直接生成，不手填。', '> 改台词只改那两个 JSON，然后重跑：`node tools/zh_script_doc.mjs`。', '> 语体：简体中文，机器腔，短、硬、不抒情，全角标点，句末不加句号。', '');
+out.push('> 由 `tools/zh_script_doc.mjs` 从 `docs/archive/v4/chat_script.json` 与 `docs/archive/v4/errors.json` 直接生成，不手填。', '> 改台词只改那两个 JSON，然后重跑：`node tools/zh_script_doc.mjs`。', '> 语体：简体中文，机器腔，短、硬、不抒情，全角标点，句末不加句号。', '');
 out.push('## 一、面上看得见的字', '');
 out.push(table(['字段', '中文'], [['`title`', script.title], ['`question`', script.question], ['`composer_placeholder`', script.composer_placeholder]]), '');
 out.push('## 二、侧栏六条', '');

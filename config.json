@@ -5,8 +5,8 @@
     "features": "data/audio_features.json",
     "lyrics": "data/lyrics.json",
     "art": "assets/character",
-    "script": "docs/v4/chat_script.json",
-    "errors": "docs/v4/errors.json"
+    "script": "docs/archive/v4/chat_script.json",
+    "errors": "docs/archive/v4/errors.json"
   },
 
   "video": {

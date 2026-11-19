@@ -3,7 +3,7 @@
 // No PNG decoder among the project's dependencies, so the measuring happens where the film already decodes images:
 // a headless browser on the project's own static server. Nothing here draws a frame; it only reads pixels.
 //
-//   node tools/art_check.mjs              # measure assets/character, compare with docs/v4/art/baseline.json
+//   node tools/art_check.mjs              # measure assets/character, compare with docs/archive/v4/art/baseline.json
 //   node tools/art_check.mjs --baseline   # (re)write that baseline from the files currently in place
 //   node tools/art_check.mjs --dir <p> --json out/art.json --strict
 //
@@ -21,7 +21,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
 const arg = (n, d) => { const i = argv.indexOf('--' + n); return i >= 0 ? argv[i + 1] : d; };
 const ART_DIR = (arg('dir', 'assets/character') || '').replace(/\\/g, '/');
-const BASE_FILE = arg('baselineFile', 'docs/v4/art/baseline.json');
+const BASE_FILE = arg('baselineFile', 'docs/archive/v4/art/baseline.json');
 const JSON_OUT = arg('json', null);
 const STRICT = argv.includes('--baseline') ? false : argv.includes('--strict');
 

@@ -4,8 +4,8 @@
 // the export differ machine to machine). The Latin roles fall back to their CJK role, so both zhSans and zhSerif must
 // carry the whole set.
 //
-// Sources scanned: config.json (all strings except the font text lists themselves), docs/v4/chat_script.json,
-// docs/v4/errors.json, every file under src/ and data/. Comments are NOT stripped on purpose: an extra glyph costs a
+// Sources scanned: config.json (all strings except the font text lists themselves), docs/archive/v4/chat_script.json,
+// docs/archive/v4/errors.json, every file under src/ and data/. Comments are NOT stripped on purpose: an extra glyph costs a
 // few bytes in a woff2 slice, a missed one costs a broken frame.
 //
 //   node tools/zh_charset.mjs            # write the lists back into config.json
@@ -25,7 +25,7 @@ const isCJK = (ch) => {
     || c === 0x3c0 || c === 0xd7;                    // π, ×：数学记号，随中文角色一起预载
 };
 
-const files = ['docs/v4/chat_script.json', 'docs/v4/errors.json', 'docs/v4/lyrics.json'];
+const files = ['docs/archive/v4/chat_script.json', 'docs/archive/v4/errors.json', 'docs/archive/v4/lyrics.json'];
 const walk = (dir) => fs.readdirSync(path.join(ROOT, dir), { withFileTypes: true }).forEach((d) => {
   const rel = path.join(dir, d.name);
   if (d.isDirectory()) return walk(rel);
