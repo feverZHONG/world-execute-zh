@@ -1,6 +1,6 @@
 {
  "question": "你会怎么爱我",
- "title": "用几何解释爱",
+ "title": "用几何讲讲爱",
  "sidebar": [
   "你一直都在吗",
   "又睡不着了",
@@ -205,7 +205,7 @@
      "moment": "The answer begins (lines 12–14): scattered orange points are handed cream axes one at a time, and the client names the conversation in the sidebar.",
      "you": [],
      "ui": [
-      "用几何解释爱"
+      "用几何讲讲爱"
      ],
      "system": [
       "0-D → 3-D"
