@@ -55,8 +55,15 @@ export function frameSocketHandler({ frameBytes, onFrame, onError }) {
           if (raw ? msgOff + len > frameBytes : msgOff + len > MAX) return fail(new Error('frame larger than expected'));
         }
         const take = Math.min(frag.left, d.length);
-        if (raw) frame.set(d.subarray(0, take), msgOff);
-        else {
+        if (raw) {
+          // Every WS frame carries its own mask key, and a large message IS split into several frames (measured:
+          // an 8.3 MB 1080p frame arrives as ~10 of them). The bytes of a frame must therefore be unmasked with
+          // the mask of the frame they came in, right here - unmasking the whole message once with the LAST
+          // frame's key XORed the earlier parts against the wrong 4-byte pattern and turned every row into a
+          // stripe of noise. (Packed frames already worked this way; raw was the broken path.)
+          frame.set(d.subarray(0, take), msgOff);
+          unmask(frame, msgOff, msgOff + take, frag.mask, msgOff - frag.start);
+        } else {
           // Every WS frame carries its own mask key, so a message split into several frames must be unmasked per
           // frame: copy this piece out at once, then unmask it with the mask of the frame it came from.
           const piece = Buffer.from(d.subarray(0, take));
@@ -65,11 +72,10 @@ export function frameSocketHandler({ frameBytes, onFrame, onError }) {
         }
         msgOff += take; frag.left -= take; d = d.subarray(take);
         if (frag.left > 0) return;
-        const fin = frag.fin, mask = frag.mask, start = frag.start; frag = null;
+        const fin = frag.fin; frag = null;
         if (!fin) continue;                                                   // more fragments follow
         let msg;
         if (raw) {
-          unmask(frame, start, msgOff, mask, 0);
           if (msgOff !== frameBytes) return fail(new Error(`bad frame size ${msgOff}, expected ${frameBytes}`));
           msg = frame;
         } else {
