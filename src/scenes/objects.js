@@ -38,7 +38,7 @@ function curve(pairs) {
 }
 
 /** The object's data as the string its glyphs are set in: `label:value` pairs from the card the script wrote for it. */
-export function dataText(card, fallback, tail = '每100克') {
+export function dataText(card, fallback, tail = '每 100 克') {
   const rows = (card?.rows ?? []).map((r) => `${r.label.toLowerCase().replace(/[\s,]+/g, '_')}:${r.value.replace(/\s+/g, '')}`);
   return rows.length ? `${[...rows, tail].filter(Boolean).join(' ')} `.replace(/ /g, '·') : fallback;
 }

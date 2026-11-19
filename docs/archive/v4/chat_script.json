@@ -1202,7 +1202,7 @@
     "line": 57
    },
    {
-    "label": "待命",
+    "label": "待命时段",
     "control": "slider",
     "values": [
      "AM",

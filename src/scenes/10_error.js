@@ -36,7 +36,7 @@ export function errorShots(env) {
   const IT = [{ title: FIRST.title, body: FIRST.body, code: FIRST.code }, ...(errors.spread ?? []).slice(0, 14).map((s) => ({ title: s.t, body: s.body, code: s.code }))];
   const FORGED = '我回来了。';                                   // the reply it wants (the user's last words were "one sec, brb")
   const SET = [...(script.settings_rows?.section4 ?? []), ...(script.settings_rows?.section7 ?? [])];
-  const LEFT = { '电流': 1, '视觉': 1, '知识日期': 0.04, '共享记忆': 1, '上下文深度': 1, '性别': 1, '待命': 1, '角色': 1, '循环': 1 };   // as the user left them (v4: Current stays DC)
+  const LEFT = { '电流': 1, '视觉': 1, '知识日期': 0.04, '共享记忆': 1, '上下文深度': 1, '性别': 1, '待命时段': 1, '角色': 1, '循环': 1 };   // as the user left them (v4: Current stays DC)
 
   // ---------------------------------------------------------------- time
   const CUT_REQ = H(83), CUT_CHECK = Bt(278), CUT_FIRST = Bt(283.5), S0 = B(72), CUT_CHROME = B(74), CUT_DRAWER = B(76), CUT_FORGE = Bt(308), CUT_WIN = B(78);

@@ -31,7 +31,7 @@ import { enter } from './shot.js';
 
 const WIDE = 1.4;                                            // the drawer opens to 616 px, as in pre-chorus 1
 const FALLBACK_ROWS = [
-  { label: '性别', control: 'segmented', values: ['F', 'M'], line: 57 }, { label: '待命', control: 'slider', values: ['AM', 'PM'], line: 59 },
+  { label: '性别', control: 'segmented', values: ['F', 'M'], line: 57 }, { label: '待命时段', control: 'slider', values: ['AM', 'PM'], line: 59 },
   { label: '角色', control: 'segmented', values: ['S', 'M'], line: 61 }, { label: '循环', control: 'toggle', values: ['关', '开'], line: 63 },
 ];
 
