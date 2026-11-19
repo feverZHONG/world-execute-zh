@@ -15,13 +15,13 @@ import { ground } from '../components/plate.js';
 const H = 812, FIG = { x: 960 - (H * 1086) / 1448 / 2 + 6, y: -12, w: (H * 1086) / 1448, h: H }, K = H / 1448;
 /** A point of the art (source px) on the sheet. */
 const at = ([x, y]) => [FIG.x + x * K, FIG.y + y * K];
-/** Her line, in her own register (see 说明\角色\高奈利亚.md: 动词先行 / 状态与读数 / 无主句 / 不用感叹号): the
- *  sticker reports the film as finished and then, without meaning to, the one reading that gives her away. Two rows,
- *  no first person. */
-const ROW1 = '视频：画完了。', ROW2 = '面部温度：偏高。';
+/** Her line, in her own register (see 说明\角色\高奈利亚.md: 动词先行 / 句落动作或状态 / 无主句 / 情绪只出现在手上 /
+ *  不用感叹号): the sticker reports the film as finished, and then names the one thing on her that is still moving.
+ *  Two rows, no first person. */
+const ROW1 = '画完了。', ROW2 = '手还在抖。';
 
 /** The blush under an eye: three short strokes in the rose of the error. On this sticker it is the only thing her
- *  face says - the tears were taken out, so the reading in the second row is what tells on her. */
+ *  face says - the tears were taken out, so the second row is what tells on her. */
 function blush(ctx, x, y, s) {
   for (let i = -1; i <= 1; i++) ctx.line(x + i * 13 * s - 5 * s, y + 9 * s, x + i * 13 * s + 5 * s, y - 9 * s, { color: 'err', width: 5 * s, alpha: 0.9 });
 }
@@ -53,15 +53,15 @@ export function labCards(env) {
         art.inks(ctx, 'cat_paws', { ...FIG, x: FIG.x + 16, y: FIG.y + 16 }, { plates: [{ ink: 'all', role: 'bg' }] });
         art.inks(ctx, 'cat_paws', FIG);
         // her face: no tears (a sticker of her crying is a different sticker), only the blush under both eyes -
-        //   and the second row naming that reading as a number
+        //   and the second row naming the thing she cannot keep still
         const eyes = (art.region('cat_paws', 'eyes.0') && art.region('cat_paws', 'eyes.1')) ? ['eyes.0', 'eyes.1'].map((k) => { const r = art.region('cat_paws', k); return [r.x, r.y]; }) : [[690, 430], [520, 515]];
         const [eR, eL] = eyes.map(at);                                    // (on the sheet: eR is the eye at the right)
         blush(ctx, eR[0] - 26, eR[1] + 46, 1.15); blush(ctx, eL[0] + 15, eL[1] + 30, 1.15);
         // she is shaking: beside her shoulders
         shake(ctx, FIG.x + FIG.w + 4, 470, 1); shake(ctx, FIG.x - 4, 520, -1);
-        // what she says
-        row(ctx, [[ROW1, 'memeSans', 900, 'text']], 960, 902, 92);
-        row(ctx, [[ROW2, 'memeSans', 900, 'text']], 960, 992, 60);
+        // what she says (short lines now: the top one carries the weight, the bottom one is her tell)
+        row(ctx, [[ROW1, 'memeSans', 900, 'text']], 960, 896, 118);
+        row(ctx, [[ROW2, 'memeSans', 900, 'text']], 960, 1000, 62);
         // (no ledger line under it: the `// token × …` counter that stood here was a number nobody computed. A
         //  sticker says her line and stops; anything under it has to be a real figure, or it is not there.)
         ctx.fx.glow = 0.3; ctx.fx.scan = 0; ctx.fx.vignette = 0.5; ctx.fx.zoom = 1; ctx.fx.bright = 1.04;
