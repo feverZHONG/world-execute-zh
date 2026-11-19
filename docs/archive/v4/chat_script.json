@@ -169,7 +169,7 @@
      "lines": [],
      "moment": "The user starts one question, deletes it, types the real one and sends it as the first cream bubble.",
      "you": [
-      "type, then delete: 为什么",
+      "打出再删掉：为什么",
       "你会怎么爱我",
       "click: Send"
      ],
@@ -1035,8 +1035,7 @@
      "ui": [],
      "system": [
       "(x² + y² − 1)³ − x²y³ = 0",
-      "x = …   y = …",
-      "点 n / 240"
+      "x = …   y = …"
      ],
      "me_extra": []
     },

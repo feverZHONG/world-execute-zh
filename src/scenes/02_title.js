@@ -19,8 +19,11 @@ export function titleShots(env) {
   const { art, script, features } = env, { T, B, Bt, P, text } = cues(env);
   const L = chatLayout();
   const DROP = B(8), tType = features.snapToBeat(T(11)), tEnter = B(9), END = Bt(63);
-  const QUESTION = script.question ?? 'how would you love me';
-  const FALSE = ((script.sections?.[1]?.beats ?? []).flatMap((b) => b.you ?? []).find((s) => /^type, then delete:/.test(s)) ?? 'type, then delete: why did').split(': ')[1];
+  const QUESTION = script.question ?? '你会怎么爱我';
+  // 假起手：剧本里写成一条中文指令（「打出再删掉：为什么」），冒号后就是要打的字；兜底也是中文
+  const FA_PREFIX = '打出再删掉：';
+  const FA_LINE = (script.sections?.[1]?.beats ?? []).flatMap((b) => b.you ?? []).find((s) => s.startsWith(FA_PREFIX)) ?? FA_PREFIX + '为什么';
+  const FALSE = FA_LINE.slice(FA_PREFIX.length);
   /** The figure behind the glass, lit by the spark: the same bust as at boot, now in two dark oranges. */
   const figure = (ctx, a, color = 'meDim') => glassFigure(ctx, art, a, { color });
 
