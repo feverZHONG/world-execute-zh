@@ -308,36 +308,32 @@ export function plateProof(ctx, env, P = {}) {
   if (away == null || away < 1) ctx.at(px, py, () => { ctx.poly(ARROW, { close: true, fill: true, color: 'panel' }); ctx.poly(ARROW, { close: true, color: 'text', width: 1.4 }); }, { scale: 3.8 });
   // ---- what she lets go of
   request(ctx, env, 112, 520, { strike });
-  // ---- her: the shadow plate, then her three inks. Her plate was cropped at the shoulder, so its right edge is
-  // faded out on screen (a constant width in px, whatever the camera is doing) instead of printing as a line.
+  // ---- her: the shadow plate, then her three inks. Her plate was cropped at the shoulder, at the top through her
+  // hat, at the left through her hair; and the band prints over her neck. So all four of those edges are melted out
+  // on screen (a constant width in px, whatever the camera is doing) instead of printing as a straight cut.
   const z = Math.hypot(g.getTransform().a, g.getTransform().b) / ctx.scale;
+  const EDGE = { l: 0.1, r: 0.08, t: 0.1 };                    // cropped at shoulder / through her hair / through her hat
   ctx.masked(() => {
-    art.inks(ctx, 'f_reach', SHE, { plates: [{ ink: 'all', role: 'bg', offset: [13, 13] }] });
-    figure(ctx, art, 'f_reach', SHE, m, { proof, ink: shown });
+    art.inks(ctx, 'f_reach', SHE, { plates: [{ ink: 'all', role: 'bg', offset: [13, 13] }], edge: EDGE });
+    figure(ctx, art, 'f_reach', SHE, m, { proof, ink: shown, edge: EDGE });
   }, () => {
-    const mg = ctx.g, X = SHE.x + SHE.w, W = 92 / z, Y = SHE.y, V = 170 / z;
+    const mg = ctx.g, Vb = 34 / z, B = FOOT.y;
     mg.save();
     mg.fillStyle = '#fff';
     mg.fillRect(-4000, -4000, 8000, 8000);
-    // the right edge: the plate was cropped at the shoulder
-    let gr = mg.createLinearGradient(X - W, 0, X, 0);
-    gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(0.5, 'rgba(0,0,0,0.55)'); gr.addColorStop(1, 'rgba(0,0,0,1)');
     mg.globalCompositeOperation = 'destination-out';
+    const gr = mg.createLinearGradient(0, B - Vb, 0, B);
+    gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(0.5, 'rgba(0,0,0,0.55)'); gr.addColorStop(1, 'rgba(0,0,0,1)');
     mg.fillStyle = gr;
-    mg.fillRect(X - W - 1, -4000, W + 1, 8000);
-    // and the top: it was cropped through her hat, so it melts into the paper above instead of printing as a line
-    gr = mg.createLinearGradient(0, Y, 0, Y + V);
-    gr.addColorStop(0, 'rgba(0,0,0,1)'); gr.addColorStop(0.5, 'rgba(0,0,0,0.55)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
-    mg.fillStyle = gr;
-    mg.fillRect(-4000, Y - 1, 8000, V + 1);
+    mg.fillRect(-4000, B - Vb, 8000, Vb + 1);
     mg.restore();
   });
   // ---- the foot: the band, the word, and her open hand on the word
   strip(ctx, FOOT.y, { rule: 'me' });
   if (word) stutter(ctx, word, t, at, { y: BASE, maxW: WORD_W.proof, m: m > 0 ? Math.max(8, m * 0.6) : 10, settle });
-  // (the hand is cut out of the art itself: the patch of cream ink round her palm, art.part(); only that ink is printed
-  // over the band, as a path, so its edge is the art's own edge at any size)
-  if (dim || shown.cream > 0) art.partClip(ctx, 'f_reach', SHE, 'palm', () => art.inks(ctx, 'f_reach', SHE, { vector: true, plates: [{ ink: 'cream', role: dim ? 'mute' : 'text', exact: true }] }), { grow: 2 });
+  // (her open hand is NOT reprinted over the band in this shot: its cream patch is the connected light body, so the
+  // patch brought her sleeve and collar with it and ended in a razor line on the plate's edge. She fades out above
+  // the band instead, so nothing of her is ever cut by it)
   marks(ctx, { color: 'mute' });
 }
 
