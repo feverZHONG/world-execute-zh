@@ -8,6 +8,7 @@ SRC = ROOT / 'src'
 MD = ROOT / '二次创作/文稿/全片文案总表.md'
 
 CJK = re.compile(r'[\u3400-\u9fff]')
+LATIN = re.compile(r'[A-Za-z]')
 STR = re.compile(r"'(?:[^'\\\n]|\\.)*'|\"(?:[^\"\\\n]|\\.)*\"|`(?:[^`\\]|\\.)*`", re.S)
 COMMENT = re.compile(r'(?<!:)\s*//.*$', re.M)
 JSONS = ['docs/archive/v4/chat_script.json', 'docs/archive/v4/errors.json']
@@ -73,6 +74,25 @@ def main():
         for s, n in sorted(items):
             out.append(f'- `{s}`' + (f' ×{n}' if n > 1 else ''))
         out.append('')
+
+    # 三、中英混排：一条串里同时有中文和拉丁字母——最容易出现"一半中文一半英文"的地方
+    out.append('## 中英混排串（逐条判：代码 / 歌词 / 单位符号 / 品牌 / 该中文化）')
+    out.append('')
+    mix_json, mix_js = [], []
+    for rel in JSONS:
+        data = json.loads((ROOT / rel).read_text(encoding='utf-8'))
+        for path, s in walk_json(data):
+            if LATIN.search(s):
+                mix_json.append((rel, path, s))
+    for f in sorted({f for f, _ in seen}):
+        for s, n in sorted((s, n) for (ff, s), n in seen.items() if ff == f):
+            if LATIN.search(s):
+                mix_js.append((f, s, n))
+    for rel, path, s in mix_json:
+        out.append(f'- `{rel}` `{path}` → {s}')
+    for f, s, n in mix_js:
+        out.append(f'- `{f}` → `{s}`' + (f' ×{n}' if n > 1 else ''))
+    out.append('')
 
     MD.write_text('\n'.join(out), encoding='utf-8')
     print(f'-> {MD.relative_to(ROOT)}')
