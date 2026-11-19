@@ -39,7 +39,7 @@ export const WORD_W = { lesson: 1520, formula: 1700, proof: 1868 };
  * Her in the proof (f_reach). Her head stands under the notch of the curve; the art is cut by its lower edge, and that
  * edge lies below the frame, behind the band of the word. Only her open hand comes forward over the band.
  */
-export const SHE = (() => { const s = 0.655, w = 1086 * s, h = 1448 * s; return { x: CURVE.O.x - 566 * s, y: 143, w, h, s }; })();
+export const SHE = (() => { const s = 0.8, w = 1086 * s, h = 1448 * s; return { x: CURVE.O.x - 566 * s, y: 140, w, h, s }; })();
 const TAN = heartTangent(8), TAN_P = [CURVE.O.x + TAN.p[0] * CURVE.R, CURVE.O.y - TAN.p[1] * CURVE.R];
 /** Where the pen stands when k (0..1) of the curve has been traced (the rays of the formula plate come from it). */
 export const penAt = (k) => PTS[Math.min(HEART_N - 1, Math.floor(clamp(k) * HEART_N))];
@@ -308,32 +308,18 @@ export function plateProof(ctx, env, P = {}) {
   if (away == null || away < 1) ctx.at(px, py, () => { ctx.poly(ARROW, { close: true, fill: true, color: 'panel' }); ctx.poly(ARROW, { close: true, color: 'text', width: 1.4 }); }, { scale: 3.8 });
   // ---- what she lets go of
   request(ctx, env, 112, 520, { strike });
-  // ---- her: the shadow plate, then her three inks. Her plate was cropped at the shoulder, at the top through her
-  // hat, at the left through her hair; and the band prints over her neck. So all four of those edges are melted out
-  // on screen (a constant width in px, whatever the camera is doing) instead of printing as a straight cut.
-  const z = Math.hypot(g.getTransform().a, g.getTransform().b) / ctx.scale;
-  const EDGE = { l: 0.1, r: 0.08, t: 0.1 };                    // cropped at shoulder / through her hair / through her hat
-  ctx.masked(() => {
-    art.inks(ctx, 'f_reach', SHE, { plates: [{ ink: 'all', role: 'bg', offset: [13, 13] }], edge: EDGE });
-    figure(ctx, art, 'f_reach', SHE, m, { proof, ink: shown, edge: EDGE });
-  }, () => {
-    const mg = ctx.g, Vb = 34 / z, B = FOOT.y;
-    mg.save();
-    mg.fillStyle = '#fff';
-    mg.fillRect(-4000, -4000, 8000, 8000);
-    mg.globalCompositeOperation = 'destination-out';
-    const gr = mg.createLinearGradient(0, B - Vb, 0, B);
-    gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(0.5, 'rgba(0,0,0,0.55)'); gr.addColorStop(1, 'rgba(0,0,0,1)');
-    mg.fillStyle = gr;
-    mg.fillRect(-4000, B - Vb, 8000, Vb + 1);
-    mg.restore();
-  });
-  // ---- the foot: the band, the word, and her open hand on the word
+  // ---- the foot: the paper band and its word go down FIRST, so she stands in front of the paper and no edge of the
+  // band ever cuts her face (the band used to print over her chin, which read as a crop)
   strip(ctx, FOOT.y, { rule: 'me' });
   if (word) stutter(ctx, word, t, at, { y: BASE, maxW: WORD_W.proof, m: m > 0 ? Math.max(8, m * 0.6) : 10, settle });
-  // (her open hand is NOT reprinted over the band in this shot: its cream patch is the connected light body, so the
-  // patch brought her sleeve and collar with it and ended in a razor line on the plate's edge. She fades out above
-  // the band instead, so nothing of her is ever cut by it)
+  // ---- her: the shadow plate, then her three inks. Her valid area is the INSIDE OF THE CURVE, not the plate's own
+  // rectangle: she is drawn large enough that the rectangle leaves the curve on every side, and the content is clipped
+  // to the curve, so the only edge that ever cuts her is the curve itself (a printed boundary).
+  const EDGE = { l: 0.06, r: 0.05, t: 0.06 };                  // safety: melts the plate's corners should they show
+  ctx.clipPath(PTS, () => {
+    art.inks(ctx, 'f_reach', SHE, { plates: [{ ink: 'all', role: 'bg', offset: [13, 13] }], edge: EDGE });
+    figure(ctx, art, 'f_reach', SHE, m, { proof, ink: shown, edge: EDGE });
+  });
   marks(ctx, { color: 'mute' });
 }
 

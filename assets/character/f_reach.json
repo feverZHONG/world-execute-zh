@@ -2,17 +2,17 @@
   "kind": "plate",
   "plate": "assets/character/f_reach.png",
   "size": [
-    1875,
-    2500
+    2172,
+    2896
   ],
   "crop": {
-    "zoom": 0.47,
+    "zoom": 0.72,
     "top": 0.0,
-    "cx": 0.473,
+    "cx": 0.5,
     "ar": 1.3333
   },
-  "nativePx": 1875,
-  "render": "out/_lib/wr/reach5760b.png",
+  "nativePx": 2214,
+  "render": "out/_lib/wr/reach5760e.png",
   "renderSidecar": {
     "kind": "live2d-render",
     "model": "assets/live2d_lib/高奈利亚/l2d16.u",
@@ -22,7 +22,7 @@
       5760
     ],
     "pad": 0.9,
-    "zoom": 1.7,
+    "zoom": 1.25,
     "ox": 0,
     "oy": 0,
     "box": null,
@@ -32,14 +32,14 @@
     "hide": null,
     "only": null,
     "bbox": [
-      1271,
-      0,
-      5256,
+      1557,
+      129,
+      4627,
       5760
     ],
-    "bboxW": 3985,
-    "bboxRatio": 0.6918,
-    "topRatio": 0,
-    "at": "2026-11-19T13:07:18.111Z"
+    "bboxW": 3070,
+    "bboxRatio": 0.533,
+    "topRatio": 0.0224,
+    "at": "2026-11-19T15:23:11.793Z"
   }
 }
