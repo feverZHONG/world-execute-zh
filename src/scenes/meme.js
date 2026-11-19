@@ -74,7 +74,8 @@ export function labCards(env) {
         // what she says
         row(ctx, [[ROW1, 'memeSans', 900, 'text']], 960, 902, 92);
         row(ctx, [[ROW2[0], 'memeSans', 900, 'text'], [ROW2[1], 'mono', 800, 'me'], [ROW2[2], 'memeSans', 900, 'text']], 960, 992, 60);
-        ctx.text('// token × 1,013,359,536', 960, 1046, { size: 26, font: 'mono', color: 'sub', align: 'center' });
+        // (no ledger line under it: the `// token × …` counter that stood here was a number nobody computed. A
+        //  sticker says her line and stops; anything under it has to be a real figure, or it is not there.)
         ctx.fx.glow = 0.3; ctx.fx.scan = 0; ctx.fx.vignette = 0.5; ctx.fx.zoom = 1; ctx.fx.bright = 1.04;
       },
     }],
