@@ -91,11 +91,12 @@ export function countShots(env) {
       if (j < LANGS.length - 1) { ctx.text(',', X + col * cw, y2, { size, font: 'mono', color: 'mute' }); col += 2; }
     });
     codeLine(ctx, ']) say(love, lang);', X + col * cw, y2, { size });
-    // replies 0 / n
-    const rs = 46, rc = ctx.cw(rs), str = `replies 0 / ${i + 1}`, x0 = CX - (str.length * rc) / 2, yb = 1014;
-    ctx.text('replies', x0, yb, { size: rs, font: 'mono', color: 'sub' });
-    ctx.text('0', x0 + 8 * rc, yb, { size: rs, font: 'mono', weight: 800, color: 'err' });
-    ctx.text(`/ ${i + 1}`, x0 + 10 * rc, yb, { size: rs, font: 'mono', color: 'sub' });
+    // 回复 0 / n
+    const rs = 46, pre = '回复 ', suf = ` / ${i + 1}`, o = { size: rs };
+    const q0 = ctx.measure(pre, o), q1 = ctx.measure('0', o), wAll = q0 + q1 + ctx.measure(suf, o), x0 = CX - wAll / 2, yb = 1014;
+    ctx.text(pre, x0, yb, { size: rs, color: 'sub' });
+    ctx.text('0', x0 + q0, yb, { size: rs, weight: 800, color: 'err' });
+    ctx.text(suf, x0 + q0 + q1, yb, { size: rs, color: 'sub' });
   }
 
   // ---- the six moves: the incoming card is drawn through a moving clip, or slid, over the outgoing one

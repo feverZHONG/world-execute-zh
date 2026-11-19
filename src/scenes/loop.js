@@ -82,8 +82,8 @@ export function machine(ctx, S) {
     ctx.text('stop', X + kw / 2, ky + kh * 0.68, { size: 30 * ZL, font: 'mono', weight: 800, color: 'bg', align: 'center', alpha });
     ctx.text('yours', X + kw + 18 * ZL, ky + kh * 0.66, { size: 24 * ZL, font: 'mono', color: 'sub', alpha });
   }
-  ctx.text('run', X, by - cs * 0.02, { size: 30 * ZL, font: 'mono', color: 'sub', alpha });
-  const ox = X + 78 * ZL, ow = odometer(ctx, ox, by, count, { digits: 4, size: cs, color: total != null ? 'err' : 'text', overflow, alpha });
+  ctx.text('运行', X, by - cs * 0.02, { size: 30 * ZL, color: 'sub', alpha });
+  const ox = X + 94 * ZL, ow = odometer(ctx, ox, by, count, { digits: 4, size: cs, color: total != null ? 'err' : 'text', overflow, alpha });
   if (total != null) ctx.text(` / ${total}`, ox + ow, by, { size: cs * 0.5, font: 'mono', weight: 700, color: 'sub', alpha });
   if (overflow > 0) ctx.text(OVERFLOW, ox, by - cs * 0.9 + (1 - easeOut(clamp(overflow * 2))) * 12, { size: 28 * ZL, font: 'mono', weight: 700, color: 'err', alpha: alpha * clamp(overflow * 3) });
 

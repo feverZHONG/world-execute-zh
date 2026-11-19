@@ -258,8 +258,8 @@ export function plateExecutionStuck(ctx, env, P) {
     dashedRing(ctx, you[0], Y + 6 * LH - SIZE * 0.3, 52);
     // the round counter, past its count: the numerator in red
     const cs = 132, cx = 1436, cy = 136, v = n ? from + n - 1 + easeOut(prog(since, 0, 0.09)) : from;
-    ctx.text('round', cx - 5.6 * ctx.cw(30), cy - cs * 0.5, { size: 30, font: 'mono', color: 'sub' });
     const w = odometer(ctx, cx, cy, v, { digits: 2, size: cs, color: n ? 'err' : 'sub' });
+    ctx.text('轮次', cx - w / 2 - ctx.measure('轮次', { size: 30 }) - 18, cy - cs * 0.5, { size: 30, color: 'sub' });
     ctx.text('/' + from, cx + w + 8, cy, { size: cs * 0.5, font: 'mono', weight: 700, color: 'sub' });
     g.globalAlpha = a0;
   });

@@ -106,7 +106,7 @@ export function verse1Shots(env) {
         // the answer carries a code block, as answers do: the live coordinates
         const ca = prog(t, START + P, START + 1.6 * P) * (1 - prog(t, cutCircle - 0.3, cutCircle));
         ctx.rrect(176, 320, 372, 286, 16, { fill: 'raised', stroke: 'line', alpha: ca, shadow: 0.4 });
-        ctx.text('point', 198, 352, { size: 16, font: 'mono', color: 'mute', alpha: ca });
+        ctx.text('点', 198, 352, { size: 16, color: 'mute', alpha: ca });
         pts.slice(0, 8).forEach((p, i) => { if (t > START + P + i * 0.06) ctx.text(`p${i} (${fmt(p[0])},${fmt(-p[1])},${fmt(p[2])})`, 198, 384 + 27 * i, { size: 19, font: 'mono', color: 'sub', alpha: ca }); });
         if (t >= hitDim) {                                                   // the word itself gains dimensions: line, plane, solid
           const dims = Math.min(3, 1 + Math.floor((t - hitDim) / (P / 2))), word = text(LINE.DIMENSION);
