@@ -122,12 +122,12 @@ export function shutdownShots(env) {
         windowFrame(ctx, L, { glass: 0.86 });
         sidebar(ctx, L, { t, loaded: 0, items: SIDE, lit: 0 });
         header(ctx, L, { t, loaded: 0, title: '' });
-        composer(ctx, L.composer, { placeholder: HOLD, t, focus: 1, send: 'off', label: s < 7.4 ? '克劳德' : '' });
+        composer(ctx, L.composer, { placeholder: HOLD, t, focus: 1, send: 'off', label: s < 7.4 ? '高奈利亚' : '' });
         const r = { x: 470, y: 160, w: 760, h: 664 }, b = card(ctx, r, { title: '人格', k: 1 - prog(s, 7.6, 8) });
         if (b) {
           sysLine(ctx, '设置：还是你走时的样子', t, B0 + 0.1, b.x, b.y - 37, { size: 22, alpha: b.a });
           const rows = [                                             // [label, value, font, italic, beat on which the row clears]
-            ['姓名', '克劳德', 'serif', false, 7.5], ['语音', '衬线体，不慌不忙', 'serif', true, 7], ['温度', null, null, false, 6.5],
+            ['姓名', '高奈利亚', 'serif', false, 7.5], ['语音', '衬线体，不慌不忙', 'serif', true, 7], ['温度', null, null, false, 6.5],
             ['记忆', '这段对话', 'sans', false, 6], ['爱', null, null, false, 5.5],
           ];
           rows.forEach(([label, value, font, italic, out], i) => {

@@ -24,7 +24,7 @@
 | 本副本 | 由 **feverZHONG**（B 站 UP 主「fever钟」）制作，2026 年 11 月起；目标是把整片 UI 与台词简体中文化，不改歌词 |
 
 上游的 AI 使用说明同样适用于本副本：上游代码与文档由 AI（Claude，经 Claude Code）撰写，方向与取舍来自制作者；
-角色剪影是用 AI 图像生成工具做的拟人二创图。详见 [`CREDITS.md`](CREDITS.md)。
+角色剪影是用 AI 图像生成工具做的二创图，片中角色名定为「高奈利亚」。详见 [`CREDITS.md`](CREDITS.md)。
 
 **上游要求全文的登记**：制作者给 AI 的两份要求 [`PROMPT_v4.md`](PROMPT_v4.md)、[`PROMPT_v4_fix.md`](PROMPT_v4_fix.md) 在副本里原样保留（根目录与 `docs/archive/v4/` 各一份，逐字节一致）；
 它们与 `PLAN.md`、`KIT.md`、`PROGRESS.md`、`README.upstream.md` 等上游文档的尺寸、SHA-256、版权与维护规则，统一登记在 [`二次创作/说明/上游文档登记.md`](二次创作/说明/上游文档登记.md)

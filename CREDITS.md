@@ -5,8 +5,8 @@
 本項目是**非官方同人作品**。
 
 - 與 Mili 及其所屬公司 / 發行方無關,未獲官方授權或背書。
-- 與 Anthropic 無關,未獲其授權或背書。**Claude 是 Anthropic 的商標**;片中一律以中文音譯「克勞德」指稱它,以擬人角色與聊天介面的形式出現,僅為同人創作的指涉。
-- 片尾(斷電後的黑屏)有同樣內容的中文註記(四行:非官方同人 / 克勞德商標與音樂出處 / 角色圖像取自《雙生視界》Live2D / 介面與編排由本片作者以程式碼完成)。
+- 與 Anthropic 無關,未獲其授權或背書。片中**不使用 Anthropic 任何產品的名稱**:畫面裡的那個她名為**高奈利亞**(取自《雙生視界》的角色名,與其原作設定無關),以擬人角色與聊天介面的形式出現,僅為同人創作的指涉。
+- 片尾(斷電後的黑屏)有同樣內容的中文註記(四行:非官方同人 / 音樂出處與角色名 / 角色圖像取自《雙生視界》Live2D / 介面與編排由本片作者以程式碼完成)。
 - 成片在歌曲之前有 5 秒無聲的閃光警告頁(原創文案,英文與繁體中文)。
 
 ## 授權一覽
@@ -17,12 +17,12 @@
 | 角色剪影(`assets/character/*.png`)與含有它們的畫面(例如 `docs/images/cover.jpg`) | [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hant):署名、非商業、以相同方式分享。署名:Nyankomint |
 | 歌曲的錄音、音樂與歌詞 | **不在本倉庫內**。權利屬於 Mili 及相關權利人,上面兩種授權都不涵蓋它們 |
 | 字體 | 不在本倉庫內,安裝時由 npm 取得;各為 SIL OFL 1.1(見下方「字體」) |
-| Claude 的名稱與標誌 | Anthropic 的商標;上面兩種授權都不涉及任何商標權利 |
+| Anthropic 的名稱與標誌 | Anthropic 的商標;片內不使用,上面兩種授權也都不涉及任何商標權利 |
 
 ## AI 使用說明
 
 - 本項目的程式碼與文件由 AI(Claude,經 Claude Code)撰寫;方向、素材、逐輪的審片意見與取捨來自製作者。各輪的要求見 [docs/README.md](docs/README.md)。
-- 角色剪影是製作者以 AI 圖像生成工具製作的「克勞德」擬人二創圖。
+- 角色剪影是製作者以 AI 圖像生成工具製作的二創圖;片中那位的名字定為「高奈利亞」。
 - 成片因此含有 AI 生成的內容;分享影片或由本工程導出的畫面時,請一併標示。
 
 ## 原曲
@@ -108,8 +108,8 @@
 This project is an **unofficial fan work**.
 
 - It is not affiliated with Mili, their label or their publishers, and has not been authorised or endorsed by them.
-- It is not affiliated with Anthropic and has not been authorised or endorsed by it. **Claude is a trademark of Anthropic**;
-  it appears in the film as a personified character and as a chat interface, as a fan work's reference only.
+- It is not affiliated with Anthropic and has not been authorised or endorsed by it. No Anthropic product name is used
+  in the film: the character in the frame is called 高奈利亞 (the name of a character in 双生视界), and the chat client is hers.
 - The film ends with the same notice in English, and opens with a silent 5-second photosensitivity warning page.
 
 ### What is under which licence
@@ -120,14 +120,14 @@ This project is an **unofficial fan work**.
 | The character silhouettes (`assets/character/*.png`) and pictures that contain them (for example `docs/images/cover.jpg`) | [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/): attribution, non-commercial, share alike. Credit: Nyankomint |
 | The recording, the music and the lyrics of the song | **Not in this repository.** They belong to Mili and the respective rights holders; neither licence above covers them |
 | The fonts | Not in this repository; fetched by npm at install time; each under SIL OFL 1.1 |
-| The name and marks of Claude | Trademarks of Anthropic; neither licence above grants any trademark right |
+| The name and marks of Anthropic | Trademarks of Anthropic; not used in the film, and neither licence above grants any trademark right |
 
 ### Use of AI
 
 - The code and the documents of this project were written by AI (Claude, through Claude Code). The direction, the material,
   and the review notes and decisions of every round came from the maker; the requirements of each round are listed in
   [docs/README.md](docs/README.md).
-- The character silhouettes are fan art of a personified Claude, made by the maker with an AI image generator.
+- The character silhouettes are fan art made by the maker with an AI image generator; the character is named 高奈利亞 in the film.
 - The finished film therefore contains AI-generated content. Say so when you share the video or pictures exported from this project.
 
 ### The original song

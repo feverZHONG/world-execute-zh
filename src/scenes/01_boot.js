@@ -120,7 +120,7 @@ export function bootShots(env) {
         header(ctx, L, { t, loaded: 0, title: '' });
         const r = { x: 470, y: 160, w: 760, h: 700 }, b = card(ctx, r, { title: '人格', subtitle: text(6).toLowerCase(), tag: '设定', k: prog(t, B(4) - 0.1, B(4) + 0.25) });
         if (b) {
-          const rows = [['姓名', '克劳德', 'serif'], ['语音', '衬线体，不慌不忙', 'sans'], ['温度', null, null], ['记忆', '这段对话', 'sans'], ['爱', '未定义', 'sans']];
+          const rows = [['姓名', '高奈利亚', 'serif'], ['语音', '衬线体，不慌不忙', 'sans'], ['温度', null, null], ['记忆', '这段对话', 'sans'], ['爱', '未定义', 'sans']];
           rows.forEach(([label, value, font], i) => {
             const t0 = B(4) + P * 0.5 + i * P, e = enter(t, t0, 0, { dur: 0.28, rise: 20 }), y = b.y + 22 + i * 104 + e.dy;
             if (e.a <= 0) return;
