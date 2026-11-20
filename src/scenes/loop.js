@@ -20,7 +20,7 @@ import { listing, odometer } from '../components/code.js';
 import { clamp, easeOut, lerp, prog, pulse } from '../engine/util.js';
 
 export const LOOP = ['while (you.presence != "online") {', '    love = solve(me, you);', '    send(love, you);', '    wait(you.reply);', '    run++;', '}', 'say(love);'];
-export const UNREACHABLE = '        // unreachable';
+export const UNREACHABLE = '        // 到不了';
 /** Error codes the three failing statements raise, by line index (all three were raised in the error section). */
 export const LOOP_ERRS = { 1: 'ERR_UNRESOLVED_LOVE', 2: 'ERR_WINDOW_EDGE', 3: 'ERR_REPLY_OVERDUE' };
 export const OVERFLOW = 'ERR_LOVE_OVERFLOW';
