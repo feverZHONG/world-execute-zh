@@ -9,14 +9,14 @@
 > [!IMPORTANT]
 > **提示詞在這裡 · Looking for the prompts?**
 >
-> 製作者給 AI 的要求全部公開在 [`docs/`](docs/README.md):[第四版的完整提示詞](docs/v4/PROMPT_v4.md)(約 2.3 萬字)、
-> [修復輪的提示詞](docs/v4/PROMPT_v4_fix.md),以及[每一輪實際做了什麼的紀錄](docs/v4/PROGRESS.md)。
-> 兩份提示詞也可以在 [Releases](../../releases/latest) 單獨下載。用它們或源碼發布影片時,請照[這裡的格式](#用本項目發布影片)註明出處。
+> 製作者給 AI 的要求全部公開在 [`docs/`](docs/README.md):[第四版的完整提示詞](docs/archive/v4/PROMPT_v4.md)(約 2.3 萬字)、
+> [修復輪的提示詞](docs/archive/v4/PROMPT_v4_fix.md),以及[每一輪實際做了什麼的紀錄](docs/archive/v4/PROGRESS.md)。
+> 兩份提示詞也可以在 [Releases](https://github.com/Nyankomintsu/world-execute-me-lyric-mv/releases/latest) 單獨下載。用它們或源碼發布影片時,請照[這裡的格式](#用本項目發布影片)註明出處。
 >
-> Everything the maker asked the AI for is public in [`docs/`](docs/README.md): the [full prompt of version 4](docs/v4/PROMPT_v4.md)
-> (about 23,000 Chinese characters), the [prompt of the fix round](docs/v4/PROMPT_v4_fix.md), and the
-> [log of what was actually built](docs/v4/PROGRESS.md). They are written in Chinese; [`docs/README.md`](docs/README.md) says in
-> English what each file contains. The two prompt files can also be downloaded on their own from [Releases](../../releases/latest).
+> Everything the maker asked the AI for is public in [`docs/`](docs/README.md): the [full prompt of version 4](docs/archive/v4/PROMPT_v4.md)
+> (about 23,000 Chinese characters), the [prompt of the fix round](docs/archive/v4/PROMPT_v4_fix.md), and the
+> [log of what was actually built](docs/archive/v4/PROGRESS.md). They are written in Chinese; [`docs/README.md`](docs/README.md) says in
+> English what each file contains. The two prompt files can also be downloaded on their own from [Releases](https://github.com/Nyankomintsu/world-execute-me-lyric-mv/releases/latest).
 > If you publish a video made with them or with the code, please credit it as described [here](#publishing-a-video-made-with-this-project).
 
 > [!WARNING]
@@ -71,7 +71,7 @@ Mili《world.execute(me);》的歌詞 MV 渲染工程,**第四版**。整支影�
 
 需要 [Node.js](https://nodejs.org/) 20 以上;導出影片另需本機已安裝的 Chrome 或 Edge。本工程只在 Windows 11 上製作與測試過,其他系統沒有試過。
 
-1. 下載:在 [Releases](../../releases/latest) 下載 Source code (zip) 並解壓,或 `git clone` 本倉庫。
+1. 下載:在 [Releases](https://github.com/Nyankomintsu/world-execute-me-lyric-mv/releases/latest) 下載 Source code (zip) 並解壓,或 `git clone` 本倉庫。
 2. 把你自己的歌曲與歌詞放進 `音頻&歌詞/`(見上表)。
 3. Windows 可以直接雙擊 `preview.cmd`(第一次會先安裝依賴)。或者在終端機裡:
 
@@ -92,9 +92,9 @@ Python 只有重新分析音頻與檢查導出檔時才需要,見下方「檢查
 
 | 想看什麼 | 在哪裡 |
 | --- | --- |
-| **給 AI 的提示詞** | [docs/v4/PROMPT_v4.md](docs/v4/PROMPT_v4.md)(第四版,全片逐段的要求)、[docs/v4/PROMPT_v4_fix.md](docs/v4/PROMPT_v4_fix.md)(看過預覽之後的修復輪) |
-| 每一輪實際做了什麼、哪裡沒有照要求做 | [docs/v4/PROGRESS.md](docs/v4/PROGRESS.md) |
-| 敘事、顏色與質感的規則;如何寫一個段落 | [docs/v4/PLAN.md](docs/v4/PLAN.md)、[docs/v4/KIT.md](docs/v4/KIT.md) |
+| **給 AI 的提示詞** | [docs/archive/v4/PROMPT_v4.md](docs/archive/v4/PROMPT_v4.md)(第四版,全片逐段的要求)、[docs/archive/v4/PROMPT_v4_fix.md](docs/archive/v4/PROMPT_v4_fix.md)(看過預覽之後的修復輪) |
+| 每一輪實際做了什麼、哪裡沒有照要求做 | [docs/archive/v4/PROGRESS.md](docs/archive/v4/PROGRESS.md) |
+| 敘事、顏色與質感的規則;如何寫一個段落 | [docs/archive/v4/PLAN.md](docs/archive/v4/PLAN.md)、[docs/archive/v4/KIT.md](docs/archive/v4/KIT.md) |
 | 逐鏡頭分鏡表(自動生成) | [STORYBOARD.md](STORYBOARD.md) |
 | 全部文件的索引與閱讀說明 | [docs/README.md](docs/README.md) |
 
@@ -174,7 +174,7 @@ puts your words into that table and writes `data/lyrics.json`, which stays on yo
 You need [Node.js](https://nodejs.org/) 20 or newer; exporting a video also needs Chrome or Edge installed.
 The project was made and tested on Windows 11 only.
 
-1. Download: get "Source code (zip)" from [Releases](../../releases/latest) and unpack it, or `git clone` the repository.
+1. Download: get "Source code (zip)" from [Releases](https://github.com/Nyankomintsu/world-execute-me-lyric-mv/releases/latest) and unpack it, or `git clone` the repository.
 2. Put your own song and lyric file into `音頻&歌詞/` (see the table above).
 3. On Windows, double-click `preview.cmd` (the first run installs the dependencies). Or, in a terminal:
 
@@ -196,9 +196,9 @@ every round came from the maker. All the documents that went back and forth are 
 
 | What you are looking for | Where it is |
 | --- | --- |
-| **The prompts given to the AI** | [docs/v4/PROMPT_v4.md](docs/v4/PROMPT_v4.md) (version 4: what was asked for, section by section) and [docs/v4/PROMPT_v4_fix.md](docs/v4/PROMPT_v4_fix.md) (the fix round after watching the preview) |
-| What was actually built in each round, and where it departs from the prompt | [docs/v4/PROGRESS.md](docs/v4/PROGRESS.md) |
-| The rules of story, colour and texture; how to write a section | [docs/v4/PLAN.md](docs/v4/PLAN.md), [docs/v4/KIT.md](docs/v4/KIT.md) (in English) |
+| **The prompts given to the AI** | [docs/archive/v4/PROMPT_v4.md](docs/archive/v4/PROMPT_v4.md) (version 4: what was asked for, section by section) and [docs/archive/v4/PROMPT_v4_fix.md](docs/archive/v4/PROMPT_v4_fix.md) (the fix round after watching the preview) |
+| What was actually built in each round, and where it departs from the prompt | [docs/archive/v4/PROGRESS.md](docs/archive/v4/PROGRESS.md) |
+| The rules of story, colour and texture; how to write a section | [docs/archive/v4/PLAN.md](docs/archive/v4/PLAN.md), [docs/archive/v4/KIT.md](docs/archive/v4/KIT.md) (in English) |
 | The shot-by-shot storyboard (generated from the code) | [STORYBOARD.md](STORYBOARD.md) |
 | Index of all documents, with reading notes | [docs/README.md](docs/README.md) |
 
@@ -352,13 +352,13 @@ uv pip install --python .venv\Scripts\python.exe librosa soundfile numpy
 ```
 preview.cmd              Windows 下雙擊啟動預覽(第一次會先執行 npm install)
 config.json              palettes(顏色狀態)、spot(茄子與番茄的專色)、fonts、glow / post、safety(含片頭長度)、解析度、時間偏移、編碼
-docs/v4/PROMPT_v4.md     第四版的要求(優先於其他文件)
-docs/v4/PLAN.md          敘事、三種畫面、顏色語義、質感標準、剪影的用法、分段、文案歸屬、閃光安全
-docs/v4/KIT.md           如何寫一個段落:鏡頭定義、可用元件、驗收標準、檢查方法
-docs/v4/PROGRESS.md      製作進度:做完了什麼、哪裡沒有照要求做、還沒做的
-docs/v4/chat_script.json 聊天內容(使用者的訊息與操作、設定項、資料、時間戳)        → env.script
-docs/v4/errors.json      錯誤文案、愛的迴圈、數數、最後一聲的紀錄                    → env.errors
-docs/v4/maps/            上一輪對第三版逐段的分析(時間、座標、量測值)
+docs/archive/v4/PROMPT_v4.md     第四版的要求(優先於其他文件)
+docs/archive/v4/PLAN.md          敘事、三種畫面、顏色語義、質感標準、剪影的用法、分段、文案歸屬、閃光安全
+docs/archive/v4/KIT.md           如何寫一個段落:鏡頭定義、可用元件、驗收標準、檢查方法
+docs/archive/v4/PROGRESS.md      製作進度:做完了什麼、哪裡沒有照要求做、還沒做的
+docs/archive/v4/chat_script.json 聊天內容(使用者的訊息與操作、設定項、資料、時間戳)        → env.script
+docs/archive/v4/errors.json      錯誤文案、愛的迴圈、數數、最後一聲的紀錄                    → env.errors
+docs/archive/v4/maps/            上一輪對第三版逐段的分析(時間、座標、量測值)
 data/lyric_timing.json   片中每一行歌詞的時間、段落、是否關鍵詞、詞數與雜湊值(不含歌詞文字)
 data/audio_features.json 從錄音算出的節拍格、起音、響度、頻段能量與粗略頻譜(製作時的那一份)
 data/lyrics.json         (不在倉庫內)由 tools/fill_lyrics.mjs 從你的歌詞檔生成,只留在本機

@@ -44,7 +44,7 @@ const enterText = (e) => {
 };
 
 /**
- * Section summary: [id prefixes, title] (every section is the v4 build: docs/v4/PROGRESS.md).
+ * Section summary: [id prefixes, title] (every section is the v4 build: docs/archive/v4/PROGRESS.md).
  * Update the title here when a section is rebuilt.
  */
 const SECTIONS = [
@@ -84,7 +84,7 @@ const songRange = `${mmss(cfg.safety.flashRange[0])}–${mmss(cfg.safety.flashRa
 const md = `# 分鏡表 / Storyboard(第四版)
 
 由 \`node tools/storyboard.mjs\` 從程式中的鏡頭清單自動生成(共 ${shots.length} 個鏡頭,平均 ${(lens.reduce((a, b) => a + b, 0) / lens.length).toFixed(2)} 秒)。
-提意見時直接引用「鏡頭 id」;每個 id 對應 \`src/scenes/\` 裡的一個鏡頭定義。敘事與顏色規則見 \`docs/v4/PLAN.md\`,製作進度見 \`docs/v4/PROGRESS.md\`。
+提意見時直接引用「鏡頭 id」;每個 id 對應 \`src/scenes/\` 裡的一個鏡頭定義。敘事與顏色規則見 \`docs/archive/v4/PLAN.md\`,製作進度見 \`docs/archive/v4/PROGRESS.md\`。
 
 整支影片是一場對話。「對話裡的時刻」欄回答每個鏡頭「這是這場對話的哪個時刻」(欄位內容直接取自程式,為英文)。
 畫面有三種:介面(使用者看到的對話)、版畫(AI 心裡的意思與感受)、程式碼(只在 EXECUTION 段)。

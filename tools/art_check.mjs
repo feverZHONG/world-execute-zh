@@ -26,7 +26,7 @@ const JSON_OUT = arg('json', null);
 const STRICT = argv.includes('--baseline') ? false : argv.includes('--strict');
 
 const NAMES = ['f_bust', 'f_profile', 'f_reach', 'f_eye', 'boy_bust', 'man_bust', 'cat_bust', 'cat_paws'];
-// targets from docs/v4/WANTED_ART.md §规格建议: busts ≥2000 px long side, close-ups ≥3000; ≥5 % clear on top/left/right
+// targets from docs/archive/v4/WANTED_ART.md §规格建议: busts ≥2000 px long side, close-ups ≥3000; ≥5 % clear on top/left/right
 const TARGET_LONG = { f_eye: 3000, f_reach: 3000 };
 const TARGET_LONG_DEFAULT = 2000;
 const MARGIN_MIN = 0.05;

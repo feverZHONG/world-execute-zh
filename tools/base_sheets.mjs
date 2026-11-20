@@ -1,4 +1,4 @@
-// Baseline contact sheets for the stretches v4 keeps (docs/v4/PROMPT_v4.md §9, step 0): one frame per beat.
+// Baseline contact sheets for the stretches v4 keeps (docs/archive/v4/PROMPT_v4.md §9, step 0): one frame per beat.
 //   node tools/base_sheets.mjs base     -> out/base_<set>.png   (rendered ONCE, from the untouched v3 code)
 //   node tools/base_sheets.mjs cmp      -> out/cmp_<set>.png    (after a change to a shared file)
 //   .venv\Scripts\python tools/compare_sheets.py               (lists every tile that differs)

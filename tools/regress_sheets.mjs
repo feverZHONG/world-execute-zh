@@ -1,4 +1,4 @@
-// Before / after contact sheets of the sections that are already rebuilt (docs/v4/PROGRESS.md), for use around a
+// Before / after contact sheets of the sections that are already rebuilt (docs/archive/v4/PROGRESS.md), for use around a
 // change to a shared file: render once BEFORE the change, once after, and compare tile by tile.
 //   node tools/regress_sheets.mjs r0            -> out/r0_<set>.png   (before)
 //   node tools/regress_sheets.mjs r1            -> out/r1_<set>.png   (after)

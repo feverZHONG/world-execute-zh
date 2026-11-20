@@ -6,7 +6,7 @@
 >
 > 下面全部是上游 v4 文件，原樣保存作為歷史；第四版之後的重製（Live2D 原生畫面、藍色主調、角色層文案）另記在 `二次创作\`。
 
-> **提示詞 · The prompts:** [v4/PROMPT_v4.md](v4/PROMPT_v4.md) · [v4/PROMPT_v4_fix.md](v4/PROMPT_v4_fix.md)
+> **提示詞 · The prompts:** [v4/PROMPT_v4.md](archive/v4/PROMPT_v4.md) · [v4/PROMPT_v4_fix.md](archive/v4/PROMPT_v4_fix.md)
 >
 > 兩份都是簡體中文。 · Both are written in Simplified Chinese.
 >
@@ -22,8 +22,8 @@
 
 | 輪次 | 檔案 | 內容 |
 | --- | --- | --- |
-| 第四版(精修版) | [v4/PROMPT_v4.md](v4/PROMPT_v4.md) | 全片逐段的要求,約 2.3 萬字:三種畫面、三色剪影的用法、每一段的設計方向、閃光安全、自查清單、交付順序。分三次對話執行完。 |
-| 第四版的修復輪 | [v4/PROMPT_v4_fix.md](v4/PROMPT_v4_fix.md) | 看過 1080p 預覽之後的三項修改:導歌二的踩點改跟人聲、最後副歌的人物鏡頭重做、最後一段的光更強。 |
+| 第四版(精修版) | [v4/PROMPT_v4.md](archive/v4/PROMPT_v4.md) | 全片逐段的要求,約 2.3 萬字:三種畫面、三色剪影的用法、每一段的設計方向、閃光安全、自查清單、交付順序。分三次對話執行完。 |
+| 第四版的修復輪 | [v4/PROMPT_v4_fix.md](archive/v4/PROMPT_v4_fix.md) | 看過 1080p 預覽之後的三項修改:導歌二的踩點改跟人聲、最後副歌的人物鏡頭重做、最後一段的光更強。 |
 
 - 這兩份是「交接說明」:把製作者每一輪看片之後的意見與決定整理成文(起草時有 AI 協助),再交給一個新的對話去執行。
 - **它們不是一鍵復現的配方。** `PROMPT_v4.md` 開頭就寫明第三版已經通過,並且引用 `v3/` 的規則與 `v4/maps/` 的分析;
@@ -34,25 +34,25 @@
 
 | 檔案 | 內容 |
 | --- | --- |
-| [v4/PLAN.md](v4/PLAN.md) | 敘事、三種畫面、顏色語義、質感標準、剪影的用法、分段、文案歸屬、閃光安全(英文) |
-| [v4/KIT.md](v4/KIT.md) | 如何寫一個段落:鏡頭定義、可用元件、驗收標準、檢查方法(英文) |
-| [v3/PLAN.md](v3/PLAN.md)、[v3/KIT.md](v3/KIT.md) | 第三版的同名文件;第四版的要求以它們為起點,與之不一致的地方以第四版為準 |
+| [v4/PLAN.md](archive/v4/PLAN.md) | 敘事、三種畫面、顏色語義、質感標準、剪影的用法、分段、文案歸屬、閃光安全(英文) |
+| [v4/KIT.md](archive/v4/KIT.md) | 如何寫一個段落:鏡頭定義、可用元件、驗收標準、檢查方法(英文) |
+| [v3/PLAN.md](archive/v3/PLAN.md)、[v3/KIT.md](archive/v3/KIT.md) | 第三版的同名文件;第四版的要求以它們為起點,與之不一致的地方以第四版為準 |
 
 ### 紀錄:每一輪實際做了什麼
 
 | 檔案 | 內容 |
 | --- | --- |
-| [v4/PROGRESS.md](v4/PROGRESS.md) | 第四版的進度與交付:做完了什麼、量到的數字、每一處沒有照要求做的地方及原因(簡體中文,約 4 萬字) |
-| [v4/maps/](v4/maps/) | 動手做第四版之前,對第三版逐段所做的分析:鏡頭清單、關鍵詞與重鼓點的實測時間、剪影的逐張測量、引擎的能力與缺口 |
-| [v4/WANTED_ART.md](v4/WANTED_ART.md)、[v3/WANTED_ART.md](v3/WANTED_ART.md) | 做完之後列出的「還想要的圖」:因為沒有那張圖而只能繞過去的地方 |
+| [v4/PROGRESS.md](archive/v4/PROGRESS.md) | 第四版的進度與交付:做完了什麼、量到的數字、每一處沒有照要求做的地方及原因(簡體中文,約 4 萬字) |
+| [v4/maps/](archive/v4/maps/) | 動手做第四版之前,對第三版逐段所做的分析:鏡頭清單、關鍵詞與重鼓點的實測時間、剪影的逐張測量、引擎的能力與缺口 |
+| [v4/WANTED_ART.md](archive/v4/WANTED_ART.md)、[v3/WANTED_ART.md](archive/v3/WANTED_ART.md) | 做完之後列出的「還想要的圖」:因為沒有那張圖而只能繞過去的地方 |
 | [../STORYBOARD.md](../STORYBOARD.md) | 逐鏡頭分鏡表,由 `npm run storyboard` 從程式裡的鏡頭清單自動生成 |
 
 ### 片中的文案
 
 | 檔案 | 內容 |
 | --- | --- |
-| [v4/chat_script.json](v4/chat_script.json) | 聊天內容:使用者的訊息與操作、設定項、資料、時間戳(本片原創) |
-| [v4/errors.json](v4/errors.json) | 錯誤文案、愛的迴圈、數數、最後一聲的紀錄(本片原創) |
+| [v4/chat_script.json](archive/v4/chat_script.json) | 聊天內容:使用者的訊息與操作、設定項、資料、時間戳(本片原創) |
+| [v4/errors.json](archive/v4/errors.json) | 錯誤文案、愛的迴圈、數數、最後一聲的紀錄(本片原創) |
 | `v3/` 裡的同名檔 | 第三版當時的文案 |
 
 ### 讀這些文件時要知道的事
@@ -74,8 +74,8 @@ AI while it was made: what the maker asked for, the rules drawn from that, and t
 
 | Round | File | What it contains |
 | --- | --- | --- |
-| Version 4 (the refinement) | [v4/PROMPT_v4.md](v4/PROMPT_v4.md) | The requirements for the whole film, section by section, about 23,000 Chinese characters. It was carried out over three conversations. |
-| Fix round of version 4 | [v4/PROMPT_v4_fix.md](v4/PROMPT_v4_fix.md) | Three changes asked for after watching the 1080p preview. |
+| Version 4 (the refinement) | [v4/PROMPT_v4.md](archive/v4/PROMPT_v4.md) | The requirements for the whole film, section by section, about 23,000 Chinese characters. It was carried out over three conversations. |
+| Fix round of version 4 | [v4/PROMPT_v4_fix.md](archive/v4/PROMPT_v4_fix.md) | Three changes asked for after watching the 1080p preview. |
 
 What is inside, by heading (the files themselves are in Simplified Chinese):
 
@@ -103,25 +103,25 @@ Three things to know about them:
 
 | File | What it contains |
 | --- | --- |
-| [v4/PLAN.md](v4/PLAN.md) | Story, the three kinds of pictures, colour semantics, texture standards, how the silhouettes are used, sections, flash safety (in English) |
-| [v4/KIT.md](v4/KIT.md) | How to write a section: shot definitions, components, acceptance criteria, how to check (in English) |
-| [v3/PLAN.md](v3/PLAN.md), [v3/KIT.md](v3/KIT.md) | The same documents of version 3; version 4 starts from them and overrides them where they differ |
+| [v4/PLAN.md](archive/v4/PLAN.md) | Story, the three kinds of pictures, colour semantics, texture standards, how the silhouettes are used, sections, flash safety (in English) |
+| [v4/KIT.md](archive/v4/KIT.md) | How to write a section: shot definitions, components, acceptance criteria, how to check (in English) |
+| [v3/PLAN.md](archive/v3/PLAN.md), [v3/KIT.md](archive/v3/KIT.md) | The same documents of version 3; version 4 starts from them and overrides them where they differ |
 
 ### The record: what each round actually built
 
 | File | What it contains |
 | --- | --- |
-| [v4/PROGRESS.md](v4/PROGRESS.md) | Progress and delivery of version 4: what was built, the measured numbers, every place that departs from the prompt and why (Simplified Chinese, about 40,000 characters) |
-| [v4/maps/](v4/maps/) | The analysis of version 3 made before version 4 was started: shot lists, measured times of keywords and drum hits, measurements of every silhouette, what the engine could and could not do (in English) |
-| [v4/WANTED_ART.md](v4/WANTED_ART.md), [v3/WANTED_ART.md](v3/WANTED_ART.md) | Pictures the film would still have liked to have: places that had to be worked around for lack of one |
+| [v4/PROGRESS.md](archive/v4/PROGRESS.md) | Progress and delivery of version 4: what was built, the measured numbers, every place that departs from the prompt and why (Simplified Chinese, about 40,000 characters) |
+| [v4/maps/](archive/v4/maps/) | The analysis of version 3 made before version 4 was started: shot lists, measured times of keywords and drum hits, measurements of every silhouette, what the engine could and could not do (in English) |
+| [v4/WANTED_ART.md](archive/v4/WANTED_ART.md), [v3/WANTED_ART.md](archive/v3/WANTED_ART.md) | Pictures the film would still have liked to have: places that had to be worked around for lack of one |
 | [../STORYBOARD.md](../STORYBOARD.md) | The shot-by-shot storyboard, generated from the shot list in the code by `npm run storyboard` |
 
 ### The words on screen
 
 | File | What it contains |
 | --- | --- |
-| [v4/chat_script.json](v4/chat_script.json) | The chat: the user's messages and actions, settings, data, timestamps (written for this film) |
-| [v4/errors.json](v4/errors.json) | Error messages, the love loop, the counting, the record of the last shout (written for this film) |
+| [v4/chat_script.json](archive/v4/chat_script.json) | The chat: the user's messages and actions, settings, data, timestamps (written for this film) |
+| [v4/errors.json](archive/v4/errors.json) | Error messages, the love loop, the counting, the record of the last shout (written for this film) |
 
 ### Reading notes
 
