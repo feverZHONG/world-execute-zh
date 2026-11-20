@@ -101,6 +101,10 @@ if (SHEET) {
       ? ['-y', '-hide_banner', '-loglevel', 'error', '-f', 'h264', '-framerate', String(FPS)]
       : ['-y', '-hide_banner', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', FRAME === 'png' ? 'png' : 'mjpeg'];
   // audio: the song from max(0, start); if the export starts before the song, it is delayed by that lead (in samples: exact)
+  // --mute writes a silent track of exactly the video's length instead. Segmented 4K rendering uses it: a slice that
+  // starts inside the 5 s preroll would ask for a negative audio length (ffmpeg: "Value -3.000000 for parameter
+  // 'durationi' out of range"), and the segments get one continuous audio track at concat time anyway.
+  const MUTE = argv.includes('--mute');
   const lead = Math.max(0, -firstFrame / FPS), aStart = Math.max(0, firstFrame / FPS);
   const VIDEO_OUT = CODEC === 'copy'
     ? ['-c:v', 'copy']                                   // already encoded (and already yuv420p) in the page
@@ -108,16 +112,18 @@ if (SHEET) {
        '-c:v', CODEC, ...(CODEC === 'h264_nvenc' ? quality(cfg.export.nvenc, '-cq') : quality(cfg.export.x264, '-crf'))];
   ffArgs = [
     ...frameIn, '-thread_queue_size', '64', '-i', 'pipe:0',
-    '-ss', String(aStart), '-t', String(total / FPS - lead), '-i', path.join(ROOT, cfg.paths.audio),
+    ...(MUTE
+      ? ['-f', 'lavfi', '-t', String(total / FPS), '-i', 'anullsrc=channel_layout=stereo:sample_rate=44100']
+      : ['-ss', String(aStart), '-t', String(total / FPS - lead), '-i', path.join(ROOT, cfg.paths.audio)]),
     '-map', '0:v', '-map', '1:a',
     // adelay takes one value per channel; the `all` option does not exist in older ffmpeg builds (this machine's 4.2)
-    ...(lead > 0 ? ['-af', `adelay=${Array(Math.max(2, features.meta.channels ?? 2)).fill(Math.round(lead * features.meta.sampleRate) + 'S').join('|')}`] : []),
+    ...(lead > 0 && !MUTE ? ['-af', `adelay=${Array(Math.max(2, features.meta.channels ?? 2)).fill(Math.round(lead * features.meta.sampleRate) + 'S').join('|')}`] : []),
     '-metadata', `comment=mv_start=${(firstFrame / FPS).toFixed(6)}`,
     ...VIDEO_OUT,
     '-colorspace', 'bt709', '-color_primaries', 'bt709', '-color_trc', 'bt709', '-color_range', 'tv',
     // `-shortest` would trim the last frames when the AAC track is a hair shorter than the video (copy mode), so
     // only the re-encode paths use it; the audio is already bounded by its own -t
-    ...(CODEC === 'copy' ? [] : ['-shortest']),
+    ...(CODEC === 'copy' || MUTE ? [] : ['-shortest']),
     ...cfg.export.audio, '-movflags', '+faststart', OUT,
   ];
 }

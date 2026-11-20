@@ -107,7 +107,9 @@ function setupExport() {
       error: (e) => { encFail = e; wake(); },
     });
     enc.configure({
-      codec: 'avc1.4d0028', width, height,
+      // level matters: 4d0028 is High@4.0, which tops out at 1080p - a 3840x2160 frame is rejected outright,
+      // so 4K asks for High@5.2 (640034).
+      codec: width * height > 2.2e6 ? 'avc1.640034' : 'avc1.4d0028', width, height,
       bitrate: Math.round(Math.max(8e6, width * height * fps * (Number(qs.get('bpp')) || 0.2))),   // ~0.2 bit per pixel-second, hardware VBR settles lower on flat art; ?bpp= raises it for quality checks
       framerate: fps, hardwareAcceleration: 'prefer-hardware', latencyMode: 'quality',
       avc: { format: 'annexb' },                          // ffmpeg's raw h264 demuxer wants Annex B, not AVCC
