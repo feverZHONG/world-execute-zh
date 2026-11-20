@@ -1,7 +1,7 @@
 {
-  "name": "world-execute-me-lyric-mv",
+  "name": "world-execute-zh",
   "version": "4.0.0",
-  "description": "Unofficial fan-made lyric MV for Mili - world.execute(me); (deterministic renderer)",
+  "description": "Mili《world.execute (me) ;》歌词 MV 的简体中文二创：界面与台词全量中文化、歌词一字未改（确定性渲染器）",
   "private": true,
   "license": "MIT",
   "type": "module",
