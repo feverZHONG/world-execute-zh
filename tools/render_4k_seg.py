@@ -56,7 +56,7 @@ def main():
             keep_awake()
             cmd = ['node', os.path.join('export', 'export.mjs'),
                    '--start', f'{PRE + f0 / FPS:.5f}', '--end', f'{PRE + f1 / FPS:.5f}',
-                   '--width', '3840', '--height', '2160', '--fps', '60', '--mute',
+                   '--width', '3840', '--height', '2160', '--fps', '60', '--frame', 'h264', '--mute',
                    '--out', os.path.relpath(out, ROOT)]
             r = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
             if r.returncode == 0 and frames_of(out) == f1 - f0:

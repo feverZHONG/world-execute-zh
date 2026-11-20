@@ -107,11 +107,15 @@ function setupExport() {
       error: (e) => { encFail = e; wake(); },
     });
     enc.configure({
-      // level matters: 4d0028 is High@4.0, which tops out at 1080p - a 3840x2160 frame is rejected outright,
-      // so 4K asks for High@5.2 (640034).
-      codec: width * height > 2.2e6 ? 'avc1.640034' : 'avc1.4d0028', width, height,
+      // level matters: 4d0028 is Main@4.0 (tops out at 1080p), 640034 is High@5.2 whose MaxMBPS is 1,555,200 —
+      // and 3840x2160@60 needs 1,944,000 MB/s, so 4K60 asks for High@6.0 (64003C) or the encoder refuses to start.
+      codec: width * height * fps > 4e8 ? 'avc1.64003C'
+        : width * height > 2.2e6 ? 'avc1.640034' : 'avc1.4d0028', width, height,
       bitrate: Math.round(Math.max(8e6, width * height * fps * (Number(qs.get('bpp')) || 0.2))),   // ~0.2 bit per pixel-second, hardware VBR settles lower on flat art; ?bpp= raises it for quality checks
-      framerate: fps, hardwareAcceleration: 'prefer-hardware', latencyMode: 'quality',
+      framerate: fps,
+      // this Edge's hardware H.264 tops out at 1080p — 'prefer-hardware' is refused outright at 2K/4K, while
+      // 'no-preference' lets Chromium fall back to its software encoder for the big frames.
+      hardwareAcceleration: width * height > 2.2e6 ? 'no-preference' : 'prefer-hardware', latencyMode: 'quality',
       avc: { format: 'annexb' },                          // ffmpeg's raw h264 demuxer wants Annex B, not AVCC
     });
     drainP = drainEncoder();
