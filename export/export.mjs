@@ -69,11 +69,16 @@ const FFMPEG = findFfmpeg();
 
 function pickCodec() {
   const want = arg('codec', cfg.export.codec);
-  if (want !== 'auto' && want !== 'h264_nvenc') return want;
+  if (want !== 'auto' && want !== 'h264_nvenc' && want !== 'hevc_nvenc') return want;
   // Real probe: encode a few frames at the target size. Fails if driver/GPU/resolution is unsupported.
-  const r = spawnSync(FFMPEG, ['-hide_banner', '-loglevel', 'error', '-f', 'lavfi', '-i', `color=black:s=${W}x${H}:r=${FPS}`,
-    '-frames:v', '5', '-c:v', 'h264_nvenc', '-f', 'null', '-']);
-  if (r.status === 0) return 'h264_nvenc';
+  const probe = (c) => spawnSync(FFMPEG, ['-hide_banner', '-loglevel', 'error', '-f', 'lavfi', '-i', `color=black:s=${W}x${H}:r=${FPS}`,
+    '-frames:v', '5', '-c:v', c, '-f', 'null', '-']).status === 0;
+  if (want === 'hevc_nvenc') {
+    if (probe('hevc_nvenc')) return 'hevc_nvenc';
+    console.warn('[export] hevc_nvenc unavailable -> falling back to libx265');
+    return 'libx265';
+  }
+  if (probe('h264_nvenc')) return 'h264_nvenc';
   console.warn('[export] h264_nvenc unavailable -> falling back to libx264');
   return 'libx264';
 }
@@ -106,10 +111,25 @@ if (SHEET) {
   // 'durationi' out of range"), and the segments get one continuous audio track at concat time anyway.
   const MUTE = argv.includes('--mute');
   const lead = Math.max(0, -firstFrame / FPS), aStart = Math.max(0, firstFrame / FPS);
+  const hevc = CODEC === 'hevc_nvenc' || CODEC === 'libx265';
+  // Kept, not used: measured 2026-11-20. Page-side HEVC encoding is impossible (Chromium decodes only), the
+  // jpeg + NVENC path came out 51% heavier than H.264 at 4K60, and master transcode only pays off below cq22,
+  // where the background halftone texture flattens out. Delivery stays on --frame h264. See 说明\踩坑与经验.md §4.1.
+  // HEVC has its own profile names (main / main10) and its own ceiling: 4K60 H.264 here runs at ~95 Mbps, so the
+  // H.264 preset's -maxrate 80M would clip it — HEVC gets a higher cap. -tune is left out: NVENC couples it to preset.
+  const encArgs = CODEC === 'hevc_nvenc'
+    ? ['-preset', 'p7', '-rc', 'vbr', '-cq', arg('cq', '20'), '-b:v', '0',
+       '-maxrate', W * H * FPS > 4e8 ? '160M' : '60M', '-bufsize', W * H * FPS > 4e8 ? '320M' : '120M',
+       '-profile:v', 'main', '-bf', '3']
+    : CODEC === 'libx265'
+      ? ['-preset', 'slow', '-crf', arg('cq', '18'), '-profile:v', 'main']
+      : CODEC === 'h264_nvenc' ? quality(cfg.export.nvenc, '-cq') : quality(cfg.export.x264, '-crf');
   const VIDEO_OUT = CODEC === 'copy'
     ? ['-c:v', 'copy']                                   // already encoded (and already yuv420p) in the page
     : ['-vf', 'scale=out_color_matrix=bt709:out_range=limited,format=yuv420p',
-       '-c:v', CODEC, ...(CODEC === 'h264_nvenc' ? quality(cfg.export.nvenc, '-cq') : quality(cfg.export.x264, '-crf'))];
+       '-c:v', CODEC, ...encArgs,
+       // HEVC in MP4: tag hvc1, not the default hev1 — Windows/QuickTime refuse hev1 sample entries
+       ...(hevc ? ['-tag:v', 'hvc1'] : [])];
   ffArgs = [
     ...frameIn, '-thread_queue_size', '64', '-i', 'pipe:0',
     ...(MUTE
