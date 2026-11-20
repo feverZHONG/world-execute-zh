@@ -61,11 +61,13 @@ assets/         角色剪影（8 张 PNG + regions.json）、简体字体包的�
 out/            渲染产物与成片（不入库）
 ```
 
-中文化的全部文档在 [`二次创作/`](二次创作/README.md)，入口是 [`二次创作说明.md`](二次创作说明.md)。
+中文化的全部文档在 [`二次创作/`](二次创作/README.md)；2026-11-16 那版总览已归档到 [`docs/archive/二创说明-20261116.md`](docs/archive/二创说明-20261116.md)，只作演进记录。
 
 ---
 
 ## 四、怎么跑
+
+> 最小可跑路径就是下面五步。完整的踩坑版（分帧传输对比、单帧验镜参数、已知坑清单）见 [`二次创作/说明/使用说明.md`](二次创作/说明/使用说明.md)，两处不重复。
 
 ```powershell
 git clone https://github.com/feverZHONG/world-execute-zh
