@@ -43,8 +43,8 @@
 | 文案层 | `chat_script.json`、`errors.json` 全量中文化，场景里硬编码的 UI 字一并改（含警告页整页、片尾署名） | `docs/archive/v4/chat_script.json`、`docs/archive/v4/errors.json`、`src/scenes/*` |
 | 美术层（接线，不出图） | 剪影交付规格单、验收脚本、八张实测基线；坐标基准参数化（1086×1448 不再写死）；**收图流水线**：外来图一键规整到基线构图、量墨、出配准初值 | `二次创作/说明/剪影规格.md`、[`收图流程.md`](二次创作/说明/收图流程.md)、`tools/art_check.mjs`、`tools/art_intake.py`、`src/engine/art.js` |
 | 美术层（形体来源，试验线已结案） | 试过用 Live2D 模型当剪影的形体来源：建墨色索引、写压图配方、接入渲染工具；结论是"能跑通、不能当成品"（五官、猫耳它都没有），成片仍用交付的八张位图，素材不入库 | [`素材库.md`](二次创作/说明/素材库.md)、`tools/live2d_index.py`、`docs/archive/v4/art/live2d_index.json`、`tools/live2d_art.mjs` |
-| 导出层 | 修本机 ffmpeg 4.2.2 不认 `adelay=...:all=1`；1080p60 全片已出；自检脚本量音画滞后 | `export/export.mjs`、`tools/check_export.py` |
-| 试验线（已结案） | SVG 位图矢量化（无画质收益，2026-11-17 关闭）、Live2D 模型顶剪影（能跑通但不能当成品） | `二次创作/说明/踩坑与经验.md` 3.3 / 3.4 |
+| 导出层 | 修本机 ffmpeg 4.2.2 不认 `adelay=...:all=1`；1080p60 与 4K60 两版已出（页面内编码、ffmpeg 只 `-c copy`）；自检脚本量音画滞后 | `export/export.mjs`、`tools/check_export.py` |
+| 试验线（已结案） | SVG 位图矢量化（无画质收益，2026-11-17 关闭）、Live2D 模型顶剪影（能跑通但不能当成品） | `docs/archive/剪影-试验线记录.md` |
 
 ---
 
