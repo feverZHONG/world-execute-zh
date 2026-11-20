@@ -8,7 +8,8 @@
 //
 //   node tools/live2d_art.mjs render --model l2d16.u --out out/plate.png --w 4096 --h 4096 --dump
 //   node tools/live2d_art.mjs render --model l2d16.u --out out/p2.png --motion motions/Mgirl02_stand.motion3.json --t 1.2
-//   node tools/live2d_art.mjs ink --in out/plate.png --out assets/_test_art/f_bust.png --w 2172 --h 2896 --crop 0,0,1600,2133 --dry
+//   node tools/live2d_art.mjs ink --in out/plate.png --out out/_art/f_bust.png --w 2172 --h 2896 --crop 0,0,1600,2133 --dry
+//   试验产物一律落 out/_art（out 已 ignore）；旧的 assets/_test_art* 四个目录已于 2026-11-20 清出
 //
 // 只处理本地素材；模型与产物都不可发布（双生视界/高奈利亚的版权）。
 import fs from 'node:fs';

@@ -116,7 +116,7 @@ python tools/check_export.py out/wem_zh_1080p60.mp4 --frames -2.5,45.4,170.19,20
 
 这份副本**单独一个 Git 仓库**（父目录 `E:\DCIM\doubaoWS` 与 `workspace\` 都没有 `.git`）。默认**私有**，只作本地与异地备份：
 
-- 忽略项：`/out/`（渲染产物与成片）、`/音頻&歌詞/*`（歌与词）、`/assets/fonts/node_modules/`、`/assets/live2d/`、`/assets/_test_art/`、`node_modules/`、`/data/lyrics.json`。
+- 忽略项：`/out/`（渲染产物与成片）、`/音頻&歌詞/*`（歌与词）、`/assets/fonts/node_modules/`、`/assets/live2d/`、`/assets/_test_art*/`、`/assets/character_pic/`（四个试验目录 2026-11-20 已清空，条目留着防再生成时误入库）、`node_modules/`、`/data/lyrics.json`。
 - `.gitattributes` 只有一行 `* -text`：逐字节保留，不做 CRLF 转换（工程里 CRLF/LF 混杂，`tools/script_json.py` 还依赖 `chat_script.json` 的排版），别改成 `text=auto`。
 - 文档一律 UTF-8（无 BOM）；用 Windows 记事本打开再保存会把编码改坏。
 - 公开推远端前，先把 `assets/character/`、`tools/live2d_lib/` 两处换成自己的素材（`assets/character_svg/` 已于 2026-11-20 清出）。
