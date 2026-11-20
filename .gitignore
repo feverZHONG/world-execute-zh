@@ -24,6 +24,8 @@
 # dependencies, caches, local settings
 node_modules/
 .venv/
+# check_sync.py 的 librosa/numpy（pip install --target .pydeps，309 MB，不入库）
+/.pydeps/
 __pycache__/
 *.pyc
 *.log
