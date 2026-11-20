@@ -273,6 +273,9 @@ export function plateProof(ctx, env, P) {
       if (whole) art.inks(ctx, 'f_bust', FIG);                          // in register: the three plates
       else {
         art.inks(ctx, 'f_bust', FIG, { roles: { cream: null } });       // the proof: orange and black only; her face is a void in her hair
+        // 注（2026-11-20）：`f_bust` 在 `assets/character/raw.json` 名单里，`art.inks` 会直接印整张原图并忽略
+        // `roles` / `plates`——这一镜在屏幕上一直是全彩的她，而不是校样。真要做出"缺一色"，得把 `f_bust` 移出
+        // raw 名单改走按色分离，那是美术方向改动；见 `docs/推进计划.md` P5 #4。
         if (t >= P.slide) {                                             // the plate that was missing, on its way over from the user
           const ap = flashIn(t, P.slide);
           for (const [role, o] of [['bg', [dx + 10, 10]], ['text', [dx, 0]]]) art.inks(ctx, 'f_bust', FIG, { alpha: ap, plates: [{ ink: 'cream', role, exact: true, offset: o }] });      // (its shadow plate, then itself)
