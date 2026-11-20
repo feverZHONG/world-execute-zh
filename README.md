@@ -104,11 +104,11 @@ python tools/check_export.py out/wem_zh_1080p60.mp4 --frames -2.5,45.4,170.19,20
 
 - **代码与自撰文档**：MIT。改后发布，保留上游版权声明即可。
 - **角色剪影**（`assets/character/*.png`）：CC BY-NC-SA 4.0，署名 **Nyankomint**。非商业、相同方式共享。
-  仓库里的 `assets/character_svg/` 只是本地技术验证副本，同样受此约束。
+  仓库里原来那份矢量化验证副本（`assets/character_svg/`）已于 2026-11-20 清出，不再随仓库分发。
 - **歌曲与歌词**：不在本仓库内，权利属于 Mili 及相关权利人。本工程只读你自己放在 `音頻&歌詞/` 的文件。
 - **AI 生成**：片中含 AI 生成的角色图；公开分享时请一并标注。
 - **闪光警告**：成片含大段高对比快速切换（歌时间 148.04–192.34 s），片头有 5 秒警示页；公开发布请在标题或简介再标一次。
-- **不可直接发布的东西**：`assets/live2d/`（第三方 Live2D 模型，只作本地试验）、`assets/character_svg/`（技术验证副本）。
+- **不可直接发布的东西**：`assets/live2d/`（第三方 Live2D 模型，只作本地试验）。
 
 ---
 
@@ -119,7 +119,7 @@ python tools/check_export.py out/wem_zh_1080p60.mp4 --frames -2.5,45.4,170.19,20
 - 忽略项：`/out/`（渲染产物与成片）、`/音頻&歌詞/*`（歌与词）、`/assets/fonts/node_modules/`、`/assets/live2d/`、`/assets/_test_art/`、`node_modules/`、`/data/lyrics.json`。
 - `.gitattributes` 只有一行 `* -text`：逐字节保留，不做 CRLF 转换（工程里 CRLF/LF 混杂，`tools/script_json.py` 还依赖 `chat_script.json` 的排版），别改成 `text=auto`。
 - 文档一律 UTF-8（无 BOM）；用 Windows 记事本打开再保存会把编码改坏。
-- 公开推远端前，先把 `assets/character/`、`assets/character_svg/`、`tools/live2d_lib/` 三处换成自己的素材。
+- 公开推远端前，先把 `assets/character/`、`tools/live2d_lib/` 两处换成自己的素材（`assets/character_svg/` 已于 2026-11-20 清出）。
 
 ---
 

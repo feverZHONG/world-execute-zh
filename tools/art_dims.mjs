@@ -2,7 +2,8 @@
 // 顺带把 loadArt 自己的告警（gold viewBox 缺 width/height、长宽比不对、分辨率不够）原样打出来。
 //
 //   node tools/art_dims.mjs                       # 当前 config 的 PNG 一套
-//   node tools/art_dims.mjs --svg assets/character_svg    # 同一套的矢量版（缺的自动回落 PNG）
+//   node tools/art_dims.mjs --svg <矢量目录>              # 同一套的矢量版（缺的自动回落 PNG）
+//     矢量副本与生成器（raster_to_svg.mjs）已于 2026-11-20 清出；将来画师交 SVG 时再用这个开关
 //
 // 判读：sx/sy 就是「设计单位 → 源像素」的系数。八张 PNG 全是 1.000 说明还没换图；换了大图之后这里应当 >1，
 // 且 sx 与 sy 相等（不等=长宽比被改了，片子里每一处裁切都会被拉扁）。aspx 一列偏离 0 超过 2% 即告警。

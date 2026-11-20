@@ -33,7 +33,7 @@ const argv = process.argv.slice(2);
 const arg = (name, def) => { const i = argv.indexOf('--' + name); return i >= 0 ? argv[i + 1] : def; };
 const SHEET = arg('sheet', null);
 const LAB = arg('lab', null);                         // --lab <set>: the check cards of src/scenes/lab.js, one per second from t = 0
-const ARTSVG = arg('artsvg', '');                     // --artsvg <dir>: take the silhouettes from that folder as SVG (tools/raster_to_svg.mjs)
+const ARTSVG = arg('artsvg', '');                     // --artsvg <dir>: take the silhouettes from that folder as SVG (raster_to_svg.mjs removed 2026-11-20; kept for a vector delivery from the artist)
 const ARTDIR = arg('art', '');                        // --art <dir>: use another silhouette folder (test plates, without touching assets/character)
 const PAL = arg('pal', '');                           // --pal <file>: override palette roles per state (out/_pal/*.json)
 const W = +arg('width', SHEET ? 960 : cfg.video.width), H = +arg('height', SHEET ? 540 : cfg.video.height), FPS = +arg('fps', cfg.video.fps);
