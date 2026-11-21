@@ -127,7 +127,7 @@ This project is an **unofficial fan work**.
 - The code and the documents of this project were written by AI (Claude, through Claude Code). The direction, the material,
   and the review notes and decisions of every round came from the maker; the requirements of each round are listed in
   [docs/README.md](docs/README.md).
-- The character silhouettes are fan art made by the maker with an AI image generator; the character is named 高奈利亞 in the film.
+- The character silhouettes are cropped from Live2D model renders of Kanalia (*Twin Visions*, © Seasun); no licence is granted for them. The character is named 高奈利亞 in the film.
 - The finished film therefore contains AI-generated content. Say so when you share the video or pictures exported from this project.
 
 ### The original song
