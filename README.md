@@ -69,7 +69,7 @@ out/            渲染产物与成片（不入库）
 
 > 最小可跑路径就是下面五步。完整的踩坑版（分帧传输对比、单帧验镜参数、已知坑清单）见 [`二次创作/说明/使用说明.md`](二次创作/说明/使用说明.md)，两处不重复。
 
-```powershell
+```bash
 git clone https://github.com/feverZHONG/world-execute-zh
 cd world-execute-zh
 
@@ -91,7 +91,9 @@ npm run export:preview     # 1080p60，约 2–2.5 分钟，683 MB
 npm run export:4k          # 4K60，约 7–8 分钟，2.6 GB
 ```
 
-- 时间参数一律是**歌时间**（音频开头 = 0）；成片前有 `safety.preroll: 5` 秒警告页，影片时间 = 歌时间 + 5。
+* 时间参数一律是 **歌时间**（音频开头 = 0）；成片前有 `safety.preroll: 5` 秒警告页，影片时间 = 歌时间 + 5。
+* **跨平台**：`npm run check`／`lyrics:retime`／`analyze`／`check:plates` 都经 `tools/py.mjs` 找 Python（`$PYTHON` → `.venv/bin/python` → `.venv/Scripts/python.exe` → `python3`），Windows 与 Linux/macOS 同一条命令，不再写死 `.venv\Scripts\python`。`tools/check.cmd` 保留给 Windows 直接双击，步骤与 `npm run check` 等价。
+* Linux/macOS 上放歌与词时注意引号：目录名里有 `&`，`cp x.lrc "音頻&歌詞/"` 要加双引号。
 - 换中文文案后先跑 `node tools/zh_charset.mjs`，677 字表之外的新字会被拦下。
 - `--frame h264` 是浏览器内编码、ffmpeg 只做 `-c copy`，不依赖本机 NVENC；没有独显时浏览器回落软件编码，慢一些但能出片。只有 `--frame jpeg --codec auto` 那条才探 NVENC（不可用时回落 `libx264`）。
 - 本机 ffmpeg 4.2.2 的 `h264_nvenc` 用不了（旧 API 不认新驱动），需要 NVENC 就 `--ffmpeg` 指一条 5.x；不指也能出片。
@@ -129,7 +131,7 @@ npm run export:4k          # 4K60，约 7–8 分钟，2.6 GB
 
 这份副本是**独立的公开仓库**（`github.com/feverZHONG/world-execute-zh`），代码 MIT，欢迎 fork；文档与文案欢迎提 issue/PR。
 
-- 忽略项：`/out/`（渲染产物与成片）、`/音頻&歌詞/*`（歌与词）、`/assets/fonts/node_modules/`、`/assets/live2d/`（本地试验的第三方模型）、`/assets/live2d_lib/`（指向本机素材库的目录联结）、`/assets/_test_art*/`、`/assets/character_pic/`、`node_modules/`、`/data/lyrics.json`、`/.pydeps/`。
+- 忽略项：`/out/`（渲染产物与成片）、`/音頻&歌詞/*`（歌与词）、`/assets/fonts/node_modules/`、`/assets/live2d/`（本地试验的第三方模型）、`/assets/live2d_lib/`（指向本机素材库的目录联结）。注意与入库的 `tools/live2d_lib/` 不是一回事：前者是本机的模型库联结（不入库），后者是渲图用的渲染壳（pixi ＋ Cubism core ＋ `render.html`，随仓库分发）、`/assets/_test_art*/`、`/assets/character_pic/`、`node_modules/`、`/data/lyrics.json`、`/.pydeps/`。
 - `.gitattributes` 只有一行 `* -text`：逐字节保留，不做 CRLF 转换（工程里 CRLF/LF 混杂，`tools/script_json.py` 还依赖 `chat_script.json` 的排版），别改成 `text=auto`。
 - 文档一律 UTF-8（无 BOM）；用 Windows 记事本打开再保存会把编码改坏。
 - 剪影随仓库只为工程完整性保留，不含任何授权；**商业使用**必须自行换图（`assets/character/*.png` + `regions.json`，换图前先跑 `python tools/art_intake.py` 归位到基线构图）。
