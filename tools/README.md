@@ -13,8 +13,10 @@
 | `base_sheets.mjs` | v4 保留段落的基线拼图，一beat 一帧 |
 | `regress_sheets.mjs` | 已重做段落的改前/改后拼图 |
 | `fill_lyrics.mjs` | 用你的歌词文件 + 仓库内时间表生成 `data/lyrics.json`（`npm run lyrics`） |
-| `parse_lrc.py` | 解析 LRC 时间轴 |
+| `parse_lrc.py` | 解析 LRC 时间轴（`node tools/py.mjs tools/parse_lrc.py`） |
 | `analyze_audio.py` | 逐帧音频特征 → `data/audio_features.json`（`npm run analyze`，需 librosa） |
+| `py.mjs` | 跨平台 Python 入口：`$PYTHON` → `.venv/bin/python` → `.venv/Scripts/python.exe` → `python3`；npm scripts 一律经它调 py |
+| `check.mjs` | 跨平台 QA 门禁（flash ＋ sync），等价 `check.cmd`；`npm run check` / `check:4k` 走它 |
 | `check_no_lyrics.mjs` | 发布前门禁：入库文件里不得有连续歌词 |
 | `dump_text.mjs` | 给 `fillText` 挂勾子，按 0.5 s 网格扫全片画出的文字（查漏中文用） |
 | `check_export.py` | 成片最小自检：ffprobe 元数据 + 音轨与源 wav 互相关 + 按歌时间抽帧（本机唯一能跑的质检） |
@@ -26,6 +28,8 @@
 | `render_4k_chunks.py` | 上一代方案：分 12 段 × 1086 帧，断点续跑记 `out/_4k_parts/progress.json` |
 
 ## 二、画板与美术流水线
+
+> `plate_*.py` 一族（`plate_bake` / `plate_cut` / `plate_refit` / `plate_tune` / `plate_iou` / `plate_pick` / `plate_trace` / `plate_alpha_key` / `plate_delta` / `plate_vs`）是 11-17 换图那轮的一次性试验，**已结案**，日常不必维护；常跑的只有 `plate_check.py`（画板门禁）与 `plates.py`（共用裁切）。归档到 `tools/experiments/` 之前先改完 20 多处文档引用（见第五节）。
 
 | 脚本 | 做什么 |
 |:--|:--|
