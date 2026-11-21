@@ -2,7 +2,7 @@
 
 [![来源](https://img.shields.io/badge/upstream-Nyankomintsu%2Fworld--execute--me--lyric--mv-blue)](https://github.com/Nyankomintsu/world-execute-me-lyric-mv)
 [![许可](https://img.shields.io/badge/code-MIT-green)](LICENSE)
-[![剪影](https://img.shields.io/badge/silhouettes-CC%20BY--NC--SA%204.0-orange)](CREDITS.md)
+[![剪影](https://img.shields.io/badge/silhouettes-Twin%20Vision%20Live2D-orange)](CREDITS.md)
 
 ![成片静帧：设置抽屉，歌时间 45.4 s](docs/images/film-still.jpg)
 
@@ -19,14 +19,14 @@
 |:--|:--|
 | 上游仓库 | <https://github.com/Nyankomintsu/world-execute-me-lyric-mv>（原版中文 README 见 [`README.upstream.md`](README.upstream.md)） |
 | 上游版本 | **v4**（`package.json` 里 `version: 4.0.0`），整片全部镜已完成 |
-| 上游作者 / 署名 | **Nyankomint**（角色剪影由其提供，CC BY-NC-SA 4.0） |
+| 上游作者 / 署名 | **Nyankomint**（代码与镜头；本片剪影已重制，不再使用其素材） |
 | 上游原片 | B 站 <https://www.bilibili.com/video/BV186pc65E68> |
-| 上游许可 | 代码与自撰文档 **MIT**（见 [`LICENSE`](LICENSE)）；角色剪影 **CC BY-NC-SA 4.0**；字体 SIL OFL 1.1 |
+| 上游许可 | 代码与自撰文档 **MIT**（见 [`LICENSE`](LICENSE)）；字体 SIL OFL 1.1 |
 | 原曲 | Mili《world.execute (me) ;》，收录于专辑《Miracle Milk》(2016)；作曲 Cassie Wei / Mili，作词 Mili。音频与歌词版权归 Mili 及相关权利人，**不在本仓库内** |
 | 本副本 | 由 **feverZHONG**（B 站 UP 主「fever钟」）制作，2026 年 11 月起；目标是把整片 UI 与台词简体中文化，不改歌词 |
 
 上游的 AI 使用说明同样适用于本副本：上游代码与文档由 AI（Claude，经 Claude Code）撰写，方向与取舍来自制作者；
-角色剪影是用 AI 图像生成工具做的二创图，片中角色名定为「高奈利亚」。详见 [`CREDITS.md`](CREDITS.md)。
+八张剪影由制作者从《双生视界》高奈利亚的 Live2D 模型渲图裁切而成，版权归游戏原权利人，本仓库不对其授权。片中角色名定为「高奈利亚」，与游戏原作剧情无关。详见 [`CREDITS.md`](CREDITS.md)。
 
 **上游要求全文的登记**：制作者给 AI 的两份要求 [`PROMPT_v4.md`](PROMPT_v4.md)、[`PROMPT_v4_fix.md`](PROMPT_v4_fix.md) 在副本里原样保留（根目录与 `docs/archive/v4/` 各一份，逐字节一致）；
 它们与 `PLAN.md`、`KIT.md`、`PROGRESS.md`、`README.upstream.md` 等上游文档的尺寸、SHA-256、版权与维护规则，统一登记在 [`二次创作/说明/上游文档登记.md`](二次创作/说明/上游文档登记.md)
@@ -116,10 +116,10 @@ npm run export:4k          # 4K60，约 7–8 分钟，2.6 GB
 ## 六、许可与红线
 
 - **代码与自撰文档**：MIT。改后发布，保留上游版权声明即可。
-- **角色剪影**（`assets/character/*.png`）：CC BY-NC-SA 4.0，署名 **Nyankomint**。非商业、相同方式共享。
+- **角色剪影**（`assets/character/*.png`）：由《双生视界》高奈利亚的 Live2D 模型渲图裁切而成，版权归游戏原权利人（西山居）。**本仓库不对这些图授予任何许可**：只能作非商业同人用途，别单独再分发、别拿去商用。
   仓库里原来那份矢量化验证副本（`assets/character_svg/`）已于 2026-11-20 清出，不再随仓库分发。
 - **歌曲与歌词**：不在本仓库内，权利属于 Mili 及相关权利人。本工程只读你自己放在 `音頻&歌詞/` 的文件。
-- **AI 生成**：片中含 AI 生成的角色图；公开分享时请一并标注。
+- **AI 生成**：代码与文档由 AI 撰写，成片由这些代码渲染而成；剪影是游戏 Live2D 模型的渲图，不是 AI 生图。公开分享时仍请标为 AI 辅助制作。
 - **闪光警告**：成片含大段高对比快速切换（歌时间 148.04–192.34 s），片头有 5 秒警示页；公开发布请在标题或简介再标一次。
 - **不可直接发布的东西**：`assets/live2d/`（第三方 Live2D 模型，只作本地试验）。
 
@@ -132,7 +132,7 @@ npm run export:4k          # 4K60，约 7–8 分钟，2.6 GB
 - 忽略项：`/out/`（渲染产物与成片）、`/音頻&歌詞/*`（歌与词）、`/assets/fonts/node_modules/`、`/assets/live2d/`（本地试验的第三方模型）、`/assets/live2d_lib/`（指向本机素材库的目录联结）、`/assets/_test_art*/`、`/assets/character_pic/`、`node_modules/`、`/data/lyrics.json`、`/.pydeps/`。
 - `.gitattributes` 只有一行 `* -text`：逐字节保留，不做 CRLF 转换（工程里 CRLF/LF 混杂，`tools/script_json.py` 还依赖 `chat_script.json` 的排版），别改成 `text=auto`。
 - 文档一律 UTF-8（无 BOM）；用 Windows 记事本打开再保存会把编码改坏。
-- 剪影按 CC BY-NC-SA 4.0 可随仓库分发；**商业使用**必须自行换图（`assets/character/*.png` + `regions.json`，换图前先跑 `python tools/art_intake.py` 归位到基线构图）。
+- 剪影随仓库只为工程完整性保留，不含任何授权；**商业使用**必须自行换图（`assets/character/*.png` + `regions.json`，换图前先跑 `python tools/art_intake.py` 归位到基线构图）。
 
 ---
 

@@ -14,7 +14,7 @@
 | 內容 | 授權 |
 | --- | --- |
 | 程式碼(`src/`、`export/`、`tools/`、`index.html`、`config.json`),以及本項目自己撰寫的文件、聊天文案與錯誤文案(`docs/`) | MIT,見 [LICENSE](LICENSE) |
-| 角色剪影(`assets/character/*.png`)與含有它們的畫面(例如 `docs/images/cover.jpg`) | [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hant):署名、非商業、以相同方式分享。署名:Nyankomint |
+| 角色剪影(`assets/character/*.png`)與含有它們的畫面(例如 `docs/images/cover.jpg`) | **本倉庫不對這些圖授權**。《雙生視界》的角色與 Live2D 模型版權歸原權利人(西山居);它們由該作的模型渲圖裁切而成,只作非商業同人用途,不得單獨再分發或商用 |
 | 歌曲的錄音、音樂與歌詞 | **不在本倉庫內**。權利屬於 Mili 及相關權利人,上面兩種授權都不涵蓋它們 |
 | 字體 | 不在本倉庫內,安裝時由 npm 取得;各為 SIL OFL 1.1(見下方「字體」) |
 | Anthropic 的名稱與標誌 | Anthropic 的商標;片內不使用,上面兩種授權也都不涉及任何商標權利 |
@@ -22,7 +22,7 @@
 ## AI 使用說明
 
 - 本項目的程式碼與文件由 AI(Claude,經 Claude Code)撰寫;方向、素材、逐輪的審片意見與取捨來自製作者。各輪的要求見 [docs/README.md](docs/README.md)。
-- 角色剪影是製作者以 AI 圖像生成工具製作的二創圖;片中那位的名字定為「高奈利亞」。
+- 八張剪影是製作者從《雙生視界》高奈利亞的 Live2D 模型渲圖裁切而成,形體與姿勢都來自模型;片中那位的名字定為「高奈利亞」,與遊戲原作劇情無關。
 - 成片因此含有 AI 生成的內容;分享影片或由本工程導出的畫面時,請一併標示。
 
 ## 原曲
@@ -51,8 +51,8 @@
 ## 角色圖
 
 - **第四版使用的八張三色剪影**(`assets/character/` 內的 f_bust / f_profile / f_reach / f_eye / boy_bust / man_bust / cat_bust / cat_paws)
-  **由本片製作者提供**,是以 AI 圖像生成工具製作的「克勞德」擬人二創圖(複製進工程時改為英文檔名;f_bust 裁去最後一行像素)。
-  製作者手上的原檔與未採用的其餘幾張不在本倉庫內。授權:CC BY-NC-SA 4.0(見上方「授權一覽」)。
+  由製作者從《雙生視界》高奈利亞的 Live2D 模型渲圖裁切而成(取框工具 `tools/plate_cut.py`,每張的來源模型見 [`二次创作/说明/素材库.md`](二次创作/说明/素材库.md) §四)。
+  角色與模型版權歸原權利人(西山居);**本倉庫不對這些圖授予任何許可**,只作非商業同人用途。原渲圖與未採用的模型不在本倉庫內。
 - 本工程對剪影只做:按墨色分成橙、米白、黑三個版並各自套上調色盤的顏色、錯版(位移)、逐版顯影、裁切、遮罩、鏡像(f_eye 一律水平鏡像)、
   以分版後的輪廓描成路徑以供放大、以及取樣成網點或字符。不重繪、不扭曲五官、不讓嘴部動作,也不以程式繪製角色的臉。
 - 第三版使用的六張插畫(library / tea / rain / gaze / plea / parted,同樣由製作者提供)**已從第四版全片撤下**,檔案也已從 `assets/character/` 移除
@@ -117,7 +117,7 @@ This project is an **unofficial fan work**.
 | Content | Licence |
 | --- | --- |
 | The code (`src/`, `export/`, `tools/`, `index.html`, `config.json`) and the documents, chat text and error text written for this project (`docs/`) | MIT, see [LICENSE](LICENSE) |
-| The character silhouettes (`assets/character/*.png`) and pictures that contain them (for example `docs/images/cover.jpg`) | [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/): attribution, non-commercial, share alike. Credit: Nyankomint |
+| The character silhouettes (`assets/character/*.png`) and pictures that contain them (for example `docs/images/cover.jpg`) | **No licence is granted.** They are cropped from renders of Kanalia's Live2D model in *Twin Visions*; copyright stays with the game's rights holders (Seasun). Non-commercial fan use only; do not redistribute the plates or use them commercially |
 | The recording, the music and the lyrics of the song | **Not in this repository.** They belong to Mili and the respective rights holders; neither licence above covers them |
 | The fonts | Not in this repository; fetched by npm at install time; each under SIL OFL 1.1 |
 | The name and marks of Anthropic | Trademarks of Anthropic; not used in the film, and neither licence above grants any trademark right |
@@ -158,8 +158,8 @@ share it only as those guidelines allow.
 
 ### Character art
 
-- The eight three-ink silhouettes used by version 4 (`assets/character/`) were **provided by the maker**, who made them with an
-  AI image generator. Licence: CC BY-NC-SA 4.0. The maker's source files and the pictures that were not used are not in this repository.
+- The eight three-ink silhouettes used by version 4 (`assets/character/`) were cropped by the maker from Live2D model renders of
+  Kanalia (*Twin Visions*, © Seasun). No licence is granted for them; non-commercial fan use only. The model and the renders are not in this repository.
 - The project only separates each silhouette into its three inks (orange, cream, black), recolours, shifts, reveals, crops,
   masks and mirrors the plates, traces their outlines for close-ups, and samples them into dots or glyphs. It does not redraw
   them, distort the features, animate the mouth, or draw a face in code.
